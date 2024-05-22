@@ -29,16 +29,16 @@ The aim of this project is to create a user-friendly Neural Networks library for
 double x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
 double y[4][1] = {{1}, {0}, {1}, {0}};
 
-NN_Layer input = NN_CreateLayer(2, 16, &NN_ReLU);
-NN_Layer output = NN_CreateLayer(16, 1, &NN_Sigmoid);
-NN_ConnectLayers(&input, &output);
+PULSE_Layer input = PULSE_CreateLayer(2, 16, &PULSE_ReLU);
+PULSE_Layer output = PULSE_CreateLayer(16, 1, &PULSE_Sigmoid);
+PULSE_Connect(&input, &output);
 
-NN_Train(&input, &output, (double*)x, (double*)y, 4, 2, 15000, 0.1);
+PULSE_Train(&input, (double*)x, (double*)y, 4, 2, 15000, 0.1);
 
 printf("TRAIN RESULT\n");
 for (int i = 0; i < 4; i++)
 {
-	NN_FeedLayer(&input, x[I]);
+	input.feed(&input, x[i]);
 	printf("Entrada: %d %d, Output: %.10f\n", (int)x[i][0], (int)x[i][1], output.outputs[0]);
 }
 ```
