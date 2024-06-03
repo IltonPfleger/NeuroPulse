@@ -19,7 +19,7 @@ The aim of this project is to create a user-friendly Neural Networks library for
 * [x] Batch Gradient Descent.
 * [x] Mini-Batch Gradient Descent.
 * [x] Custom Activation Functions Per Layer.
-* [ ] Convolutional Layers.
+* [x] Convolutional Layers.
 * [ ] RNN Features.
 * [ ] Optimizers like RMSProp, Adam, etc.
 * [ ] Custom Error Functions.
