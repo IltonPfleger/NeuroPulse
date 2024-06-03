@@ -7,7 +7,7 @@
 
 
 <div align="center">
-    <img width="30%" src="https://github.com/IltonPfleger/NeuroPulse/blob/main/preview.gif">
+<img width="30%" src="https://github.com/IltonPfleger/NeuroPulse/blob/main/preview.gif">
 </div>
 
 # About The Project
@@ -33,7 +33,7 @@ PULSE_Layer input = PULSE_CreateLayer(2, 16, &PULSE_ReLU);
 PULSE_Layer output = PULSE_CreateLayer(16, 1, &PULSE_Sigmoid);
 PULSE_Connect(&input, &output);
 
-PULSE_Train(&input, (double*)x, (double*)y, 4, 2, 15000, 0.1);
+PULSE_Train(&input, 15000, 4, (PULSE_HyperArgs){2, 0.1}, (PULSE_DataType*)x, (PULSE_DataType*)y);
 
 printf("TRAIN RESULT\n");
 for (int i = 0; i < 4; i++)
@@ -44,5 +44,5 @@ for (int i = 0; i < 4; i++)
 ```
 ## Notes:
 * The project requires C standard libraries. If using non-compiled files, include them in your compilation.
-  
+
 * Feel free to send ideas, suggestions, questions, and requests.
