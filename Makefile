@@ -1,6 +1,5 @@
 output: Convolutional.o Layer.o MaxPoll.o Dense.o Activations.o PULSE.o
-	gcc -O3 Convolutional.o Layer.o MaxPoll.o Dense.o Activations.o PULSE.o -o PULSE -lm -fopenmp
-	./PULSE
+	gcc -O3 Convolutional.o Layer.o MaxPoll.o Dense.o Activations.o PULSE.o -shared -o PULSE.so -lm -fopenmp
 	@echo
 
 Activations.o: Activations.c
@@ -16,7 +15,7 @@ MaxPoll.o: MaxPoll.c
 	gcc -O3 -c MaxPoll.c -o MaxPoll.o -fopenmp
 
 Dense.o: Dense.c
-	gcc -O3 -c Dense.c -o Dense.o -openmp
+	gcc -O3 -c Dense.c -o Dense.o
 
 PULSE.o: PULSE.c
 	gcc -O3 -c PULSE.c -o PULSE.o

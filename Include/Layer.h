@@ -7,9 +7,9 @@ typedef double PULSE_DataType;
 
 typedef void (*PULSE_FeedLayerFunctionPtr)(struct PULSE_LayerStruct *);
 typedef void (*PULSE_BackLayerFunctionPtr)(struct PULSE_LayerStruct *);
-typedef void (*PULSE_ActivationLayerFunctionPtr)(struct PULSE_LayerStruct *, char);
 typedef void (*PULSE_FixLayerFunctionPtr)(struct PULSE_LayerStruct *, PULSE_HyperArgs);
 typedef void (*PULSE_DestroyLayerFunctionPtr)(struct PULSE_LayerStruct *);
+typedef void (*PULSE_ActivationLayerFunctionPtr)(struct PULSE_LayerStruct *, char);
 
 typedef enum
 {

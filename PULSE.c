@@ -4,8 +4,10 @@
 #include <omp.h>
 #include "Include/Layer.h"
 #include "Include/Dense.h"
-#include "Include/Convolutional.h"
 #include "Include/MaxPoll.h"
+#include "Include/Convolutional.h"
+#include "Include/Activations.h"
+#include "Include/PULSE.h"
 
 void PULSE_Foward(PULSE_Layer * layer, PULSE_DataType * inputs)
 {
@@ -22,9 +24,6 @@ void PULSE_Foward(PULSE_Layer * layer, PULSE_DataType * inputs)
 		PULSE_Foward(layer->child, NULL);
 	}
 }
-
-
-
 
 
 void PULSE_Back(PULSE_Layer * layer)

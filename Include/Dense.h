@@ -1,5 +1,6 @@
+#ifndef _PULSE_DENSE
+#define _PULSE_DENSE
 #include "Layer.h"
-#include "Activations.h"
 
 typedef struct {
 	PULSE_DataType * weights;
@@ -14,4 +15,4 @@ static void _BackDense(PULSE_Layer *);
 static void _FixDense(PULSE_Layer *, PULSE_HyperArgs);
 PULSE_Layer PULSE_CreateDenseLayer(int, int, PULSE_ActivationLayerFunctionPtr);
 
-
+#endif
