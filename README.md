@@ -38,7 +38,7 @@ PULSE_Train(&input, 15000, 4, (PULSE_HyperArgs){2, 0.1}, (PULSE_DataType*)x, (PU
 printf("TRAIN RESULT\n");
 for (int i = 0; i < 4; i++)
 {
-	input.feed(&input, x[i]);
+	PULSE_Foward(&input, x[i]);
 	printf("Entrada: %d %d, Output: %.10f\n", (int)x[i][0], (int)x[i][1], output.outputs[0]);
 }
 ```
