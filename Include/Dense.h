@@ -1,5 +1,8 @@
 #ifndef _PULSE_DENSE
 #define _PULSE_DENSE
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "Layer.h"
 
 typedef struct {

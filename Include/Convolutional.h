@@ -1,5 +1,8 @@
 #ifndef _PULSE_CONV
 #define _PULSE_CONV
+#include <stdio.h>
+#include <stdlib.h>
+#include <omp.h>
 #include "Layer.h"
 
 typedef struct {

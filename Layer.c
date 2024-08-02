@@ -1,8 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "Include/Layer.h"
 
-PULSE_Layer PULSE_CreateLayer(int n_inputs, int n_outputs, PULSE_LayerType type, PULSE_FeedLayerFunctionPtr feed, PULSE_BackLayerFunctionPtr back, PULSE_FixLayerFunctionPtr fix, PULSE_DestroyLayerFunctionPtr destroy){
+PULSE_Layer PULSE_CreateLayer(PULSE_N n_inputs, PULSE_N n_outputs, PULSE_LayerType type, PULSE_FeedLayerFunctionPtr feed, PULSE_BackLayerFunctionPtr back, PULSE_FixLayerFunctionPtr fix, PULSE_DestroyLayerFunctionPtr destroy){
 	PULSE_Layer layer;
 	layer.n_inputs = n_inputs;
 	layer.n_outputs = n_outputs;

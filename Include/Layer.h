@@ -1,15 +1,15 @@
 #ifndef _PULSE_LAYER
 #define _PULSE_LAYER
+#include <stdio.h>
+#include <stdlib.h>
+#include "PULSETypes.h"
 
-struct PULSE_LayerStruct;
-typedef struct {int batch_size; double lr;} PULSE_HyperArgs; 
-typedef double PULSE_DataType;
-
-typedef void (*PULSE_FeedLayerFunctionPtr)(struct PULSE_LayerStruct *);
-typedef void (*PULSE_BackLayerFunctionPtr)(struct PULSE_LayerStruct *);
-typedef void (*PULSE_FixLayerFunctionPtr)(struct PULSE_LayerStruct *, PULSE_HyperArgs);
-typedef void (*PULSE_DestroyLayerFunctionPtr)(struct PULSE_LayerStruct *);
-typedef void (*PULSE_ActivationLayerFunctionPtr)(struct PULSE_LayerStruct *, char);
+struct PULSE_Layer;
+typedef PULSE_Void (*PULSE_FeedLayerFunctionPtr)(struct PULSE_Layer *);
+typedef PULSE_Void (*PULSE_BackLayerFunctionPtr)(struct PULSE_Layer *);
+typedef PULSE_Void (*PULSE_FixLayerFunctionPtr)(struct PULSE_Layer *, PULSE_HyperArgs);
+typedef PULSE_Void (*PULSE_DestroyLayerFunctionPtr)(struct PULSE_Layer *);
+typedef PULSE_Void (*PULSE_ActivationLayerFunctionPtr)(struct PULSE_Layer *, char);
 
 typedef enum
 {
@@ -19,7 +19,7 @@ typedef enum
 	PULSE_MAXPOLL
 } PULSE_LayerType;
 
-typedef struct PULSE_LayerStruct
+typedef struct PULSE_Layer
 {
 	PULSE_LayerType type;
 	PULSE_DataType *inputs;
@@ -30,16 +30,15 @@ typedef struct PULSE_LayerStruct
 	PULSE_FixLayerFunctionPtr fix;
 	PULSE_DestroyLayerFunctionPtr destroy;
 	PULSE_ActivationLayerFunctionPtr activate;
-	struct PULSE_LayerStruct * parent;
-	struct PULSE_LayerStruct * child;
-	void * layer;
-	unsigned int n_inputs;
-	unsigned int n_outputs;
+	struct PULSE_Layer * parent;
+	struct PULSE_Layer * child;
+	PULSE_Void * layer;
+	PULSE_N n_inputs;
+	PULSE_N n_outputs;
 } PULSE_Layer;
 
 
-PULSE_Layer PULSE_CreateLayer(int n_inputs, int n_outputs, PULSE_LayerType type, PULSE_FeedLayerFunctionPtr feed, PULSE_BackLayerFunctionPtr back, PULSE_FixLayerFunctionPtr fix, PULSE_DestroyLayerFunctionPtr destroy);
-void PULSE_DestroyLayer();
-
+PULSE_Layer PULSE_CreateLayer(PULSE_N , PULSE_N , PULSE_LayerType, PULSE_FeedLayerFunctionPtr, PULSE_BackLayerFunctionPtr, PULSE_FixLayerFunctionPtr, PULSE_DestroyLayerFunctionPtr);
+PULSE_Void PULSE_DestroyLayer();
 
 #endif

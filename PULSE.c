@@ -4,7 +4,7 @@
 #include <omp.h>
 #include "Include/Layer.h"
 #include "Include/Dense.h"
-#include "Include/MaxPoll.h"
+#include "Include/MaxPool.h"
 #include "Include/Convolutional.h"
 #include "Include/Activations.h"
 #include "Include/PULSE.h"
@@ -40,7 +40,7 @@ void PULSE_Back(PULSE_Layer * layer)
 
 
 
-void PULSE_Shuffle(int *indexes, int max)
+void PULSE_Shuffle(PULSE_N *indexes, PULSE_N max)
 {
 	srand(time(NULL));
 	for (int i = 0; i < max; i++)
@@ -57,7 +57,7 @@ void PULSE_Shuffle(int *indexes, int max)
 
 
 
-void PULSE_Train(PULSE_Layer * first_layer, int epoch, int data_size, PULSE_HyperArgs args, PULSE_DataType * x, PULSE_DataType * y)
+void PULSE_Train(PULSE_Layer * first_layer, PULSE_N epoch, PULSE_N data_size, PULSE_HyperArgs args, PULSE_DataType * x, PULSE_DataType * y)
 {
 	PULSE_Layer * output = first_layer;
 	while(output->child != NULL)

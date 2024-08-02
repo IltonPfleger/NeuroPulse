@@ -1,6 +1,4 @@
 #include "Include/Activations.h"
-#include <math.h>
-#include <omp.h>
 
 void PULSE_Sigmoid(PULSE_Layer * layer, char prime)
 {

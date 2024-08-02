@@ -1,9 +1,4 @@
 #include "Include/Convolutional.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <omp.h>
-
-
 
 static void _FeedConvolutional(PULSE_Layer * this)
 {

@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include <omp.h>
-#include "Include/MaxPoll.h"
+#include "Include/MaxPool.h"
 
 
-static void _FeedMaxPoll(PULSE_Layer * this)
+static void _FeedMaxPool(PULSE_Layer * this)
 {
-	PULSE_MaxPollLayer * poll = (PULSE_MaxPollLayer*)this->layer;
+	PULSE_MaxPoolLayer * poll = (PULSE_MaxPoolLayer*)this->layer;
 #pragma omp parallel for schedule(static)
 	for(int i = 0; i < poll->i_size[0]; i++)
 	{
@@ -35,11 +35,11 @@ static void _FeedMaxPoll(PULSE_Layer * this)
 
 
 
-static void _BackMaxPoll(PULSE_Layer * this)
+static void _BackMaxPool(PULSE_Layer * this)
 {
 	if(this->parent != NULL)
 	{
-		PULSE_MaxPollLayer * poll = (PULSE_MaxPollLayer*)this->layer;
+		PULSE_MaxPoolLayer * poll = (PULSE_MaxPoolLayer*)this->layer;
 #pragma omp parallel for schedule(static)
 		for(int i = 0; i < poll->i_size[0]; i++)
 		{
@@ -69,20 +69,20 @@ static void _BackMaxPoll(PULSE_Layer * this)
 
 
 
-static void _FixMaxPoll(PULSE_Layer * this, PULSE_HyperArgs args){}
+static void _FixMaxPool(PULSE_Layer * this, PULSE_HyperArgs args){}
 
-static void _DestroyMaxPoll(PULSE_Layer * this)
+static void _DestroyMaxPool(PULSE_Layer * this)
 {
 	free(this->layer);
 	PULSE_DestroyLayer(this);
 }
 
 
-PULSE_Layer PULSE_CreateMaxPollLayer(int k_size, int iz, int iy, int ix)
+PULSE_Layer PULSE_CreateMaxPoolLayer(PULSE_N k_size, PULSE_N iz, PULSE_N iy, PULSE_N ix)
 {
 	int n_inputs = iz*iy*ix;
 	int n_outputs = iz*(iy/k_size)*(ix/k_size);
-	PULSE_MaxPollLayer * poll = (PULSE_MaxPollLayer*)malloc(sizeof(PULSE_MaxPollLayer));
+	PULSE_MaxPoolLayer * poll = (PULSE_MaxPoolLayer*)malloc(sizeof(PULSE_MaxPoolLayer));
 	poll->k_size = k_size;
 	poll->i_size[0] = iz;
 	poll->i_size[1] = iy;
@@ -90,7 +90,7 @@ PULSE_Layer PULSE_CreateMaxPollLayer(int k_size, int iz, int iy, int ix)
 	poll->o_size[0] = iz;
 	poll->o_size[1] = iy/k_size;
 	poll->o_size[2] = ix/k_size;
-	PULSE_Layer layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_MAXPOLL, &_FeedMaxPoll, &_BackMaxPoll, &_FixMaxPoll, &_DestroyMaxPoll);
+	PULSE_Layer layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_MAXPOLL, &_FeedMaxPool, &_BackMaxPool, &_FixMaxPool, &_DestroyMaxPool);
 	layer.layer = poll;
 	return layer;
 }

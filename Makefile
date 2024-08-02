@@ -1,24 +1,32 @@
-output: Convolutional.o Layer.o MaxPoll.o Dense.o Activations.o PULSE.o
-	gcc -O3 Convolutional.o Layer.o MaxPoll.o Dense.o Activations.o PULSE.o -shared -o PULSE.so -lm -fopenmp
+
+
+CFLAGS = -O4 -march=native -lm -fopenmp
+
+
+output: Convolutional.o Layer.o MaxPool.o Dense.o Activations.o PULSE.o
+	gcc ${CFLAGS} Convolutional.o Layer.o MaxPool.o Dense.o Activations.o PULSE.o -shared -o libPULSE.so
 	@echo
 
 Activations.o: Activations.c
-	gcc -O3 -c Activations.c -o Activations.o
+	gcc ${CFLAGS} -c Activations.c -o Activations.o
 
 Convolutional.o: Convolutional.c
-	gcc -O3 -c Convolutional.c -o Convolutional.o -fopenmp
+	gcc ${CFLAGS} -c Convolutional.c -o Convolutional.o
 
 Layer.o: Layer.c
-	gcc -O3 -c Layer.c -o Layer.o
+	gcc ${CFLAGS} -c Layer.c -o Layer.o
 
-MaxPoll.o: MaxPoll.c
-	gcc -O3 -c MaxPoll.c -o MaxPoll.o -fopenmp
+MaxPool.o: MaxPool.c
+	gcc ${CFLAGS} -c MaxPool.c -o MaxPool.o
 
 Dense.o: Dense.c
-	gcc -O3 -c Dense.c -o Dense.o
+	gcc ${CFLAGS} -c Dense.c -o Dense.o
 
 PULSE.o: PULSE.c
-	gcc -O3 -c PULSE.c -o PULSE.o
+	gcc ${CFLAGS} -c PULSE.c -o PULSE.o
 
 clear:
-	rm *.o
+	rm *.o && rm *.so
+
+build:
+	gcc ${CFLAGS} ${MAIN}.c -o ${MAIN} -L. -lPULSE -Wl,-rpath=.

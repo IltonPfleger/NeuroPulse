@@ -4,17 +4,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <omp.h>
+#include "PULSETypes.h"
 #include "Layer.h"
 #include "Activations.h"
 #include "Convolutional.h"
-#include "MaxPoll.h"
+#include "MaxPool.h"
 #include "Dense.h"
 
-void PULSE_Foward(PULSE_Layer * layer, PULSE_DataType * inputs);
-void PULSE_Back(PULSE_Layer * layer);
-void PULSE_Shuffle(int *indexes, int max);
-void PULSE_Train(PULSE_Layer * first_layer, int epoch, int data_size, PULSE_HyperArgs args, PULSE_DataType * x, PULSE_DataType * y);
-void PULSE_Connect(PULSE_Layer * parent, PULSE_Layer * child);
-void PULSE_Destroy(PULSE_Layer * layer);
+void PULSE_Foward(PULSE_Layer *, PULSE_DataType *);
+void PULSE_Back(PULSE_Layer *);
+void PULSE_Shuffle(PULSE_N *, PULSE_N);
+void PULSE_Train(PULSE_Layer *, PULSE_N, PULSE_N, PULSE_HyperArgs, PULSE_DataType *, PULSE_DataType *);
+void PULSE_Connect(PULSE_Layer *, PULSE_Layer * );
+void PULSE_Destroy(PULSE_Layer *);
 
 #endif
