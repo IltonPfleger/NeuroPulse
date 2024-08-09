@@ -26,20 +26,27 @@ The aim of this project is to create a user-friendly Neural Networks library for
 
 ## Example
 ```c Xor Problem.
-double x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
-double y[4][1] = {{1}, {0}, {1}, {0}};
+#include <stdlib.h>
+#include <stdio.h>
+#include "PULSE.h"
 
-PULSE_Layer input = PULSE_CreateLayer(2, 16, &PULSE_ReLU);
-PULSE_Layer output = PULSE_CreateLayer(16, 1, &PULSE_Sigmoid);
-PULSE_Connect(&input, &output);
-
-PULSE_Train(&input, 15000, 4, (PULSE_HyperArgs){2, 0.1}, (PULSE_DataType*)x, (PULSE_DataType*)y);
-
-printf("TRAIN RESULT\n");
-for (int i = 0; i < 4; i++)
+int main()
 {
-	PULSE_Foward(&input, x[i]);
-	printf("Entrada: %d %d, Output: %.10f\n", (int)x[i][0], (int)x[i][1], output.outputs[0]);
+	PULSE_DataType x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
+	PULSE_DataType y[4][1] = {{1}, {0}, {1}, {0}};
+
+	PULSE_Layer input = PULSE_CreateDenseLayer(2, 256, &PULSE_ReLU, PULSE_OPTIMIZATION_SIMD);
+	PULSE_Layer output = PULSE_CreateDenseLayer(256, 1, &PULSE_Sigmoid, PULSE_OPTIMIZATION_SIMD);
+	PULSE_Connect(&input, &output);
+
+	PULSE_Train(&input, 15000, 4, (PULSE_HyperArgs){2, 0.1}, (PULSE_DataType*)x, (PULSE_DataType*)y);
+
+	printf("TRAIN RESULT\n");
+	for (int i = 0; i < 4; i++)
+	{
+		PULSE_Foward(&input, x[i]);
+		printf("Entrada: %d %d, Output: %f\n", (int)x[i][0], (int)x[i][1], output.outputs[0]);
+	}
 }
 ```
 ## Notes:
