@@ -22,6 +22,7 @@ typedef enum
 typedef struct PULSE_Layer
 {
 	PULSE_LayerType type;
+	PULSE_OptimizationType optimization_type;
 	PULSE_DataType *inputs;
 	PULSE_DataType *outputs;
 	PULSE_DataType *errors;
@@ -38,7 +39,7 @@ typedef struct PULSE_Layer
 } PULSE_Layer;
 
 
-PULSE_Layer PULSE_CreateLayer(PULSE_N , PULSE_N , PULSE_LayerType, PULSE_FeedLayerFunctionPtr, PULSE_BackLayerFunctionPtr, PULSE_FixLayerFunctionPtr, PULSE_DestroyLayerFunctionPtr);
+PULSE_Layer PULSE_CreateLayer(PULSE_N , PULSE_N , PULSE_LayerType, PULSE_ActivationLayerFunctionPtr, PULSE_FeedLayerFunctionPtr, PULSE_BackLayerFunctionPtr, PULSE_FixLayerFunctionPtr, PULSE_DestroyLayerFunctionPtr, PULSE_OptimizationType);
 PULSE_Void PULSE_DestroyLayer();
 
 #endif

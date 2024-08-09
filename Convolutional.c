@@ -150,7 +150,7 @@ PULSE_Layer PULSE_CreateConvolutionalLayer(int dim, int k_size, int iz, int iy, 
 	for(int i = 0; i < dim*iz*k_size*k_size; i++)
 		conv->kernels[i] = (PULSE_DataType)rand()/(PULSE_DataType)(RAND_MAX);
 
-	PULSE_Layer layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_CONV, &_FeedConvolutional, &_BackConvolutional, &_FixConvolutional, &_DestroyConvolutional);
+	PULSE_Layer layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_CONV, NULL, &_FeedConvolutional, &_BackConvolutional, &_FixConvolutional, &_DestroyConvolutional, PULSE_OPTIMIZATION_NONE);
 	layer.layer = conv;
 	return layer;
 }

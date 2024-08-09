@@ -147,15 +147,14 @@ PULSE_Layer PULSE_CreateDenseLayer(int n_inputs, int n_outputs, PULSE_Activation
 	switch(optimization)
 	{
 		case PULSE_OPTIMIZATION_NONE:
-			layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, &_FeedDense, &_BackDense, &_FixDense, &_DestroyDense);
+			layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, activation_function, &_FeedDense, &_BackDense, &_FixDense, &_DestroyDense, optimization);
 			break;
 		case PULSE_OPTIMIZATION_SIMD:
-			layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, &_SIMD_FeedDense, &_SIMD_BackDense, &_SIMD_FixDense, &_DestroyDense);
+			layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, activation_function, &_SIMD_FeedDense, &_SIMD_BackDense, &_SIMD_FixDense, &_DestroyDense, optimization);
 			break;
 	}
 
 	layer.layer = dense;
-	layer.activate = activation_function;
 	return layer;
 }
 
