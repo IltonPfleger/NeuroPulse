@@ -68,8 +68,8 @@ int main()
 	print_one_hot_label(labels);
 
 	double t1 = omp_get_wtime();
-	PULSE_Layer input = PULSE_CreateDenseLayer(IMAGE_SIZE, 128, &PULSE_ReLU, PULSE_OPTIMIZATION_SIMD);
-	PULSE_Layer hid1 = PULSE_CreateDenseLayer(128, 10, &PULSE_Sigmoid, PULSE_OPTIMIZATION_SIMD);
+	PULSE_Layer input = PULSE_CreateDenseLayer(IMAGE_SIZE, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD);
+	PULSE_Layer hid1 = PULSE_CreateDenseLayer(128, 10, PULSE_ACTIVATION_SIGMOID, PULSE_OPTIMIZATION_SIMD);
 	PULSE_Connect(&input, &hid1);
 	PULSE_Train(&input, 5, 60000, (PULSE_HyperArgs){100, 0.1}, (PULSE_DataType*)images, (PULSE_DataType*)labels);
 	double t2 = omp_get_wtime();

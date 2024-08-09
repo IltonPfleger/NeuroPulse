@@ -13,14 +13,14 @@ static void _FeedDense(PULSE_Layer * this)
 			this->outputs[i] += this->inputs[j] * dense->weights[wi + j];
 		this->outputs[i] += dense->baiases[i];
 	}
-	this->activate(this, 0);
+	this->activate(this->outputs, this->n_outputs, 0);
 }
 
 
 static void _BackDense(PULSE_Layer * this)
 {
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
-	this->activate(this, 1);
+	this->activate(this->outputs, this->n_outputs, 1);
 	for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
 	{
 		double delta = this->errors[i] * this->outputs[i];
@@ -73,7 +73,7 @@ static void _SIMD_FeedDense(PULSE_Layer * this)
 		}
 		this->outputs[i] = _mm_cvtss_f32(__PULSE_SIMD_X86_REDUCE_ADD_256(outputs)) + dense->baiases[i];
 	}
-	this->activate(this, 0);
+	this->activate(this->outputs, this->n_outputs, 0);
 }
 
 
@@ -81,7 +81,7 @@ static void _SIMD_BackDense(PULSE_Layer * this)
 {
 	static const int CHUNK_SIZE = 256/sizeof(__m256);
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
-	this->activate(this, 1);
+	this->activate(this->outputs, this->n_outputs, 1);
 	__m256 deltas, ddeltas, delta, errors, gradients, inputs, weights, outputs;
 
 	for(int i = 0; i < this->n_outputs; i += CHUNK_SIZE)
@@ -158,7 +158,7 @@ static void _DestroyDense(PULSE_Layer * this)
 
 
 
-PULSE_Layer PULSE_CreateDenseLayer(int n_inputs, int n_outputs, PULSE_ActivationLayerFunctionPtr activation_function, PULSE_OptimizationType optimization)
+PULSE_Layer PULSE_CreateDenseLayer(int n_inputs, int n_outputs, PULSE_ActivationFunction activation_function, PULSE_OptimizationType optimization)
 {
 	PULSE_DenseLayer *dense = (PULSE_DenseLayer*)malloc(sizeof(PULSE_DenseLayer));
 

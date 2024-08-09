@@ -3,13 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "PULSETypes.h"
+#include "Activations.h"
 
 struct PULSE_Layer;
 typedef PULSE_Void (*PULSE_FeedLayerFunctionPtr)(struct PULSE_Layer *);
 typedef PULSE_Void (*PULSE_BackLayerFunctionPtr)(struct PULSE_Layer *);
 typedef PULSE_Void (*PULSE_FixLayerFunctionPtr)(struct PULSE_Layer *, PULSE_HyperArgs);
 typedef PULSE_Void (*PULSE_DestroyLayerFunctionPtr)(struct PULSE_Layer *);
-typedef PULSE_Void (*PULSE_ActivationLayerFunctionPtr)(struct PULSE_Layer *, char);
+typedef PULSE_Void (*PULSE_ActivationLayerFunctionPtr)(PULSE_DataType *, PULSE_N, char);
 
 typedef enum
 {
@@ -39,7 +40,7 @@ typedef struct PULSE_Layer
 } PULSE_Layer;
 
 
-PULSE_Layer PULSE_CreateLayer(PULSE_N , PULSE_N , PULSE_LayerType, PULSE_ActivationLayerFunctionPtr, PULSE_FeedLayerFunctionPtr, PULSE_BackLayerFunctionPtr, PULSE_FixLayerFunctionPtr, PULSE_DestroyLayerFunctionPtr, PULSE_OptimizationType);
+PULSE_Layer PULSE_CreateLayer(PULSE_N , PULSE_N , PULSE_LayerType, PULSE_ActivationFunction, PULSE_FeedLayerFunctionPtr, PULSE_BackLayerFunctionPtr, PULSE_FixLayerFunctionPtr, PULSE_DestroyLayerFunctionPtr, PULSE_OptimizationType);
 PULSE_Void PULSE_DestroyLayer();
 
 #endif

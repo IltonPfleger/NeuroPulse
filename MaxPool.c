@@ -90,7 +90,7 @@ PULSE_Layer PULSE_CreateMaxPoolLayer(PULSE_N k_size, PULSE_N iz, PULSE_N iy, PUL
 	poll->o_size[0] = iz;
 	poll->o_size[1] = iy/k_size;
 	poll->o_size[2] = ix/k_size;
-	PULSE_Layer layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_MAXPOLL, NULL, &_FeedMaxPool, &_BackMaxPool, &_FixMaxPool, &_DestroyMaxPool, PULSE_OPTIMIZATION_NONE);
+	PULSE_Layer layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_MAXPOLL, PULSE_ACTIVATION_NONE, &_FeedMaxPool, &_BackMaxPool, &_FixMaxPool, &_DestroyMaxPool, PULSE_OPTIMIZATION_NONE);
 	layer.layer = poll;
 	return layer;
 }

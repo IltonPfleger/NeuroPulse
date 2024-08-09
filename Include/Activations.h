@@ -1,11 +1,11 @@
 #ifndef _PULSE_ACT
 #define _PULSE_ACT
 #include <math.h>
-#include <omp.h>
-#include "Layer.h"
+#include "PULSETypes.h"
 
-void PULSE_Softmax(PULSE_Layer * layer, char prime);
-void PULSE_Sigmoid(PULSE_Layer * layer, char prime);
-void PULSE_ReLU(PULSE_Layer * layer, char prime);
+static void PULSE_Softmax(PULSE_DataType*, PULSE_N, char);
+static void PULSE_Sigmoid(PULSE_DataType*, PULSE_N, char);
+static void PULSE_ReLU(PULSE_DataType*, PULSE_N, char);
+void* PULSE_GetActivationFunctionPtr(PULSE_ActivationFunction);
 
 #endif

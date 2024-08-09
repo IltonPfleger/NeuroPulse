@@ -8,8 +8,8 @@ int main()
 	PULSE_DataType x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
 	PULSE_DataType y[4][1] = {{1}, {0}, {1}, {0}};
 
-	PULSE_Layer input = PULSE_CreateDenseLayer(2, 256, &PULSE_ReLU, PULSE_OPTIMIZATION_SIMD);
-	PULSE_Layer output = PULSE_CreateDenseLayer(256, 1, &PULSE_Sigmoid, PULSE_OPTIMIZATION_SIMD);
+	PULSE_Layer input = PULSE_CreateDenseLayer(2, 256, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD);
+	PULSE_Layer output = PULSE_CreateDenseLayer(256, 1, PULSE_ACTIVATION_SIGMOID, PULSE_OPTIMIZATION_SIMD);
 	PULSE_Connect(&input, &output);
 
 	double t1 = omp_get_wtime();
