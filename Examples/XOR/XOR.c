@@ -13,7 +13,7 @@ int main()
 	PULSE_Connect(&input, &output);
 
 	double t1 = omp_get_wtime();
-	PULSE_Train(&input, 15000, 4, (PULSE_HyperArgs){2, 0.1}, (PULSE_DataType*)x, (PULSE_DataType*)y);
+	PULSE_Train(&input, 15000, 4, (PULSE_HyperArgs){2, 0.1}, PULSE_LOSS_MSE, (PULSE_DataType*)x, (PULSE_DataType*)y);
 	double t2 = omp_get_wtime();
 	printf("%f\n", t2 - t1);
 

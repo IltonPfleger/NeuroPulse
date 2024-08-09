@@ -1,6 +1,6 @@
 
 
-CFLAGS = -O4 -march=native -lm -fopenmp -g
+CFLAGS = -O4 -march=native -lm -fopenmp -g -Wall
 
 default:
 	gcc ${CFLAGS} MNIST.c -o MNIST -L/home/pj/C/NeuroPulse/ -lPULSE -Wl,-rpath=../../

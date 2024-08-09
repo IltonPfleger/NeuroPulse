@@ -17,6 +17,12 @@ typedef enum
 	PULSE_ACTIVATION_SIGMOID,
 }PULSE_ActivationFunction;
 
+typedef enum
+{
+	PULSE_LOSS_MSE,
+	PULSE_LOSS_MAE,
+}PULSE_LossFunction;
+
 typedef enum 
 {
 	PULSE_OPTIMIZATION_NONE,

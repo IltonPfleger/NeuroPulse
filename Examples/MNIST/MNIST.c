@@ -71,7 +71,7 @@ int main()
 	PULSE_Layer input = PULSE_CreateDenseLayer(IMAGE_SIZE, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD);
 	PULSE_Layer hid1 = PULSE_CreateDenseLayer(128, 10, PULSE_ACTIVATION_SIGMOID, PULSE_OPTIMIZATION_SIMD);
 	PULSE_Connect(&input, &hid1);
-	PULSE_Train(&input, 5, 60000, (PULSE_HyperArgs){100, 0.1}, (PULSE_DataType*)images, (PULSE_DataType*)labels);
+	PULSE_Train(&input, 5, 60000, (PULSE_HyperArgs){100, 0.1}, PULSE_LOSS_MSE, (PULSE_DataType*)images, (PULSE_DataType*)labels);
 	double t2 = omp_get_wtime();
 	printf("%f\n", t2 - t1);
 	print_one_hot_label(PULSE_Foward(&input, images));

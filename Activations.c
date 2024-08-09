@@ -17,10 +17,23 @@ static void PULSE_ReLU(PULSE_DataType * x, PULSE_N size, char prime)
 	for(int i = 0; i < size; i++)
 	{
 		if(prime)
+			x[i] = x[i] > 0 ? 1:0;
+		x[i] = x[i] > 0 ? x[i]:0;
+	}
+}
+
+static void PULSE_LeakyReLU(PULSE_DataType * x, PULSE_N size, char prime)
+{
+
+	for(int i = 0; i < size; i++)
+	{
+		if(prime)
 			x[i] = x[i] > 0 ? 1:0.0001;
 		x[i] = x[i] > 0 ? x[i]:0.0001*x[i];
 	}
 }
+
+
 
 void* PULSE_GetActivationFunctionPtr(PULSE_ActivationFunction type)
 {
@@ -33,6 +46,8 @@ void* PULSE_GetActivationFunctionPtr(PULSE_ActivationFunction type)
 			break;
 		case PULSE_ACTIVATION_RELU:
 			return PULSE_ReLU;
+		case PULSE_ACTIVATION_LEAKYRELU:
+			return PULSE_LeakyReLU;
 			break;
 	}
 }
