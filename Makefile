@@ -1,6 +1,6 @@
 
 
-CFLAGS = -O4 -march=native -lm -fopenmp
+CFLAGS = -O4 -march=native -lm -fopenmp -D__PULSE_CFLAGS_CacheLineSize=`getconf LEVEL1_DCACHE_LINESIZE` -g
 
 
 output: Convolutional.o Layer.o MaxPool.o Dense.o Activations.o PULSE.o

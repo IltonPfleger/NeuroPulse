@@ -4,9 +4,9 @@ PULSE_Layer PULSE_CreateLayer(PULSE_N n_inputs, PULSE_N n_outputs, PULSE_LayerTy
 	PULSE_Layer layer;
 	layer.n_inputs = n_inputs;
 	layer.n_outputs = n_outputs;
-	layer.inputs = (PULSE_DataType*)calloc(n_inputs, sizeof(PULSE_DataType));
-	layer.outputs = (PULSE_DataType*)calloc(n_outputs, sizeof(PULSE_DataType));
-	layer.errors = (PULSE_DataType*)calloc(n_outputs, sizeof(PULSE_DataType));
+	layer.inputs = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*n_inputs);
+	layer.outputs = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*n_outputs);
+	layer.errors = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*n_outputs);
 	layer.type = type;
 	layer.child = NULL;
 	layer.parent = NULL;

@@ -9,6 +9,13 @@ typedef struct {
 	double lr;
 } PULSE_HyperArgs; 
 
+typedef enum 
+{
+	PULSE_OPTIMIZATION_NONE,
+	PULSE_OPTIMIZATION_SIMD,
+	PULSE_OPTIMIZATION_GPU_OPENCL,
+} PULSE_OptimizationType;
+
 
 #endif
 

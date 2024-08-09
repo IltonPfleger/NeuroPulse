@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 #include <time.h>
 #include <omp.h>
@@ -9,20 +10,20 @@
 #include "Include/Activations.h"
 #include "Include/PULSE.h"
 
-void PULSE_Foward(PULSE_Layer * layer, PULSE_DataType * inputs)
+
+PULSE_DataType * PULSE_Foward(PULSE_Layer * layer, PULSE_DataType * inputs)
 {
 	if(inputs != NULL)
-		for(int i = 0; i < layer->n_inputs; i++)
-			layer->inputs[i] = inputs[i];
-
+		memcpy(layer->inputs, inputs, sizeof(PULSE_DataType)*layer->n_inputs);
 	layer->feed(layer);
 
 	if(layer->child != NULL)
 	{
-		for(int i = 0; i < layer->n_outputs; i++)
-			layer->child->inputs[i] = layer->outputs[i];
-		PULSE_Foward(layer->child, NULL);
+		memcpy(layer->child->inputs, layer->outputs, sizeof(PULSE_DataType)*layer->n_outputs);
+		return PULSE_Foward(layer->child, NULL);
 	}
+	else
+		return layer->outputs;
 }
 
 
@@ -32,9 +33,7 @@ void PULSE_Back(PULSE_Layer * layer)
 	if(layer->parent != NULL)
 	{
 		PULSE_Back(layer->parent);
-		for(int i = 0; i < layer->n_inputs; i++)
-			layer->parent->errors[i] = 0;
-
+		memset(layer->parent->errors, 0, layer->n_inputs*sizeof(PULSE_DataType));
 	}
 }
 

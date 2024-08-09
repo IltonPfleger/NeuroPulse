@@ -11,7 +11,7 @@
 #include "MaxPool.h"
 #include "Dense.h"
 
-void PULSE_Foward(PULSE_Layer *, PULSE_DataType *);
+PULSE_DataType * PULSE_Foward(PULSE_Layer *, PULSE_DataType *);
 void PULSE_Back(PULSE_Layer *);
 void PULSE_Shuffle(PULSE_N *, PULSE_N);
 void PULSE_Train(PULSE_Layer *, PULSE_N, PULSE_N, PULSE_HyperArgs, PULSE_DataType *, PULSE_DataType *);
