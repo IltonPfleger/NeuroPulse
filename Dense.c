@@ -53,20 +53,19 @@ static void _FixDense(PULSE_Layer * this, PULSE_HyperArgs args)
 #if defined(__PULSE_SIMD_SUPPORTED)
 static void _SIMD_FeedDense(PULSE_Layer * this)
 {
-	static const int CHUNK_SIZE = 256/sizeof(__PULSE_SIMD_DATATYPE);
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
 	__PULSE_SIMD_DATATYPE inputs, weights, outputs;
 	for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
 	{
 		outputs = __PULSE_SIMD_ZERO();
-		for(int j = 0; j < this->n_inputs; j += CHUNK_SIZE)
+		for(int j = 0; j < this->n_inputs; j += __PULSE_SIMD_N_PER_CHUNK)
 		{
 			weights = __PULSE_SIMD_LOAD(dense->weights + wi + j);
 			inputs = __PULSE_SIMD_LOAD(this->inputs + j);
-			if(j + CHUNK_SIZE > this->n_inputs)
+			if(j + __PULSE_SIMD_N_PER_CHUNK > this->n_inputs)
 			{
-				weights = __PULSE_SIMD_ZERO_R(weights, CHUNK_SIZE - this->n_inputs - j);
-				inputs = __PULSE_SIMD_ZERO_R(inputs, CHUNK_SIZE - this->n_inputs - j);
+				weights = __PULSE_SIMD_ZERO_R(weights, __PULSE_SIMD_N_PER_CHUNK - this->n_inputs - j);
+				inputs = __PULSE_SIMD_ZERO_R(inputs, __PULSE_SIMD_N_PER_CHUNK - this->n_inputs - j);
 			}
 			outputs = __PULSE_SIMD_MADD(weights, inputs, outputs);
 		}
@@ -78,12 +77,11 @@ static void _SIMD_FeedDense(PULSE_Layer * this)
 
 static void _SIMD_BackDense(PULSE_Layer * this)
 {
-	static const int CHUNK_SIZE = 256/sizeof(__PULSE_SIMD_DATATYPE);
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
 	this->activate(this->outputs, this->n_outputs, 1);
 	__PULSE_SIMD_DATATYPE deltas, ddeltas, delta, errors, gradients, inputs, weights, outputs;
 
-	for(int i = 0; i < this->n_outputs; i += CHUNK_SIZE)
+	for(int i = 0; i < this->n_outputs; i += __PULSE_SIMD_N_PER_CHUNK)
 	{
 		errors = __PULSE_SIMD_LOAD(this->errors + i);
 		outputs = __PULSE_SIMD_LOAD(this->outputs + i);
@@ -98,7 +96,7 @@ static void _SIMD_BackDense(PULSE_Layer * this)
 	for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
 	{
 		delta = __PULSE_SIMD_SET_ALL(dense->ddeltas[i]);
-		for(int j = 0; j < this->n_inputs; j += CHUNK_SIZE)
+		for(int j = 0; j < this->n_inputs; j += __PULSE_SIMD_N_PER_CHUNK)
 		{
 			gradients = __PULSE_SIMD_LOAD(dense->gradients + wi + j);
 			inputs = __PULSE_SIMD_LOAD(this->inputs + j);
@@ -117,13 +115,12 @@ static void _SIMD_BackDense(PULSE_Layer * this)
 
 static void _SIMD_FixDense(PULSE_Layer * this, PULSE_HyperArgs args)
 {
-	static const int CHUNK_SIZE = 256/sizeof(__PULSE_SIMD_DATATYPE);
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
 	__PULSE_SIMD_DATATYPE baiases, deltas, weights, gradients;
 	const __PULSE_SIMD_DATATYPE HYPER = __PULSE_SIMD_SET_ALL(-args.lr/args.batch_size);
 	const __PULSE_SIMD_DATATYPE ZERO = __PULSE_SIMD_ZERO();
 
-	for(int i = 0; i < this->n_outputs; i += CHUNK_SIZE)
+	for(int i = 0; i < this->n_outputs; i += __PULSE_SIMD_N_PER_CHUNK)
 	{
 		baiases = __PULSE_SIMD_LOAD(dense->baiases + i);
 		deltas = __PULSE_SIMD_LOAD(dense->deltas + i);
@@ -132,7 +129,7 @@ static void _SIMD_FixDense(PULSE_Layer * this, PULSE_HyperArgs args)
 		__PULSE_SIMD_STORE(dense->deltas + i, ZERO);
 	}
 
-	for(int i = 0; i < this->n_outputs * this->n_inputs; i += CHUNK_SIZE)
+	for(int i = 0; i < this->n_outputs * this->n_inputs; i += __PULSE_SIMD_N_PER_CHUNK)
 	{
 		weights = __PULSE_SIMD_LOAD(dense->weights + i);
 		gradients = __PULSE_SIMD_LOAD(dense->gradients + i);
