@@ -50,28 +50,27 @@ static void _FixDense(PULSE_Layer * this, PULSE_HyperArgs args)
 	}
 }
 
-//INTEL AVX
-#if defined(__PULSE_SIMD_AVX)
+#if defined(__PULSE_SIMD_SUPPORTED)
 static void _SIMD_FeedDense(PULSE_Layer * this)
 {
-	static const int CHUNK_SIZE = 256/sizeof(__m256);
+	static const int CHUNK_SIZE = 256/sizeof(__PULSE_SIMD_DATATYPE);
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
-	__m256 inputs, weights, outputs;
+	__PULSE_SIMD_DATATYPE inputs, weights, outputs;
 	for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
 	{
-		outputs = _mm256_setzero_ps();
+		outputs = __PULSE_SIMD_ZERO();
 		for(int j = 0; j < this->n_inputs; j += CHUNK_SIZE)
 		{
-			weights = _mm256_loadu_ps(dense->weights + wi + j);
-			inputs = _mm256_loadu_ps(this->inputs + j);
+			weights = __PULSE_SIMD_LOAD(dense->weights + wi + j);
+			inputs = __PULSE_SIMD_LOAD(this->inputs + j);
 			if(j + CHUNK_SIZE > this->n_inputs)
 			{
-				weights = __PULSE_SIMD_X86_ZERO_R_256(weights, CHUNK_SIZE - this->n_inputs - j);
-				inputs = __PULSE_SIMD_X86_ZERO_R_256(inputs, CHUNK_SIZE - this->n_inputs - j);
+				weights = __PULSE_SIMD_ZERO_R(weights, CHUNK_SIZE - this->n_inputs - j);
+				inputs = __PULSE_SIMD_ZERO_R(inputs, CHUNK_SIZE - this->n_inputs - j);
 			}
-			outputs = _mm256_fmadd_ps(weights, inputs, outputs);
+			outputs = __PULSE_SIMD_MADD(weights, inputs, outputs);
 		}
-		this->outputs[i] = _mm_cvtss_f32(__PULSE_SIMD_X86_REDUCE_ADD_256(outputs)) + dense->baiases[i];
+		this->outputs[i] = __PULSE_SIMD_TO_FLOAT(__PULSE_SIMD_X86_REDUCE_ADD_256(outputs)) + dense->baiases[i];
 	}
 	this->activate(this->outputs, this->n_outputs, 0);
 }
@@ -79,38 +78,38 @@ static void _SIMD_FeedDense(PULSE_Layer * this)
 
 static void _SIMD_BackDense(PULSE_Layer * this)
 {
-	static const int CHUNK_SIZE = 256/sizeof(__m256);
+	static const int CHUNK_SIZE = 256/sizeof(__PULSE_SIMD_DATATYPE);
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
 	this->activate(this->outputs, this->n_outputs, 1);
-	__m256 deltas, ddeltas, delta, errors, gradients, inputs, weights, outputs;
+	__PULSE_SIMD_DATATYPE deltas, ddeltas, delta, errors, gradients, inputs, weights, outputs;
 
 	for(int i = 0; i < this->n_outputs; i += CHUNK_SIZE)
 	{
-		errors = _mm256_loadu_ps(this->errors + i);
-		outputs = _mm256_loadu_ps(this->outputs + i);
-		ddeltas = _mm256_loadu_ps(dense->deltas + i);
-		deltas = _mm256_loadu_ps(dense->ddeltas + i);
-		ddeltas = _mm256_mul_ps(errors, outputs);
-		deltas = _mm256_add_ps(ddeltas, deltas);
-		_mm256_storeu_ps(dense->ddeltas + i, ddeltas);
-		_mm256_storeu_ps(dense->deltas + i, deltas);
+		errors = __PULSE_SIMD_LOAD(this->errors + i);
+		outputs = __PULSE_SIMD_LOAD(this->outputs + i);
+		ddeltas = __PULSE_SIMD_LOAD(dense->deltas + i);
+		deltas = __PULSE_SIMD_LOAD(dense->ddeltas + i);
+		ddeltas = __PULSE_SIMD_MUL(errors, outputs);
+		deltas = __PULSE_SIMD_ADD(ddeltas, deltas);
+		__PULSE_SIMD_STORE(dense->ddeltas + i, ddeltas);
+		__PULSE_SIMD_STORE(dense->deltas + i, deltas);
 	};
 
 	for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
 	{
-		delta = _mm256_set1_ps(dense->ddeltas[i]);
+		delta = __PULSE_SIMD_SET_ALL(dense->ddeltas[i]);
 		for(int j = 0; j < this->n_inputs; j += CHUNK_SIZE)
 		{
-			gradients = _mm256_loadu_ps(dense->gradients + wi + j);
-			inputs = _mm256_loadu_ps(this->inputs + j);
-			gradients = _mm256_fmadd_ps(delta, inputs, gradients);
-			_mm256_storeu_ps(&dense->gradients[wi + j], gradients);
+			gradients = __PULSE_SIMD_LOAD(dense->gradients + wi + j);
+			inputs = __PULSE_SIMD_LOAD(this->inputs + j);
+			gradients = __PULSE_SIMD_MADD(delta, inputs, gradients);
+			__PULSE_SIMD_STORE(&dense->gradients[wi + j], gradients);
 
 			if(this->parent != NULL)
 			{
-				weights = _mm256_loadu_ps(dense->weights + wi + j);
-				errors = _mm256_loadu_ps(this->parent->errors + j);
-				_mm256_storeu_ps(this->parent->errors + j ,_mm256_fmadd_ps(weights, delta, errors));
+				weights = __PULSE_SIMD_LOAD(dense->weights + wi + j);
+				errors = __PULSE_SIMD_LOAD(this->parent->errors + j);
+				__PULSE_SIMD_STORE(this->parent->errors + j ,__PULSE_SIMD_MADD(weights, delta, errors));
 			}
 		}
 	}
@@ -118,32 +117,32 @@ static void _SIMD_BackDense(PULSE_Layer * this)
 
 static void _SIMD_FixDense(PULSE_Layer * this, PULSE_HyperArgs args)
 {
-	static const int CHUNK_SIZE = 256/sizeof(__m256);
+	static const int CHUNK_SIZE = 256/sizeof(__PULSE_SIMD_DATATYPE);
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
-	__m256 baiases, deltas, weights, gradients;
-	const __m256 HYPER = _mm256_set1_ps(-args.lr/args.batch_size);
-	const __m256 ZERO = _mm256_setzero_ps();
+	__PULSE_SIMD_DATATYPE baiases, deltas, weights, gradients;
+	const __PULSE_SIMD_DATATYPE HYPER = __PULSE_SIMD_SET_ALL(-args.lr/args.batch_size);
+	const __PULSE_SIMD_DATATYPE ZERO = __PULSE_SIMD_ZERO();
 
 	for(int i = 0; i < this->n_outputs; i += CHUNK_SIZE)
 	{
-		baiases = _mm256_loadu_ps(dense->baiases + i);
-		deltas = _mm256_loadu_ps(dense->deltas + i);
-		baiases = _mm256_add_ps(baiases, _mm256_mul_ps(deltas, HYPER));
-		_mm256_storeu_ps(dense->baiases + i, baiases);
-		_mm256_storeu_ps(dense->deltas + i, ZERO);
+		baiases = __PULSE_SIMD_LOAD(dense->baiases + i);
+		deltas = __PULSE_SIMD_LOAD(dense->deltas + i);
+		baiases = __PULSE_SIMD_ADD(baiases, __PULSE_SIMD_MUL(deltas, HYPER));
+		__PULSE_SIMD_STORE(dense->baiases + i, baiases);
+		__PULSE_SIMD_STORE(dense->deltas + i, ZERO);
 	}
 
 	for(int i = 0; i < this->n_outputs * this->n_inputs; i += CHUNK_SIZE)
 	{
-		weights = _mm256_loadu_ps(dense->weights + i);
-		gradients = _mm256_loadu_ps(dense->gradients + i);
-		weights = _mm256_add_ps(weights, _mm256_mul_ps(gradients, HYPER));
-		_mm256_storeu_ps(dense->weights + i, weights);
-		_mm256_storeu_ps(dense->gradients + i, ZERO);
+		weights = __PULSE_SIMD_LOAD(dense->weights + i);
+		gradients = __PULSE_SIMD_LOAD(dense->gradients + i);
+		weights = __PULSE_SIMD_ADD(weights, __PULSE_SIMD_MUL(gradients, HYPER));
+		__PULSE_SIMD_STORE(dense->weights + i, weights);
+		__PULSE_SIMD_STORE(dense->gradients + i, ZERO);
 	}
 }
 
-#endif//INTEL AVX
+#endif
 
 static void _DestroyDense(PULSE_Layer * this)
 {
@@ -181,7 +180,7 @@ PULSE_Layer PULSE_CreateDenseLayer(int n_inputs, int n_outputs, PULSE_Activation
 #if defined(__PULSE_SIMD_SUPPORTED)
 			layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, activation_function, &_SIMD_FeedDense, &_SIMD_BackDense, &_SIMD_FixDense, &_DestroyDense, optimization);
 #else
-			printf("ERROR: PULSE SIMD are not supported on this device");
+			printf("ERROR: PULSE Layer SIMD are not supported on this device");
 			exit(1);
 #endif
 			break;
