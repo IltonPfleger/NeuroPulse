@@ -10,7 +10,6 @@ typedef PULSE_Void (*PULSE_FeedLayerFunctionPtr)(struct PULSE_Layer *);
 typedef PULSE_Void (*PULSE_BackLayerFunctionPtr)(struct PULSE_Layer *);
 typedef PULSE_Void (*PULSE_FixLayerFunctionPtr)(struct PULSE_Layer *, PULSE_HyperArgs);
 typedef PULSE_Void (*PULSE_DestroyLayerFunctionPtr)(struct PULSE_Layer *);
-typedef PULSE_Void (*PULSE_ActivationLayerFunctionPtr)(PULSE_DataType *, PULSE_N, char);
 
 typedef enum
 {
@@ -31,7 +30,7 @@ typedef struct PULSE_Layer
 	PULSE_BackLayerFunctionPtr back;
 	PULSE_FixLayerFunctionPtr fix;
 	PULSE_DestroyLayerFunctionPtr destroy;
-	PULSE_ActivationLayerFunctionPtr activate;
+	PULSE_ActivationFunctionPtr activate;
 	struct PULSE_Layer * parent;
 	struct PULSE_Layer * child;
 	PULSE_Void * layer;

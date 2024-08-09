@@ -25,6 +25,7 @@ void* PULSE_GetLossFunctionPtr(PULSE_LossFunction type)
 			return _MSA;
 			break;
 	}
+	return NULL;
 }
 
 

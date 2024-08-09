@@ -8,8 +8,6 @@
 #include "Layer.h"
 #include "Activations.h"
 #include "Loss.h"
-#include "Convolutional.h"
-#include "MaxPool.h"
 #include "Dense.h"
 
 PULSE_DataType * PULSE_Foward(PULSE_Layer *, PULSE_DataType *);

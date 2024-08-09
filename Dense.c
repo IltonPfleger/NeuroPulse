@@ -181,6 +181,11 @@ PULSE_Layer PULSE_CreateDenseLayer(int n_inputs, int n_outputs, PULSE_Activation
 			exit(1);
 #endif
 			break;
+		case PULSE_OPTIMIZATION_GPU_OPENCL:
+			printf("ERROR: PULSE Layer GPU are not supported on this device");
+			exit(1);
+
+			break;
 	}
 
 	layer.layer = dense;

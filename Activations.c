@@ -33,6 +33,10 @@ static void PULSE_LeakyReLU(PULSE_DataType * x, PULSE_N size, char prime)
 	}
 }
 
+static void PULSE_Softmax(PULSE_DataType * x, PULSE_N size, char prime)
+{
+}
+
 
 
 void* PULSE_GetActivationFunctionPtr(PULSE_ActivationFunction type)
@@ -46,10 +50,15 @@ void* PULSE_GetActivationFunctionPtr(PULSE_ActivationFunction type)
 			break;
 		case PULSE_ACTIVATION_RELU:
 			return PULSE_ReLU;
+			break;
 		case PULSE_ACTIVATION_LEAKYRELU:
 			return PULSE_LeakyReLU;
 			break;
+		case PULSE_ACTIVATION_SOFTMAX:
+			return PULSE_Softmax;
+			break;
 	}
+	return NULL;
 }
 
 
