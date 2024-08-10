@@ -10220,3 +10220,193 @@ PulseAlloc.c:35:2: missed: statement clobbers memory: exit (1);
 PulseAlloc.c:35:2: note: ***** Analysis failed with vector mode VOID
 PulseAlloc.c:39:30: missed: statement clobbers memory: free (ptr_2(D));
 PulseAlloc.c:39:40: note: ***** Analysis failed with vector mode VOID
+Layer.c:7:34: missed: statement clobbers memory: _2 = PULSE_Alloc (64, 4, n_inputs.0_1, optimization_11(D));
+Layer.c:8:35: missed: statement clobbers memory: _4 = PULSE_Alloc (64, 4, n_outputs.1_3, optimization_11(D));
+Layer.c:9:34: missed: statement clobbers memory: _5 = PULSE_Alloc (64, 4, n_outputs.1_3, optimization_11(D));
+Layer.c:14:19: missed: statement clobbers memory: _6 = PULSE_GetActivationFunctionPtr (activation_function_16(D));
+Layer.c:19:9: note: ***** Analysis succeeded with vector mode V8SI
+Layer.c:19:9: note: SLPing BB part
+Layer.c:19:9: note: Costing subgraph: 
+Layer.c:19:9: note: node 0x74af518 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: op template: MEM <unsigned int> [(struct PULSE_Layer *)&<retval>] = type_15(D);
+Layer.c:19:9: note: 	stmt 0 MEM <unsigned int> [(struct PULSE_Layer *)&<retval>] = type_15(D);
+Layer.c:19:9: note: 	stmt 1 MEM <unsigned int> [(struct PULSE_Layer *)&<retval> + 4B] = optimization_11(D);
+Layer.c:19:9: note: 	children 0x74af598
+Layer.c:19:9: note: node (external) 0x74af598 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: 	{ type_15(D), optimization_11(D) }
+Layer.c:19:9: note: Cost model analysis: 
+Layer.c:19:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Layer.c:19:9: note: Costing subgraph: 
+Layer.c:19:9: note: node 0x74af618 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: op template: <retval>.n_inputs = n_inputs_9(D);
+Layer.c:19:9: note: 	stmt 0 <retval>.n_inputs = n_inputs_9(D);
+Layer.c:19:9: note: 	stmt 1 <retval>.n_outputs = n_outputs_10(D);
+Layer.c:19:9: note: 	children 0x74af698
+Layer.c:19:9: note: node (external) 0x74af698 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: 	{ n_inputs_9(D), n_outputs_10(D) }
+Layer.c:19:9: note: Cost model analysis: 
+Layer.c:19:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Layer.c:19:9: note: Costing subgraph: 
+Layer.c:19:9: note: node 0x74af798 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Layer.c:19:9: note: op template: <retval>.inputs = _2;
+Layer.c:19:9: note: 	stmt 0 <retval>.inputs = _2;
+Layer.c:19:9: note: 	stmt 1 <retval>.outputs = _4;
+Layer.c:19:9: note: 	children 0x74af818
+Layer.c:19:9: note: node (external) 0x74af818 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Layer.c:19:9: note: 	stmt 0 _2 = PULSE_Alloc (64, 4, n_inputs.0_1, optimization_11(D));
+Layer.c:19:9: note: 	stmt 1 _4 = PULSE_Alloc (64, 4, n_outputs.1_3, optimization_11(D));
+Layer.c:19:9: note: 	children 0x74af898 0x74af918 0x74af998 0x74afa98
+Layer.c:19:9: note: node (constant) 0x74af898 (max_nunits=1, refcnt=1)
+Layer.c:19:9: note: 	{ 64, 64 }
+Layer.c:19:9: note: node (constant) 0x74af918 (max_nunits=1, refcnt=1)
+Layer.c:19:9: note: 	{ 4, 4 }
+Layer.c:19:9: note: node 0x74af998 (max_nunits=2, refcnt=1) vector(2) int
+Layer.c:19:9: note: op template: n_inputs.0_1 = (int) n_inputs_9(D);
+Layer.c:19:9: note: 	stmt 0 n_inputs.0_1 = (int) n_inputs_9(D);
+Layer.c:19:9: note: 	stmt 1 n_outputs.1_3 = (int) n_outputs_10(D);
+Layer.c:19:9: note: 	children 0x74afa18
+Layer.c:19:9: note: node (external) 0x74afa18 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: 	{ n_inputs_9(D), n_outputs_10(D) }
+Layer.c:19:9: note: node (external) 0x74afa98 (max_nunits=1, refcnt=1)
+Layer.c:19:9: note: 	{ optimization_11(D), optimization_11(D) }
+Layer.c:19:9: note: Cost model analysis: 
+Layer.c:19:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Layer.c:19:9: note: Costing subgraph: 
+Layer.c:19:9: note: node 0x74afb98 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Layer.c:19:9: note: op template: <retval>.feed = feed_18(D);
+Layer.c:19:9: note: 	stmt 0 <retval>.feed = feed_18(D);
+Layer.c:19:9: note: 	stmt 1 <retval>.back = back_19(D);
+Layer.c:19:9: note: 	stmt 2 <retval>.fix = fix_20(D);
+Layer.c:19:9: note: 	stmt 3 <retval>.destroy = destroy_21(D);
+Layer.c:19:9: note: 	children 0x74afc18
+Layer.c:19:9: note: node (external) 0x74afc18 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Layer.c:19:9: note: 	{ feed_18(D), back_19(D), fix_20(D), destroy_21(D) }
+Layer.c:19:9: note: Cost model analysis: 
+Layer.c:19:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 64
+  Scalar cost: 64
+Layer.c:19:9: note: Costing subgraph: 
+Layer.c:19:9: note: node 0x74afd18 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Layer.c:19:9: note: op template: <retval>.parent = 0B;
+Layer.c:19:9: note: 	stmt 0 <retval>.parent = 0B;
+Layer.c:19:9: note: 	stmt 1 <retval>.child = 0B;
+Layer.c:19:9: note: 	children 0x74afd98
+Layer.c:19:9: note: node (constant) 0x74afd98 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Layer.c:19:9: note: 	{ 0B, 0B }
+Layer.c:19:9: note: Cost model analysis: 
+Layer.c:19:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Layer.c:19:9: note: Basic block will be vectorized using SLP
+Layer.c:19:9: optimized: basic block part vectorized using 8 byte vectors
+Layer.c:19:9: note: Vectorizing SLP tree:
+Layer.c:19:9: note: node 0x74af518 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: op template: MEM <unsigned int> [(struct PULSE_Layer *)&<retval>] = type_15(D);
+Layer.c:19:9: note: 	stmt 0 MEM <unsigned int> [(struct PULSE_Layer *)&<retval>] = type_15(D);
+Layer.c:19:9: note: 	stmt 1 MEM <unsigned int> [(struct PULSE_Layer *)&<retval> + 4B] = optimization_11(D);
+Layer.c:19:9: note: 	children 0x74af598
+Layer.c:19:9: note: node (external) 0x74af598 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: 	{ type_15(D), optimization_11(D) }
+Layer.c:19:9: note: ------>vectorizing SLP node starting from: MEM <unsigned int> [(struct PULSE_Layer *)&<retval>] = type_15(D);
+Layer.c:19:9: note: vect_is_simple_use: operand optimization_11(D), type of def: external
+Layer.c:19:9: note: transform store. ncopies = 1
+Layer.c:19:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: MEM <unsigned int> [(struct PULSE_Layer *)&<retval>]
+Layer.c:19:9: note: created &MEM <unsigned int> [(struct PULSE_Layer *)&<retval>]
+Layer.c:19:9: note: add new stmt: MEM <vector(2) unsigned int> [(struct PULSE_Layer *)&<retval>] = _38;
+Layer.c:19:9: note: vectorizing stmts using SLP.
+Layer.c:19:9: optimized: basic block part vectorized using 8 byte vectors
+Layer.c:19:9: note: Vectorizing SLP tree:
+Layer.c:19:9: note: node 0x74af618 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: op template: <retval>.n_inputs = n_inputs_9(D);
+Layer.c:19:9: note: 	stmt 0 <retval>.n_inputs = n_inputs_9(D);
+Layer.c:19:9: note: 	stmt 1 <retval>.n_outputs = n_outputs_10(D);
+Layer.c:19:9: note: 	children 0x74af698
+Layer.c:19:9: note: node (external) 0x74af698 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: 	{ n_inputs_9(D), n_outputs_10(D) }
+Layer.c:19:9: note: ------>vectorizing SLP node starting from: <retval>.n_inputs = n_inputs_9(D);
+Layer.c:19:9: note: vect_is_simple_use: operand n_outputs_10(D), type of def: external
+Layer.c:19:9: note: transform store. ncopies = 1
+Layer.c:19:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: <retval>.n_inputs
+Layer.c:19:9: note: created &<retval>.n_inputs
+Layer.c:19:9: note: add new stmt: MEM <vector(2) unsigned int> [(unsigned int *)&<retval> + 96B] = _40;
+Layer.c:19:9: note: vectorizing stmts using SLP.
+Layer.c:19:9: optimized: basic block part vectorized using 16 byte vectors
+Layer.c:19:9: note: Vectorizing SLP tree:
+Layer.c:19:9: note: node 0x74af798 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Layer.c:19:9: note: op template: <retval>.inputs = _2;
+Layer.c:19:9: note: 	stmt 0 <retval>.inputs = _2;
+Layer.c:19:9: note: 	stmt 1 <retval>.outputs = _4;
+Layer.c:19:9: note: 	children 0x74af818
+Layer.c:19:9: note: node (external) 0x74af818 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Layer.c:19:9: note: 	stmt 0 _2 = PULSE_Alloc (64, 4, n_inputs.0_1, optimization_11(D));
+Layer.c:19:9: note: 	stmt 1 _4 = PULSE_Alloc (64, 4, n_outputs.1_3, optimization_11(D));
+Layer.c:19:9: note: 	children 0x74af898 0x74af918 0x74af998 0x74afa98
+Layer.c:19:9: note: node (constant) 0x74af898 (max_nunits=1, refcnt=1)
+Layer.c:19:9: note: 	{ 64, 64 }
+Layer.c:19:9: note: node (constant) 0x74af918 (max_nunits=1, refcnt=1)
+Layer.c:19:9: note: 	{ 4, 4 }
+Layer.c:19:9: note: node 0x74af998 (max_nunits=2, refcnt=1) vector(2) int
+Layer.c:19:9: note: op template: n_inputs.0_1 = (int) n_inputs_9(D);
+Layer.c:19:9: note: 	stmt 0 n_inputs.0_1 = (int) n_inputs_9(D);
+Layer.c:19:9: note: 	stmt 1 n_outputs.1_3 = (int) n_outputs_10(D);
+Layer.c:19:9: note: 	children 0x74afa18
+Layer.c:19:9: note: node (external) 0x74afa18 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Layer.c:19:9: note: 	{ n_inputs_9(D), n_outputs_10(D) }
+Layer.c:19:9: note: node (external) 0x74afa98 (max_nunits=1, refcnt=1)
+Layer.c:19:9: note: 	{ optimization_11(D), optimization_11(D) }
+Layer.c:19:9: note: ------>vectorizing SLP node starting from: <retval>.inputs = _2;
+Layer.c:19:9: note: vect_is_simple_use: operand PULSE_Alloc (64, 4, n_outputs.1_3, optimization_11(D)), type of def: internal
+Layer.c:19:9: note: transform store. ncopies = 1
+Layer.c:19:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.inputs
+Layer.c:19:9: note: created &<retval>.inputs
+Layer.c:19:9: note: add new stmt: MEM <vector(2) long unsigned int> [(float * *)&<retval> + 8B] = _44;
+Layer.c:19:9: note: vectorizing stmts using SLP.
+Layer.c:19:9: optimized: basic block part vectorized using 32 byte vectors
+Layer.c:19:9: note: Vectorizing SLP tree:
+Layer.c:19:9: note: node 0x74afb98 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Layer.c:19:9: note: op template: <retval>.feed = feed_18(D);
+Layer.c:19:9: note: 	stmt 0 <retval>.feed = feed_18(D);
+Layer.c:19:9: note: 	stmt 1 <retval>.back = back_19(D);
+Layer.c:19:9: note: 	stmt 2 <retval>.fix = fix_20(D);
+Layer.c:19:9: note: 	stmt 3 <retval>.destroy = destroy_21(D);
+Layer.c:19:9: note: 	children 0x74afc18
+Layer.c:19:9: note: node (external) 0x74afc18 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Layer.c:19:9: note: 	{ feed_18(D), back_19(D), fix_20(D), destroy_21(D) }
+Layer.c:19:9: note: ------>vectorizing SLP node starting from: <retval>.feed = feed_18(D);
+Layer.c:19:9: note: vect_is_simple_use: operand back_19(D), type of def: external
+Layer.c:19:9: note: vect_is_simple_use: operand fix_20(D), type of def: external
+Layer.c:19:9: note: vect_is_simple_use: operand destroy_21(D), type of def: external
+Layer.c:19:9: note: conflicting alias set types.
+Layer.c:19:9: note: transform store. ncopies = 1
+Layer.c:19:9: note: create vector_type-pointer variable to type: vector(4) long unsigned int  vectorizing a pointer ref: <retval>.feed
+Layer.c:19:9: note: created &<retval>.feed
+Layer.c:19:9: note: add new stmt: MEM <vector(4) long unsigned int> [(void *)&<retval> + 32B] = _50;
+Layer.c:19:9: note: vectorizing stmts using SLP.
+Layer.c:19:9: optimized: basic block part vectorized using 16 byte vectors
+Layer.c:19:9: note: Vectorizing SLP tree:
+Layer.c:19:9: note: node 0x74afd18 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Layer.c:19:9: note: op template: <retval>.parent = 0B;
+Layer.c:19:9: note: 	stmt 0 <retval>.parent = 0B;
+Layer.c:19:9: note: 	stmt 1 <retval>.child = 0B;
+Layer.c:19:9: note: 	children 0x74afd98
+Layer.c:19:9: note: node (constant) 0x74afd98 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Layer.c:19:9: note: 	{ 0B, 0B }
+Layer.c:19:9: note: ------>vectorizing SLP node starting from: <retval>.parent = 0B;
+Layer.c:19:9: note: vect_is_simple_use: operand 0B, type of def: constant
+Layer.c:19:9: note: transform store. ncopies = 1
+Layer.c:19:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.parent
+Layer.c:19:9: note: created &<retval>.parent
+Layer.c:19:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer * *)&<retval> + 72B] = { 0, 0 };
+Layer.c:19:9: note: vectorizing stmts using SLP.
+Layer.c:19:9: note: ***** The result for vector mode V32QI would be the same
+Layer.c:24:2: missed: statement clobbers memory: PULSE_Free (_1);
+Layer.c:25:2: missed: statement clobbers memory: PULSE_Free (_2);
+Layer.c:26:2: missed: statement clobbers memory: PULSE_Free (_3);
+Layer.c:27:1: note: ***** Analysis failed with vector mode V4DI
+Layer.c:27:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI

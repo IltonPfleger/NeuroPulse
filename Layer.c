@@ -21,7 +21,7 @@ PULSE_Layer PULSE_CreateLayer(PULSE_N n_inputs, PULSE_N n_outputs, PULSE_LayerTy
 
 void PULSE_DestroyLayer(PULSE_Layer * this)
 {
-	free(this->inputs);
-	free(this->outputs);
-	free(this->errors);
+	PULSE_Free(this->inputs);
+	PULSE_Free(this->outputs);
+	PULSE_Free(this->errors);
 }
