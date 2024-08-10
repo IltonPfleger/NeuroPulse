@@ -1,6 +1,4 @@
 #include "Include/Dense.h"
-#include "Include/PULSE_SIMD.h"
-
 
 //STD
 static void _FeedDense(PULSE_Layer * this)
@@ -157,11 +155,11 @@ static void _SIMD_FixDense(PULSE_Layer * this, PULSE_HyperArgs args)
 static void _DestroyDense(PULSE_Layer * this)
 {
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
-	free(dense->weights);
-	free(dense->baiases);
-	free(dense->gradients);
-	free(dense->deltas);
-	free(dense);
+	PULSE_Free(dense->weights);
+	PULSE_Free(dense->baiases);
+	PULSE_Free(dense->gradients);
+	PULSE_Free(dense->deltas);
+	PULSE_Free(dense);
 	PULSE_DestroyLayer(this);
 }
 
@@ -171,11 +169,11 @@ PULSE_Layer PULSE_CreateDenseLayer(int n_inputs, int n_outputs, PULSE_Activation
 {
 	PULSE_DenseLayer *dense = (PULSE_DenseLayer*)malloc(sizeof(PULSE_DenseLayer));
 
-	dense->weights = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*n_inputs*n_outputs);
-	dense->gradients = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*n_inputs*n_outputs);
-	dense->baiases = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*n_outputs);
-	dense->deltas = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*n_outputs);
-	dense->ddeltas = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*n_outputs);
+	dense->weights = (PULSE_DataType*)PULSE_Alloc2D(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType), n_inputs, n_outputs, optimization);
+	dense->gradients = (PULSE_DataType*)PULSE_Alloc2D(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType), n_inputs, n_outputs, optimization);
+	dense->baiases = (PULSE_DataType*)PULSE_Alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType), n_outputs, optimization);
+	dense->deltas = (PULSE_DataType*)PULSE_Alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType), n_outputs, optimization);
+	dense->ddeltas = (PULSE_DataType*)PULSE_Alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType), n_outputs, optimization);
 
 	for(int i = 0; i < n_inputs*n_outputs; i++)
 		dense->weights[i] = (PULSE_DataType)rand()/(PULSE_DataType)(RAND_MAX)*sqrt(2.0/(PULSE_DataType)(n_inputs+n_outputs));
@@ -187,12 +185,7 @@ PULSE_Layer PULSE_CreateDenseLayer(int n_inputs, int n_outputs, PULSE_Activation
 			layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, activation_function, &_FeedDense, &_BackDense, &_FixDense, &_DestroyDense, optimization);
 			break;
 		case PULSE_OPTIMIZATION_SIMD:
-#if defined(__PULSE_SIMD_SUPPORTED)
-			layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, activation_function, &_SIMD_FeedDense, &_SIMD_BackDense, &_SIMD_FixDense, &_DestroyDense, optimization);
-#else
-			printf("ERROR: PULSE Layer SIMD are not supported on this device");
-			exit(1);
-#endif
+			__PULSE_SIMD_CHECK(layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, activation_function, &_SIMD_FeedDense, &_SIMD_BackDense, &_SIMD_FixDense, &_DestroyDense, optimization));
 			break;
 		case PULSE_OPTIMIZATION_GPU_OPENCL:
 			printf("ERROR: PULSE Layer GPU are not supported on this device");

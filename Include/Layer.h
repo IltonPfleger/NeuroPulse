@@ -1,6 +1,7 @@
 #ifndef _PULSE_LAYER
 #define _PULSE_LAYER
 #include "PulseTypes.h"
+#include "PulseAlloc.h"
 #include "Activations.h"
 
 struct PULSE_Layer;
