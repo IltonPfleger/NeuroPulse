@@ -41,6 +41,7 @@ static inline __m128 __PULSE_SIMD_X86_ZERO_R_128(__m128 x, int n) {return _mm_bl
 #if __PULSE_ARCH == 0 && __PULSE_SIMD_CHUNK_SIZE == 256
 #define __PULSE_SIMD_DATATYPE __m256
 #define __PULSE_SIMD_LOAD(x) _mm256_loadu_ps(x)
+#define __PULSE_SIMD_ALLIGNED_LOAD(x) _mm256_load_ps(x)
 #define __PULSE_SIMD_MUL(x, y) _mm256_mul_ps(x, y)
 #define __PULSE_SIMD_ADD(x, y) _mm256_add_ps(x, y)
 #define __PULSE_SIMD_ZERO() _mm256_setzero_ps()
@@ -56,6 +57,7 @@ static inline __m128 __PULSE_SIMD_X86_ZERO_R_128(__m128 x, int n) {return _mm_bl
 #if __PULSE_ARCH == 0 && __PULSE_SIMD_CHUNK_SIZE == 128
 #define __PULSE_SIMD_DATATYPE __128
 #define __PULSE_SIMD_LOAD(x) _mm_loadu_ps(x)
+#define __PULSE_SIMD_ALIIGNED_LOAD(x) _mm_load_ps(x)
 #define __PULSE_SIMD_MUL(x, y) _mm_mul_ps(x, y)
 #define __PULSE_SIMD_ADD(x, y) _mm_add_ps(x, y)
 #define __PULSE_SIMD_ZERO() _mm_setzero_ps()

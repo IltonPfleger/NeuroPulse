@@ -1,6 +1,7 @@
 #ifndef __PULSE_TYPES__
 #define __PULSE_TYPES__
 #include <stdlib.h>
+#include <pthread.h>
 #include <string.h>
 #include <stdio.h>
 #include <math.h>

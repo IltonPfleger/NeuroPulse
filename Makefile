@@ -1,6 +1,6 @@
 
 
-CFLAGS = -O4 -march=native -lm -fopenmp -D__PULSE_CFLAGS_CacheLineSize=`getconf LEVEL1_DCACHE_LINESIZE` -g -Wall
+CFLAGS = -O4 -march=native -lm -fopenmp -D__PULSE_CFLAGS_CacheLineSize=`getconf LEVEL1_DCACHE_LINESIZE` -g -Wall -fopt-info-vec-all=gcc
 
 
 output: Layer.o  Dense.o Activations.o PULSE.o Loss.o

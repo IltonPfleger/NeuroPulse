@@ -44,23 +44,27 @@ void PULSE_Shuffle(PULSE_N *indexes, PULSE_N max)
 	};
 }
 
-
-
-void PULSE_Train(PULSE_Layer * first_layer, PULSE_N epoch, PULSE_N data_size, PULSE_HyperArgs args, PULSE_LossFunction loss, PULSE_DataType * x, PULSE_DataType * y)
+void PULSE_Train(PULSE_Layer * first_layer, PULSE_N epoch, PULSE_N data_size, PULSE_HyperArgs args, PULSE_LossFunction loss_function, PULSE_DataType * x, PULSE_DataType * y)
 {
-	const PULSE_LossFunctionPtr PULSE_GetLoss = PULSE_GetLossFunctionPtr(loss);
+	const PULSE_LossFunctionPtr PULSE_GetLoss = PULSE_GetLossFunctionPtr(loss_function);
+
+	//Get Output Node
 	PULSE_Layer * output = first_layer;
 	while(output->child != NULL)
 		output = output->child;
 
+	//Start Train Status Logger
+	int i, j;
+	PULSE_DataType loss;
+
 	PULSE_N random[data_size];
-	for (int i = 0; i < epoch; i++)
+	for (i = 0; i < epoch; i++)
 	{
 		PULSE_Shuffle(random, data_size);
-		for (int j = 0; j < data_size; j++)
+		for (j = 0; j < data_size; j++)
 		{
-			PULSE_Foward(first_layer, x + random[j] * first_layer->n_inputs);
-			PULSE_GetLoss(output->outputs, y + random[j]*output->n_outputs, output->errors, output->n_outputs);
+			PULSE_Foward(first_layer, x + random[j]*first_layer->n_inputs);
+			loss = PULSE_GetLoss(output->outputs, y + random[j]*output->n_outputs, output->errors, output->n_outputs);
 			PULSE_Back(output);
 
 			if((j+1)%args.batch_size == 0)
@@ -73,7 +77,7 @@ void PULSE_Train(PULSE_Layer * first_layer, PULSE_N epoch, PULSE_N data_size, PU
 				}
 
 			}
-			printf("Epoch: %d Item: %d\r", i, j);
+			printf("Epoch: %d Item: %d Loss: %.10f\r", i, j, loss);
 		}
 	}
 }

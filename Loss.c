@@ -1,16 +1,20 @@
 #include "Include/Loss.h"
 
 
-static void _MSE(PULSE_DataType * x, PULSE_DataType * y, PULSE_DataType * errors, PULSE_N size)
+static PULSE_DataType _MSE(PULSE_DataType * x, PULSE_DataType * y, PULSE_DataType * errors, PULSE_N size)
 {
+	PULSE_DataType loss;
 	for(int i = 0; i < size; i++)
-		errors[i] = 2*(x[i] - y[i]);
+		(errors[i] = 2*(x[i] - y[i]), loss += pow(x[i] - y[i], 2));
+	return loss/size;
 }
 
-static void _MSA(PULSE_DataType * x, PULSE_DataType * y, PULSE_DataType * errors, PULSE_N size)
+static PULSE_DataType _MSA(PULSE_DataType * x, PULSE_DataType * y, PULSE_DataType * errors, PULSE_N size)
 {
+	PULSE_DataType loss;
 	for(int i = 0; i < size; i++)
-		errors[i] = fabs(x[i] - y[i]);
+		(errors[i] = fabs(x[i] - y[i]), loss += errors[i]);
+	return loss/size;
 }
 
 
