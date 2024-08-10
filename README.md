@@ -22,7 +22,7 @@ The aim of this project is to create a user-friendly Neural Networks library for
 * [x] Convolutional Layers.
 * [ ] RNN Features.
 * [ ] Optimizers like RMSProp, Adam, etc.
-* [ ] Custom Error Functions.
+* [x] Custom Error Functions.
 
 ## Example
 ```c Xor Problem.
