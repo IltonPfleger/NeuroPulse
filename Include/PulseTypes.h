@@ -1,5 +1,11 @@
 #ifndef __PULSE_TYPES__
 #define __PULSE_TYPES__
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <math.h>
+#include <time.h>
+
 #define PULSE_DataType float
 #define PULSE_N unsigned int
 #define PULSE_Void void

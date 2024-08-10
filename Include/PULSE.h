@@ -1,14 +1,11 @@
 #ifndef _PULSE
 #define _PULSE
-
-#include <stdlib.h>
-#include <time.h>
-#include <omp.h>
-#include "PULSETypes.h"
+#include "PulseTypes.h"
 #include "Layer.h"
-#include "Activations.h"
-#include "Loss.h"
 #include "Dense.h"
+#include "Loss.h"
+#include "Activations.h"
+
 
 PULSE_DataType * PULSE_Foward(PULSE_Layer *, PULSE_DataType *);
 void PULSE_Back(PULSE_Layer *);

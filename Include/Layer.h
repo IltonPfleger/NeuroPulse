@@ -1,8 +1,6 @@
 #ifndef _PULSE_LAYER
 #define _PULSE_LAYER
-#include <stdio.h>
-#include <stdlib.h>
-#include "PULSETypes.h"
+#include "PulseTypes.h"
 #include "Activations.h"
 
 struct PULSE_Layer;

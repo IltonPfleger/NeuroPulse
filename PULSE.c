@@ -1,11 +1,3 @@
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <time.h>
-#include "Include/Layer.h"
-#include "Include/Dense.h"
-#include "Include/Activations.h"
-#include "Include/Loss.h"
 #include "Include/PULSE.h"
 
 

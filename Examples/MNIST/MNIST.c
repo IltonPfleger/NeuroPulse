@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <omp.h>
 #include "../../Include/PULSE.h"
 #define IMAGE_SIZE 784
 
