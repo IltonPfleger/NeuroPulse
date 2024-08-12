@@ -55,21 +55,25 @@ static void _SIMD_FeedDense(PULSE_Layer * this)
 {
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
 	__PULSE_SIMD_DATATYPE inputs, weights, outputs;
-	for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
+	PULSE_DataType output;
+	PULSE_DataType * w_ptr = &(dense->weights[0]);
+	int i, j;
+	for(i = 0; i < this->n_outputs; i++)
 	{
 		outputs = __PULSE_SIMD_ZERO();
-		for(int j = 0; j < this->n_inputs; j += __PULSE_SIMD_N_PER_CHUNK)
+		j = 0;
+		while(j + __PULSE_SIMD_N_PER_CHUNK < this->n_inputs)
 		{
-			weights = __PULSE_SIMD_LOAD(dense->weights + wi + j);
-			inputs = __PULSE_SIMD_LOAD(this->inputs + j);
-			if(j + __PULSE_SIMD_N_PER_CHUNK > this->n_inputs)
-			{
-				weights = __PULSE_SIMD_ZERO_R(weights, __PULSE_SIMD_N_PER_CHUNK - this->n_inputs - j);
-				inputs = __PULSE_SIMD_ZERO_R(inputs, __PULSE_SIMD_N_PER_CHUNK - this->n_inputs - j);
-			}
+			weights = __PULSE_SIMD_ALLIGNED_LOAD(w_ptr);
+			inputs = __PULSE_SIMD_ALLIGNED_LOAD(this->inputs + j);
 			outputs = __PULSE_SIMD_MADD(weights, inputs, outputs);
+			j += __PULSE_SIMD_N_PER_CHUNK;
+			w_ptr += __PULSE_SIMD_N_PER_CHUNK;
 		}
-		this->outputs[i] = __PULSE_SIMD_TO_FLOAT(__PULSE_SIMD_X86_REDUCE_ADD_256(outputs)) + dense->baiases[i];
+		output = __PULSE_SIMD_TO_FLOAT(__PULSE_SIMD_REDUCE_ADD(outputs));
+		for(; j < this->n_inputs; j++, w_ptr++)
+			output += *w_ptr * this->inputs[j];
+		this->outputs[i] = output + dense->baiases[i];
 	}
 	this->activate(this->outputs, this->n_outputs, 0);
 }
