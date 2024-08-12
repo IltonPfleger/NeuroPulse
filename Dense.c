@@ -54,15 +54,16 @@ static void _FixDense(PULSE_Layer * this, PULSE_HyperArgs args)
 static void _SIMD_FeedDense(PULSE_Layer * this)
 {
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
+	memcpy(this->outputs, dense->baiases, sizeof(PULSE_DataType)*this->n_outputs);
 	__PULSE_SIMD_DATATYPE inputs, weights, outputs;
 	PULSE_DataType output;
 	PULSE_DataType * w_ptr = &(dense->weights[0]);
-	int i, j;
+	int i, j, J = this->n_inputs - __PULSE_SIMD_N_PER_CHUNK;
 	for(i = 0; i < this->n_outputs; i++)
 	{
 		outputs = __PULSE_SIMD_ZERO();
 		j = 0;
-		while(j + __PULSE_SIMD_N_PER_CHUNK < this->n_inputs)
+		while(j < J)
 		{
 			weights = __PULSE_SIMD_ALLIGNED_LOAD(w_ptr);
 			inputs = __PULSE_SIMD_ALLIGNED_LOAD(this->inputs + j);
@@ -73,7 +74,7 @@ static void _SIMD_FeedDense(PULSE_Layer * this)
 		output = __PULSE_SIMD_TO_FLOAT(__PULSE_SIMD_REDUCE_ADD(outputs));
 		for(; j < this->n_inputs; j++, w_ptr++)
 			output += *w_ptr * this->inputs[j];
-		this->outputs[i] = output + dense->baiases[i];
+		this->outputs[i] += output;
 	}
 	this->activate(this->outputs, this->n_outputs, 0);
 }
@@ -84,8 +85,9 @@ static void _SIMD_BackDense(PULSE_Layer * this)
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
 	this->activate(this->outputs, this->n_outputs, 1);
 	__PULSE_SIMD_DATATYPE deltas, ddeltas, delta, errors, gradients, inputs, weights, outputs;
+	int i = 0, j = 0, wi = 0;
 
-	for(int i = 0; i < this->n_outputs; i += __PULSE_SIMD_N_PER_CHUNK)
+	for(i = 0; i < this->n_outputs; i += __PULSE_SIMD_N_PER_CHUNK)
 	{
 		errors = __PULSE_SIMD_LOAD(this->errors + i);
 		outputs = __PULSE_SIMD_LOAD(this->outputs + i);
@@ -97,12 +99,13 @@ static void _SIMD_BackDense(PULSE_Layer * this)
 		__PULSE_SIMD_STORE(dense->deltas + i, deltas);
 	};
 
+
 	if(this->parent != NULL)
 	{
-		for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
+		for(i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
 		{
 			delta = __PULSE_SIMD_SET_ALL(dense->ddeltas[i]);
-			for(int j = 0; j < this->n_inputs; j += __PULSE_SIMD_N_PER_CHUNK)
+			for(j = 0; j < this->n_inputs; j += __PULSE_SIMD_N_PER_CHUNK)
 			{
 				gradients = __PULSE_SIMD_LOAD(dense->gradients + wi + j);
 				inputs = __PULSE_SIMD_LOAD(this->inputs + j);
@@ -116,10 +119,10 @@ static void _SIMD_BackDense(PULSE_Layer * this)
 	}
 	else
 	{
-		for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
+		for(i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
 		{
 			delta = __PULSE_SIMD_SET_ALL(dense->ddeltas[i]);
-			for(int j = 0; j < this->n_inputs; j += __PULSE_SIMD_N_PER_CHUNK)
+			for(j = 0; j < this->n_inputs; j += __PULSE_SIMD_N_PER_CHUNK)
 			{
 				gradients = __PULSE_SIMD_LOAD(dense->gradients + wi + j);
 				inputs = __PULSE_SIMD_LOAD(this->inputs + j);
@@ -134,25 +137,40 @@ static void _SIMD_FixDense(PULSE_Layer * this, PULSE_HyperArgs args)
 {
 	PULSE_DenseLayer * dense = (PULSE_DenseLayer*)this->layer;
 	__PULSE_SIMD_DATATYPE baiases, deltas, weights, gradients;
-	const __PULSE_SIMD_DATATYPE HYPER = __PULSE_SIMD_SET_ALL(-args.lr/args.batch_size);
 	const __PULSE_SIMD_DATATYPE ZERO = __PULSE_SIMD_ZERO();
-
-	for(int i = 0; i < this->n_outputs; i += __PULSE_SIMD_N_PER_CHUNK)
+	const __PULSE_SIMD_DATATYPE HYPER = __PULSE_SIMD_SET_ALL(-args.lr/args.batch_size);
+	const int I_DELTAS_SIZE = this->n_outputs - __PULSE_SIMD_N_PER_CHUNK;
+	const int I_WEIGHTS_SIZE = this->n_inputs*this->n_outputs - __PULSE_SIMD_N_PER_CHUNK;
+	int i = 0;
+	while(i < I_DELTAS_SIZE)
 	{
-		baiases = __PULSE_SIMD_LOAD(dense->baiases + i);
-		deltas = __PULSE_SIMD_LOAD(dense->deltas + i);
+		baiases = __PULSE_SIMD_ALLIGNED_LOAD(dense->baiases + i);
+		deltas = __PULSE_SIMD_ALLIGNED_LOAD(dense->deltas + i);
 		baiases = __PULSE_SIMD_ADD(baiases, __PULSE_SIMD_MUL(deltas, HYPER));
-		__PULSE_SIMD_STORE(dense->baiases + i, baiases);
-		__PULSE_SIMD_STORE(dense->deltas + i, ZERO);
+		__PULSE_SIMD_STREAM_STORE(dense->baiases + i, baiases);
+		__PULSE_SIMD_STREAM_STORE(dense->deltas + i, ZERO);
+		i += __PULSE_SIMD_N_PER_CHUNK;
+	};
+	for(; i < this->n_outputs; i++)
+	{
+		dense->baiases[i] += dense->deltas[i];
+		dense->deltas[i] = 0;
 	}
 
-	for(int i = 0; i < this->n_outputs * this->n_inputs; i += __PULSE_SIMD_N_PER_CHUNK)
+	i = 0;
+	while(i < I_WEIGHTS_SIZE)
 	{
-		weights = __PULSE_SIMD_LOAD(dense->weights + i);
-		gradients = __PULSE_SIMD_LOAD(dense->gradients + i);
+		weights = __PULSE_SIMD_ALLIGNED_LOAD(dense->weights + i);
+		gradients = __PULSE_SIMD_ALLIGNED_LOAD(dense->gradients + i);
 		weights = __PULSE_SIMD_ADD(weights, __PULSE_SIMD_MUL(gradients, HYPER));
-		__PULSE_SIMD_STORE(dense->weights + i, weights);
-		__PULSE_SIMD_STORE(dense->gradients + i, ZERO);
+		__PULSE_SIMD_STREAM_STORE(dense->weights + i, weights);
+		__PULSE_SIMD_STREAM_STORE(dense->gradients + i, ZERO);
+		i += __PULSE_SIMD_N_PER_CHUNK;
+	};
+	for(; i < this->n_outputs; i++)
+	{
+		dense->weights[i] += dense->gradients[i];
+		dense->gradients[i] = 0;
 	}
 }
 

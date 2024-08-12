@@ -55,7 +55,7 @@ void PULSE_Train(PULSE_Layer * first_layer, PULSE_N epoch, PULSE_N data_size, PU
 
 	//Start Train Status Logger
 	int i, j;
-	PULSE_DataType loss;
+	PULSE_DataType loss = 0, batch_loss = 0;
 
 	PULSE_N random[data_size];
 	for (i = 0; i < epoch; i++)
@@ -77,8 +77,10 @@ void PULSE_Train(PULSE_Layer * first_layer, PULSE_N epoch, PULSE_N data_size, PU
 				}
 
 			}
-			printf("Epoch: %d Item: %d Loss: %.10f\r", i, j, loss);
+			batch_loss += loss/data_size;
+			printf("Epoch: %d | Item: %d | Loss: %.10f | Batch Loss: %.10f\r", i, j, loss, batch_loss);
 		}
+		batch_loss = 0;
 	}
 }
 
