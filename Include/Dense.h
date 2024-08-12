@@ -1,7 +1,5 @@
 #ifndef _PULSE_DENSE
 #define _PULSE_DENSE
-#include "PULSE_SIMD.h"
-#include "PulseAlloc.h"
 #include "Layer.h"
 
 typedef struct {
