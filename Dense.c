@@ -187,12 +187,7 @@ PULSE_Layer PULSE_CreateDenseLayer(int n_inputs, int n_outputs, PULSE_Activation
 			layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, activation_function, &_FeedDense, &_BackDense, &_FixDense, &_DestroyDense, optimization);
 			break;
 		case PULSE_OPTIMIZATION_SIMD:
-#if defined(__PULSE_SIMD_SUPPORTED)
-			layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, activation_function, &_SIMD_FeedDense, &_SIMD_BackDense, &_SIMD_FixDense, &_DestroyDense, optimization);
-#else
-			printf("ERROR: PULSE Layer SIMD are not supported on this device");
-			exit(1);
-#endif
+			__PULSE_SIMD_CHECK(layer = PULSE_CreateLayer(n_inputs, n_outputs, PULSE_DENSE, activation_function, &_SIMD_FeedDense, &_SIMD_BackDense, &_SIMD_FixDense, &_DestroyDense, optimization));
 			break;
 		case PULSE_OPTIMIZATION_GPU_OPENCL:
 			printf("ERROR: PULSE Layer GPU are not supported on this device");

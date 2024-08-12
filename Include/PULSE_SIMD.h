@@ -26,6 +26,12 @@
 #define __PULSE_FLOAT_PD_SIZE 64
 
 #define __PULSE_SIMD_N_PER_CHUNK __PULSE_SIMD_CHUNK_SIZE/__PULSE_FLOAT_PS_SIZE
+#if defined(__PULSE_SIMD_SUPPORTED)
+#define __PULSE_SIMD_CHECK(x) x
+#else
+#define __PULSE_SIMD_CHECK(x) (printf("ERROR: PULSE SIMD It's Not Supported On This Device"), exit(1))
+#endif
+
 
 
 #if defined(__i386__) || defined(__x86_64__)

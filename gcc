@@ -528,3 +528,180 @@ Loss.c:4:23: note: vectorized 0 loops in function.
 Loss.c:9:13: note: ***** Analysis failed with vector mode V8SF
 Loss.c:9:13: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
 Loss.c:23:2: note: ***** Analysis failed with vector mode VOID
+Dense.c:9:27: missed: couldn't vectorize loop
+Dense.c:9:27: missed: not vectorized: unsupported outerloop form.
+Dense.c:12:20: missed: couldn't vectorize loop
+Dense.c:13:21: missed: not vectorized: complicated access pattern.
+Dense.c:6:13: note: vectorized 0 loops in function.
+Dense.c:16:2: missed: statement clobbers memory: _30 (pretmp_91, _50, 0);
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:9:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:24:27: missed: couldn't vectorize loop
+Dense.c:24:27: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:28:20: optimized: loop vectorized using 32 byte vectors
+Dense.c:28:20: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:28:20: optimized: loop vectorized using 16 byte vectors
+Dense.c:28:20: missed: couldn't vectorize loop
+Dense.c:30:20: missed: not vectorized: no vectype for stmt: _21 = *_20;
+ scalar_type: float
+Dense.c:20:13: note: vectorized 1 loops in function.
+Dense.c:23:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:24:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:41:28: missed: couldn't vectorize loop
+Dense.c:41:28: missed: not vectorized: unsupported outerloop form.
+Dense.c:45:21: optimized: loop vectorized using 32 byte vectors
+Dense.c:45:21: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:45:21: optimized: loop vectorized using 16 byte vectors
+Dense.c:37:13: note: vectorized 1 loops in function.
+Dense.c:37:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:37:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:41:55: note: ***** Analysis failed with vector mode V4QI
+Dense.c:145:19: missed: couldn't vectorize loop
+Dense.c:145:19: missed: not vectorized: number of iterations cannot be computed.
+Dense.c:136:19: missed: couldn't vectorize loop
+Dense.c:136:19: missed: not vectorized: number of iterations cannot be computed.
+Dense.c:129:13: note: vectorized 0 loops in function.
+Dense.c:153:1: note: ***** Analysis failed with vector mode V4DI
+Dense.c:153:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+Dense.c:98:28: missed: couldn't vectorize loop
+Dense.c:98:28: missed: not vectorized: could not determine main exit from loop with multiple exits.
+Dense.c:101:21: missed: couldn't vectorize loop
+Dense.c:101:21: missed: not vectorized: number of iterations cannot be computed.
+Dense.c:115:28: missed: couldn't vectorize loop
+Dense.c:115:28: missed: not vectorized: could not determine main exit from loop with multiple exits.
+Dense.c:118:21: missed: couldn't vectorize loop
+Dense.c:118:21: missed: not vectorized: number of iterations cannot be computed.
+Dense.c:84:19: missed: couldn't vectorize loop
+Dense.c:84:19: missed: not vectorized: number of iterations cannot be computed.
+Dense.c:78:13: note: vectorized 0 loops in function.
+Dense.c:81:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+Dense.c:103:17: note: ***** Analysis succeeded with vector mode V4DI
+Dense.c:103:17: note: SLPing BB part
+Dense.c:120:17: note: Costing subgraph: 
+Dense.c:120:17: note: node 0x6e94798 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:120:17: note: op template: _49 = (sizetype) j_137;
+Dense.c:120:17: note: 	stmt 0 _49 = (sizetype) j_137;
+Dense.c:120:17: note: 	stmt 1 _209 = (sizetype) wi_136;
+Dense.c:120:17: note: 	children 0x6e94898
+Dense.c:120:17: note: node (external) 0x6e94898 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:120:17: note: 	{ j_137, wi_136 }
+Dense.c:120:17: note: Cost model analysis: 
+Dense.c:120:17: note: Scalar 2 and vector 3 loop part do not match up, skipping scalar part
+Dense.c:120:17: note: Cost model analysis for part in loop 3:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:120:17: missed: not vectorized: vectorization is not profitable.
+Dense.c:103:17: note: Costing subgraph: 
+Dense.c:103:17: note: node 0x6e94998 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:103:17: note: op template: _24 = (sizetype) j_134;
+Dense.c:103:17: note: 	stmt 0 _24 = (sizetype) j_134;
+Dense.c:103:17: note: 	stmt 1 _229 = (sizetype) wi_133;
+Dense.c:103:17: note: 	children 0x6e94a98
+Dense.c:103:17: note: node (external) 0x6e94a98 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:103:17: note: 	{ j_134, wi_133 }
+Dense.c:103:17: note: Cost model analysis: 
+Dense.c:103:17: note: Scalar 4 and vector 5 loop part do not match up, skipping scalar part
+Dense.c:103:17: note: Cost model analysis for part in loop 5:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:103:17: missed: not vectorized: vectorization is not profitable.
+Dense.c:103:17: note: ***** The result for vector mode V32QI would be the same
+Dense.c:103:17: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:103:17: note: ***** Analysis succeeded with vector mode V16QI
+Dense.c:103:17: note: SLPing BB part
+Dense.c:120:17: note: Costing subgraph: 
+Dense.c:120:17: note: node 0x6e94998 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:120:17: note: op template: _49 = (sizetype) j_137;
+Dense.c:120:17: note: 	stmt 0 _49 = (sizetype) j_137;
+Dense.c:120:17: note: 	stmt 1 _209 = (sizetype) wi_136;
+Dense.c:120:17: note: 	children 0x6e94798
+Dense.c:120:17: note: node (external) 0x6e94798 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:120:17: note: 	{ j_137, wi_136 }
+Dense.c:120:17: note: Cost model analysis: 
+Dense.c:120:17: note: Scalar 2 and vector 3 loop part do not match up, skipping scalar part
+Dense.c:120:17: note: Cost model analysis for part in loop 3:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:120:17: missed: not vectorized: vectorization is not profitable.
+Dense.c:103:17: note: Costing subgraph: 
+Dense.c:103:17: note: node 0x6e94b18 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:103:17: note: op template: _24 = (sizetype) j_134;
+Dense.c:103:17: note: 	stmt 0 _24 = (sizetype) j_134;
+Dense.c:103:17: note: 	stmt 1 _229 = (sizetype) wi_133;
+Dense.c:103:17: note: 	children 0x6e94a18
+Dense.c:103:17: note: node (external) 0x6e94a18 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:103:17: note: 	{ j_134, wi_133 }
+Dense.c:103:17: note: Cost model analysis: 
+Dense.c:103:17: note: Scalar 4 and vector 5 loop part do not match up, skipping scalar part
+Dense.c:103:17: note: Cost model analysis for part in loop 5:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:103:17: missed: not vectorized: vectorization is not profitable.
+Dense.c:103:17: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:98:55: note: ***** Analysis failed with vector mode V8QI
+Dense.c:98:55: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:98:55: note: ***** Analysis failed with vector mode V4QI
+Dense.c:58:27: missed: couldn't vectorize loop
+Dense.c:58:27: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:61:20: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.1.1/include/avxintrin.h:905:10: missed: not vectorized: no vectype for stmt: _41 = MEM[(__m256_u * {ref-all})_6];
+ scalar_type: __m256_u
+Dense.c:61:20: note: ***** Analysis failed with vector mode VOID
+Dense.c:54:13: note: vectorized 0 loops in function.
+Dense.c:54:13: missed: splitting region at dont-vectorize loop 3 entry at bb18
+Dense.c:63:14: note: ***** Analysis failed with vector mode V4DI
+Dense.c:63:14: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+Dense.c:63:14: missed: splitting region at dominance boundary bb8
+Dense.c:63:14: note: ***** Analysis failed with vector mode VOID
+Dense.c:63:14: missed: splitting region at loop 1 exit at bb16
+Dense.c:58:27: note: ***** Analysis failed with vector mode V8SF
+Dense.c:58:27: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+Dense.c:58:27: missed: splitting region at dominance boundary bb10
+Dense.c:58:27: note: ***** Analysis failed with vector mode VOID
+Dense.c:74:2: missed: statement clobbers memory: _27 (pretmp_153, _61, 0);
+Dense.c:75:1: note: ***** Analysis failed with vector mode V4DI
+Dense.c:75:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+Dense.c:160:2: missed: statement clobbers memory: free (_1);
+Dense.c:161:2: missed: statement clobbers memory: free (_2);
+Dense.c:162:2: missed: statement clobbers memory: free (_3);
+Dense.c:163:2: missed: statement clobbers memory: free (_4);
+Dense.c:164:2: missed: statement clobbers memory: free (dense_7);
+Dense.c:165:2: missed: statement clobbers memory: PULSE_DestroyLayer (this_6(D));
+Dense.c:166:1: note: ***** Analysis failed with vector mode V4DI
+Dense.c:166:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+Dense.c:180:19: missed: couldn't vectorize loop
+Dense.c:180:19: missed: not vectorized: unsupported control flow in loop.
+Dense.c:170:13: note: vectorized 0 loops in function.
+Dense.c:172:47: missed: statement clobbers memory: dense_35 = malloc (40);
+Dense.c:174:36: missed: statement clobbers memory: _5 = aligned_alloc (64, _4);
+Dense.c:175:38: missed: statement clobbers memory: _6 = aligned_alloc (64, _4);
+Dense.c:176:36: missed: statement clobbers memory: _8 = aligned_alloc (64, _7);
+Dense.c:177:35: missed: statement clobbers memory: _9 = aligned_alloc (64, _7);
+Dense.c:178:36: missed: statement clobbers memory: _10 = aligned_alloc (64, _7);
+Dense.c:181:39: missed: statement clobbers memory: _11 = rand ();
+Dense.c:181:73: missed: statement clobbers memory: _63 = sqrt (_18);
+Dense.c:193:4: missed: statement clobbers memory: printf ("ERROR: PULSE Layer GPU are not supported on this device");
+Dense.c:194:4: missed: statement clobbers memory: exit (1);
+Dense.c:190:4: missed: statement clobbers memory: layer = PULSE_CreateLayer (n_inputs.3_29, n_outputs.2_28, 1, activation_function_51(D), _SIMD_FeedDense, _SIMD_BackDense, _SIMD_FixDense, _DestroyDense, 1); [return slot optimization]
+Dense.c:187:12: missed: statement clobbers memory: layer = PULSE_CreateLayer (n_inputs.1_27, n_outputs.0_26, 1, activation_function_51(D), _FeedDense, _BackDense, _FixDense, _DestroyDense, 0); [return slot optimization]
+Dense.c:200:9: missed: not vectorized: more than one data ref in stmt: <retval> = layer;
+Dense.c:200:9: note: ***** Analysis failed with vector mode V4DI
+Dense.c:200:9: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
