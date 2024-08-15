@@ -90,27 +90,24 @@ void PULSE_Connect(PULSE_Layer * parent, PULSE_Layer * child)
 	child->parent = parent;
 }
 
-PULSE_Layer * PULSE_CreateModel(int count, ...)
+void PULSE_CreateModel(PULSE_Layer layers[], int size, ...)
 {
-	count *= 2;
-	va_list layers;
-	va_start(layers, count);
-	PULSE_Layer * layers_list = (PULSE_Layer*)malloc(sizeof(PULSE_Layer)*count/2);
-	for (int i = 0; i < count/2; i++)
+	size *= 2;
+	va_list layers_info;
+	va_start(layers_info, size);
+	for (int i = 0; i < size/2; i++)
 	{
-		PULSE_LayerType type = va_arg(layers, PULSE_LayerType);
+		PULSE_LayerType type = va_arg(layers_info, PULSE_LayerType);
 		switch(type)
 		{
 			case PULSE_DENSE:
-				PULSE_ARGS_DENSE args = va_arg(layers, PULSE_ARGS_DENSE);
-				layers_list[i] = PULSE_CreateDenseLayer(args.n_inputs, args.n_outputs, args.activation_function, args.optimization);
+				layers[i] = PULSE_CreateDenseLayer((PULSE_DenseLayerArgs)va_arg(layers_info, PULSE_DenseLayerArgs));
 				break;
 		}
 		if(i > 0)
-			PULSE_Connect(&layers_list[i - 1], &layers_list[i]);
+			PULSE_Connect(&layers[i - 1], &layers[i]);
 	}
-	va_end(layers);
-	return layers_list;
+	va_end(layers_info);
 }
 
 void PULSE_Destroy(PULSE_Layer * layer)
@@ -121,5 +118,4 @@ void PULSE_Destroy(PULSE_Layer * layer)
 		current->destroy(current);
 		current = current->child;
 	}
-	free(layer);
 }
