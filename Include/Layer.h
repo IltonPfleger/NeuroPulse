@@ -11,10 +11,7 @@ typedef PULSE_Void (*PULSE_DestroyLayerFunctionPtr)(struct PULSE_Layer *);
 
 typedef enum
 {
-	PULSE_NONE,
 	PULSE_DENSE,
-	PULSE_CONV,
-	PULSE_MAXPOLL
 } PULSE_LayerType;
 
 typedef struct PULSE_Layer

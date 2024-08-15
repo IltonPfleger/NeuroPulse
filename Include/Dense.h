@@ -2,6 +2,15 @@
 #define _PULSE_DENSE
 #include "Layer.h"
 
+typedef struct 
+{
+	unsigned int n_inputs;
+	unsigned int n_outputs;
+	PULSE_ActivationFunction activation_function;
+	PULSE_OptimizationType optimization;
+}PULSE_ARGS_DENSE;
+
+
 typedef struct {
 	PULSE_DataType * weights;
 	PULSE_DataType * baiases;
