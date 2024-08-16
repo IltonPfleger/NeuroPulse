@@ -173,27 +173,19 @@ static void _SIMD_FixDense(PULSE_Layer * this, PULSE_HyperArgs args)
 		dense.gradients[i] = 0;
 	}
 }
-
 #endif
 
-static void _DestroyDense(PULSE_Layer * this)
-{
-	PULSE_DenseLayer dense = this->layer.DENSE;
-	free(dense.weights);
-	free(dense.baiases);
-	free(dense.gradients);
-	free(dense.deltas);
-}
 
+unsigned int PULSE_GetDenseWeightsSize(PULSE_DenseLayerArgs args) { return args.n_inputs * args.n_outputs + args.n_outputs; };
+unsigned int PULSE_GetDenseIOSize(PULSE_DenseLayerArgs args) { return args.n_inputs + args.n_outputs; };
 
-
-PULSE_Layer PULSE_CreateDenseLayer(PULSE_DenseLayerArgs args)
+PULSE_Layer PULSE_CreateDenseLayer(PULSE_DenseLayerArgs args, PULSE_DataType *MODEL, PULSE_DataType * IO)
 {
 	PULSE_DenseLayer dense;
 
-	dense.weights = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*args.n_inputs*args.n_outputs);
+	dense.weights = MODEL;
+	dense.baiases = MODEL + (args.n_inputs * args.n_outputs);
 	dense.gradients = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*args.n_inputs*args.n_outputs);
-	dense.baiases = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*args.n_outputs);
 	dense.deltas = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*args.n_outputs);
 	dense.ddeltas = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*args.n_outputs);
 
@@ -201,13 +193,32 @@ PULSE_Layer PULSE_CreateDenseLayer(PULSE_DenseLayerArgs args)
 		dense.weights[i] = (PULSE_DataType)rand()/(PULSE_DataType)(RAND_MAX)*sqrt(2.0/(PULSE_DataType)(args.n_inputs+args.n_outputs));
 
 	PULSE_Layer layer;
+	layer.inputs = IO;
+	layer.outputs = IO + args.n_inputs;;
+	layer.errors = NULL;
+	layer.type = PULSE_DENSE;
+	layer.optimization = args.optimization;
+	layer.parent = NULL;
+	layer.child = NULL;
+	layer.layer.DENSE = dense;
+	layer.n_inputs = args.n_inputs;
+	layer.n_outputs = args.n_outputs;
+	layer.activate = PULSE_GetActivationFunctionPtr(args.activation_function);
+
+	layer.errors = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*args.n_outputs); //REMOVERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+
+
 	switch(args.optimization)
 	{
 		case PULSE_OPTIMIZATION_NONE:
-			layer = PULSE_CreateLayer(args.n_inputs, args.n_outputs, PULSE_DENSE, args.activation_function, &_FeedDense, &_BackDense, &_FixDense, &_DestroyDense, args.optimization);
+			layer.feed = &_FeedDense;
+			layer.back = &_BackDense;
+			layer.fix = &_FixDense;
 			break;
 		case PULSE_OPTIMIZATION_SIMD:
-			__PULSE_SIMD_CHECK(layer = PULSE_CreateLayer(args.n_inputs, args.n_outputs, PULSE_DENSE, args.activation_function, &_SIMD_FeedDense, &_SIMD_BackDense, &_SIMD_FixDense, &_DestroyDense, args.optimization));
+			__PULSE_SIMD_CHECK(layer.feed = &_SIMD_FeedDense);
+			__PULSE_SIMD_CHECK(layer.back = &_SIMD_BackDense);
+			__PULSE_SIMD_CHECK(layer.fix = &_SIMD_FixDense);
 			break;
 		case PULSE_OPTIMIZATION_GPU_OPENCL:
 			printf("ERROR: PULSE Layer GPU are not supported on this device");
@@ -215,7 +226,6 @@ PULSE_Layer PULSE_CreateDenseLayer(PULSE_DenseLayerArgs args)
 			break;
 	}
 
-	layer.layer.DENSE = dense;
 	return layer;
 }
 

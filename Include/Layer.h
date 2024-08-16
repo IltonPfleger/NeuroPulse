@@ -28,14 +28,13 @@ typedef union
 } PULSE_LayerWrapper;
 
 
-
 typedef struct PULSE_Layer
 {
-	PULSE_LayerType type;
-	PULSE_OptimizationType optimization_type;
 	PULSE_DataType *inputs;
 	PULSE_DataType *outputs;
 	PULSE_DataType *errors;
+	PULSE_LayerType type;
+	PULSE_OptimizationType optimization;
 	PULSE_FeedLayerFunctionPtr feed;
 	PULSE_BackLayerFunctionPtr back;
 	PULSE_FixLayerFunctionPtr fix;
@@ -44,12 +43,9 @@ typedef struct PULSE_Layer
 	struct PULSE_Layer * parent;
 	struct PULSE_Layer * child;
 	PULSE_LayerWrapper layer;
-	PULSE_N n_inputs;
-	PULSE_N n_outputs;
+	unsigned int n_inputs;
+	unsigned int n_outputs;
 } PULSE_Layer;
 
-
-PULSE_Layer PULSE_CreateLayer(PULSE_N , PULSE_N , PULSE_LayerType, PULSE_ActivationFunction, PULSE_FeedLayerFunctionPtr, PULSE_BackLayerFunctionPtr, PULSE_FixLayerFunctionPtr, PULSE_DestroyLayerFunctionPtr, PULSE_OptimizationType);
-PULSE_Void PULSE_DestroyLayer(PULSE_Layer*);
 
 #endif

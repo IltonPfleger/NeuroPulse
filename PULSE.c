@@ -90,32 +90,73 @@ void PULSE_Connect(PULSE_Layer * parent, PULSE_Layer * child)
 	child->parent = parent;
 }
 
-void PULSE_CreateModel(PULSE_Layer layers[], int size, ...)
+PULSE_Model PULSE_CreateModel(int size, ...)
 {
 	size *= 2;
+	PULSE_Layer * layers = (PULSE_Layer*)malloc(sizeof(PULSE_Layer)*size/2);
+
 	va_list layers_info;
 	va_start(layers_info, size);
+	unsigned int WEIGHTS_SIZE = 0;
+	unsigned int IO_SIZE = 0;
+
 	for (int i = 0; i < size/2; i++)
 	{
 		PULSE_LayerType type = va_arg(layers_info, PULSE_LayerType);
 		switch(type)
 		{
 			case PULSE_DENSE:
-				layers[i] = PULSE_CreateDenseLayer((PULSE_DenseLayerArgs)va_arg(layers_info, PULSE_DenseLayerArgs));
+				PULSE_DenseLayerArgs args = va_arg(layers_info, PULSE_DenseLayerArgs);
+				WEIGHTS_SIZE += PULSE_GetDenseWeightsSize(args);
+				IO_SIZE += PULSE_GetDenseIOSize(args);
+				break;
+		}
+	}
+
+	va_end(layers_info);
+	va_start(layers_info, size);
+	PULSE_DataType * WEIGHTS = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*WEIGHTS_SIZE);
+	PULSE_DataType * IO = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*IO_SIZE);
+	PULSE_DataType * WEIGHTS_PTR = WEIGHTS;
+	PULSE_DataType * IO_PTR = IO;
+
+	for (int i = 0; i < size/2; i++)
+	{
+		PULSE_LayerType type = va_arg(layers_info, PULSE_LayerType);
+		switch(type)
+		{
+			case PULSE_DENSE:
+				PULSE_DenseLayerArgs args = va_arg(layers_info, PULSE_DenseLayerArgs);
+				layers[i] = PULSE_CreateDenseLayer(args, WEIGHTS_PTR, IO_PTR);
+				WEIGHTS_PTR += PULSE_GetDenseWeightsSize(args);
+				IO_PTR += PULSE_GetDenseIOSize(args);
 				break;
 		}
 		if(i > 0)
 			PULSE_Connect(&layers[i - 1], &layers[i]);
 	}
 	va_end(layers_info);
+	return (PULSE_Model){layers, WEIGHTS, NULL, NULL};
 }
 
-void PULSE_Destroy(PULSE_Layer * layer)
+
+void PULSE_Destroy(PULSE_Model * model)
 {
-	PULSE_Layer * current = layer;
-	while(current)
+	if(model->weights != NULL)
 	{
-		current->destroy(current);
-		current = current->child;
+		free(model->weights);
+		model->weights = NULL;
+	}
+
+	if(model->io != NULL)
+	{
+		free(model->weights);
+		model->io = NULL;
+	}
+
+	if(model->fixes != NULL)
+	{
+		free(model->fixes);
+		model->fixes = NULL;
 	}
 }
