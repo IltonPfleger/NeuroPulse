@@ -4,10 +4,10 @@
 #include "Activations.h"
 
 struct PULSE_Layer;
-typedef PULSE_Void (*PULSE_FeedLayerFunctionPtr)(struct PULSE_Layer *);
-typedef PULSE_Void (*PULSE_BackLayerFunctionPtr)(struct PULSE_Layer *);
-typedef PULSE_Void (*PULSE_FixLayerFunctionPtr)(struct PULSE_Layer *, PULSE_HyperArgs);
-typedef PULSE_Size_t (*PULSE_DistributeTrainLayerAllocation)(struct PULSE_Layer *, PULSE_DataType *);
+typedef void (*PULSE_FeedLayerFunctionPtr)(struct PULSE_Layer *);
+typedef void (*PULSE_BackLayerFunctionPtr)(struct PULSE_Layer *);
+typedef void (*PULSE_FixLayerFunctionPtr)(struct PULSE_Layer *, PULSE_HyperArgs);
+typedef size_t (*PULSE_DistributeTrainLayerAllocation)(struct PULSE_Layer *, PULSE_DataType *);
 
 typedef enum
 {

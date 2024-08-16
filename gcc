@@ -42774,3 +42774,267 @@ Dense.c:228:9: note: created &MEM <float *> [(struct PULSE_Layer *)&<retval> + 8
 Dense.c:228:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer *)&<retval> + 88B] = _89;
 Dense.c:228:9: note: vectorizing stmts using SLP.
 Dense.c:228:9: note: ***** The result for vector mode V32QI would be the same
+Activations.c:17:19: optimized: loop vectorized using 32 byte vectors
+Activations.c:17:19: optimized: loop vectorized using 16 byte vectors
+Activations.c:17:19: optimized: loop vectorized using 32 byte vectors
+Activations.c:17:19: optimized: loop vectorized using 16 byte vectors
+Activations.c:14:13: note: vectorized 2 loops in function.
+Activations.c:14:13: note: ***** Analysis failed with vector mode V8SF
+Activations.c:14:13: note: ***** The result for vector mode V32QI would be the same
+Activations.c:14:13: note: ***** Re-trying analysis with vector mode V16QI
+Activations.c:14:13: note: ***** Analysis failed with vector mode V16QI
+Activations.c:14:13: note: ***** Re-trying analysis with vector mode V8QI
+Activations.c:14:13: note: ***** Analysis failed with vector mode V8QI
+Activations.c:14:13: note: ***** Re-trying analysis with vector mode V4QI
+Activations.c:14:13: note: ***** Analysis failed with vector mode V4QI
+Activations.c:28:19: missed: couldn't vectorize loop
+Activations.c:28:19: missed: not vectorized: unsupported control flow in loop.
+Activations.c:28:19: optimized: loop vectorized using 32 byte vectors
+Activations.c:28:19: optimized: loop vectorized using 16 byte vectors
+Activations.c:25:13: note: vectorized 1 loops in function.
+Activations.c:25:13: note: ***** Analysis failed with vector mode V8SF
+Activations.c:25:13: note: ***** The result for vector mode V32QI would be the same
+Activations.c:25:13: note: ***** Re-trying analysis with vector mode V16QI
+Activations.c:25:13: note: ***** Analysis failed with vector mode V16QI
+Activations.c:25:13: note: ***** Re-trying analysis with vector mode V8QI
+Activations.c:25:13: note: ***** Analysis failed with vector mode V8QI
+Activations.c:25:13: note: ***** Re-trying analysis with vector mode V4QI
+Activations.c:25:13: note: ***** Analysis failed with vector mode V4QI
+Activations.c:38:1: note: ***** Analysis failed with vector mode VOID
+Activations.c:5:19: missed: couldn't vectorize loop
+Activations.c:9:21: missed: statement clobbers memory: _36 = expf (_14);
+Activations.c:5:19: missed: couldn't vectorize loop
+Activations.c:9:21: missed: statement clobbers memory: _10 = expf (_9);
+Activations.c:3:13: note: vectorized 0 loops in function.
+Activations.c:9:21: missed: statement clobbers memory: _10 = expf (_9);
+Activations.c:9:21: missed: statement clobbers memory: _36 = expf (_14);
+Activations.c:11:1: note: ***** Analysis failed with vector mode V8SF
+Activations.c:11:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+Activations.c:44:2: note: ***** Analysis failed with vector mode VOID
+PULSE.c:10:7: missed: couldn't vectorize loop
+PULSE.c:10:7: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:4:18: note: vectorized 0 loops in function.
+PULSE.c:7:9: missed: statement clobbers memory: memcpy (_4, inputs_15, _3);
+PULSE.c:8:5: missed: statement clobbers memory: _5 (layer_17);
+PULSE.c:12:9: missed: statement clobbers memory: memcpy (_12, pretmp_26, _9);
+PULSE.c:13:34: note: ***** Analysis failed with vector mode V8SI
+PULSE.c:13:34: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+PULSE.c:22:5: missed: statement clobbers memory: _1 (layer_10(D));
+PULSE.c:22:5: missed: statement clobbers memory: _14 (_2);
+PULSE.c:22:5: missed: statement clobbers memory: _21 (_15);
+PULSE.c:22:5: missed: statement clobbers memory: _28 (_22);
+PULSE.c:25:9: missed: statement clobbers memory: PULSE_Back (_29);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_34, 0, _32);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_27, 0, _25);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_20, 0, _18);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_7, 0, _5);
+PULSE.c:28:1: note: ***** Analysis failed with vector mode V4DI
+PULSE.c:28:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+PULSE.c:34:23: missed: couldn't vectorize loop
+PULSE.c:36:33: missed: statement clobbers memory: _1 = rand ();
+PULSE.c:32:6: note: vectorized 0 loops in function.
+PULSE.c:36:33: missed: statement clobbers memory: _1 = rand ();
+PULSE.c:37:34: missed: statement clobbers memory: _3 = rand ();
+PULSE.c:42:1: note: ***** Analysis failed with vector mode V4DI
+PULSE.c:42:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+PULSE.c:60:23: missed: couldn't vectorize loop
+PULSE.c:60:23: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+PULSE.c:63:27: missed: couldn't vectorize loop
+PULSE.c:63:27: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+PULSE.c:70:34: missed: couldn't vectorize loop
+PULSE.c:71:21: missed: statement clobbers memory: _34 (_33, args);
+PULSE.c:10:7: missed: couldn't vectorize loop
+PULSE.c:10:7: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:34:23: missed: couldn't vectorize loop
+PULSE.c:36:33: missed: statement clobbers memory: _92 = rand ();
+PULSE.c:57:23: optimized: loop vectorized using 32 byte vectors
+PULSE.c:53:22: missed: couldn't vectorize loop
+PULSE.c:54:20: missed: statement clobbers memory: _89 = _10 (_9, TMP_PTR_212);
+PULSE.c:44:6: note: vectorized 1 loops in function.
+PULSE.c:45:1: missed: statement clobbers memory: saved_stack.3_57 = __builtin_stack_save ();
+PULSE.c:46:11: missed: statement clobbers memory: _1 = time (0B);
+PULSE.c:46:5: missed: statement clobbers memory: srand (_2);
+PULSE.c:47:43: missed: statement clobbers memory: _3 = PULSE_GetLossFunctionPtr (loss_function_60(D));
+PULSE.c:48:45: missed: statement clobbers memory: TMP_64 = aligned_alloc (64, _5);
+PULSE.c:54:20: missed: statement clobbers memory: _89 = _10 (_9, TMP_PTR_212);
+PULSE.c:56:12: missed: statement clobbers memory: RANDOM.2_70 = __builtin_alloca_with_align (_13, 64);
+PULSE.c:36:33: missed: statement clobbers memory: _92 = rand ();
+PULSE.c:37:34: missed: statement clobbers memory: _95 = rand ();
+PULSE.c:7:9: missed: statement clobbers memory: memcpy (_119, inputs_114, _118);
+PULSE.c:8:5: missed: statement clobbers memory: _120 (layer_115);
+PULSE.c:12:9: missed: statement clobbers memory: memcpy (_126, _125, _124);
+PULSE.c:66:20: missed: statement clobbers memory: loss_80 = PULSE_GetLoss_62 (_28, _27, _24, _23);
+PULSE.c:22:5: missed: statement clobbers memory: _107 (output_66);
+PULSE.c:22:5: missed: statement clobbers memory: _129 (_108);
+PULSE.c:22:5: missed: statement clobbers memory: _136 (_130);
+PULSE.c:22:5: missed: statement clobbers memory: _143 (_137);
+PULSE.c:22:5: missed: statement clobbers memory: _150 (_144);
+PULSE.c:22:5: missed: statement clobbers memory: _157 (_151);
+PULSE.c:25:9: missed: statement clobbers memory: PULSE_Back (_158);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_163, 0, _161);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_156, 0, _154);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_149, 0, _147);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_142, 0, _140);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_135, 0, _133);
+PULSE.c:26:9: missed: statement clobbers memory: memset (_113, 0, _111);
+PULSE.c:71:21: missed: statement clobbers memory: _34 (_33, args);
+PULSE.c:74:13: missed: statement clobbers memory: printf ("Epoch: %d | Item: %d | Loss: %.10f | Batch Loss: %.10f\r", i_216, j_217, _39, _38);
+PULSE.c:78:5: missed: statement clobbers memory: free (TMP_64);
+PULSE.c:44:6: missed: statement clobbers memory: __builtin_stack_restore (saved_stack.3_57);
+PULSE.c:79:1: note: ***** Analysis failed with vector mode V4DI
+PULSE.c:79:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+PULSE.c:85:1: note: ***** Analysis failed with vector mode V4DI
+PULSE.c:85:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+PULSE.c:119:23: missed: couldn't vectorize loop
+PULSE.c:119:23: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:119:23: missed: couldn't vectorize loop
+PULSE.c:119:23: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:98:23: missed: couldn't vectorize loop
+PULSE.c:98:23: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:98:23: missed: couldn't vectorize loop
+PULSE.c:98:23: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:87:13: note: vectorized 0 loops in function.
+PULSE.c:90:42: missed: statement clobbers memory: layers_43 = malloc (_3);
+PULSE.c:93:5: missed: statement clobbers memory: __builtin_va_start (&layers_info, 0);
+PULSE.c:112:5: missed: statement clobbers memory: __builtin_va_end (&layers_info);
+PULSE.c:113:5: missed: statement clobbers memory: __builtin_va_start (&layers_info, 0);
+PULSE.c:114:49: missed: statement clobbers memory: WEIGHTS_89 = aligned_alloc (64, 0);
+PULSE.c:104:34: missed: not vectorized: more than one data ref in stmt: args = MEM[(struct PULSE_DenseLayerArgs * {ref-all})addr.85_97];
+PULSE.c:105:29: missed: statement clobbers memory: _78 = PULSE_GetDenseWeightsSize (args);
+PULSE.c:106:24: missed: statement clobbers memory: _81 = PULSE_GetDenseIOSize (args);
+PULSE.c:107:27: missed: statement clobbers memory: _84 = PULSE_GetDenseFixesSize (args);
+PULSE.c:104:34: missed: not vectorized: more than one data ref in stmt: args = MEM[(struct PULSE_DenseLayerArgs * {ref-all})_227];
+PULSE.c:105:29: missed: statement clobbers memory: _213 = PULSE_GetDenseWeightsSize (args);
+PULSE.c:106:24: missed: statement clobbers memory: _216 = PULSE_GetDenseIOSize (args);
+PULSE.c:107:27: missed: statement clobbers memory: _219 = PULSE_GetDenseFixesSize (args);
+PULSE.c:112:5: missed: statement clobbers memory: __builtin_va_end (&layers_info);
+PULSE.c:113:5: missed: statement clobbers memory: __builtin_va_start (&layers_info, 0);
+PULSE.c:114:49: missed: statement clobbers memory: WEIGHTS_48 = aligned_alloc (64, _5);
+PULSE.c:115:44: missed: statement clobbers memory: IO_50 = aligned_alloc (64, _7);
+PULSE.c:125:34: missed: not vectorized: more than one data ref in stmt: args = MEM[(struct PULSE_DenseLayerArgs * {ref-all})addr.87_99];
+PULSE.c:126:25: missed: statement clobbers memory: *_10 = PULSE_CreateDenseLayer (args, WEIGHTS_PTR_155, IO_PTR_156); [return slot optimization]
+PULSE.c:127:28: missed: statement clobbers memory: _67 = PULSE_GetDenseWeightsSize (args);
+PULSE.c:128:23: missed: statement clobbers memory: _70 = PULSE_GetDenseIOSize (args);
+PULSE.c:125:34: missed: not vectorized: more than one data ref in stmt: args = MEM[(struct PULSE_DenseLayerArgs * {ref-all})addr.87_130];
+PULSE.c:126:25: missed: statement clobbers memory: *_114 = PULSE_CreateDenseLayer (args, WEIGHTS_PTR_153, IO_PTR_151); [return slot optimization]
+PULSE.c:127:28: missed: statement clobbers memory: _102 = PULSE_GetDenseWeightsSize (args);
+PULSE.c:128:23: missed: statement clobbers memory: _64 = PULSE_GetDenseIOSize (args);
+PULSE.c:134:5: missed: statement clobbers memory: __builtin_va_end (&layers_info);
+PULSE.c:135:12: note: ***** Analysis succeeded with vector mode V8SI
+PULSE.c:135:12: note: SLPing BB part
+PULSE.c:135:12: note: Costing subgraph: 
+PULSE.c:135:12: note: node 0x3c08668 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+PULSE.c:135:12: note: op template: <retval>.layers = layers_43;
+PULSE.c:135:12: note: 	stmt 0 <retval>.layers = layers_43;
+PULSE.c:135:12: note: 	stmt 1 <retval>.weights = WEIGHTS_168;
+PULSE.c:135:12: note: 	children 0x3c08768
+PULSE.c:135:12: note: node (external) 0x3c08768 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+PULSE.c:135:12: note: 	{ layers_43, WEIGHTS_168 }
+PULSE.c:135:12: note: Cost model analysis: 
+PULSE.c:135:12: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+PULSE.c:135:12: note: Costing subgraph: 
+PULSE.c:135:12: note: node 0x3c087e8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+PULSE.c:135:12: note: op template: <retval>.io = 0B;
+PULSE.c:135:12: note: 	stmt 0 <retval>.io = 0B;
+PULSE.c:135:12: note: 	stmt 1 <retval>.fixes = 0B;
+PULSE.c:135:12: note: 	children 0x3c08868
+PULSE.c:135:12: note: node (constant) 0x3c08868 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+PULSE.c:135:12: note: 	{ 0B, 0B }
+PULSE.c:135:12: note: Cost model analysis: 
+PULSE.c:135:12: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+PULSE.c:135:12: note: Costing subgraph: 
+PULSE.c:135:12: note: node 0x3c088e8 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+PULSE.c:135:12: note: op template: <retval>.n_layers = _20;
+PULSE.c:135:12: note: 	stmt 0 <retval>.n_layers = _20;
+PULSE.c:135:12: note: 	stmt 1 <retval>.weights_size = _166;
+PULSE.c:135:12: note: 	stmt 2 <retval>.io_size = _167;
+PULSE.c:135:12: note: 	stmt 3 <retval>.fixes_size = prephitmp_176;
+PULSE.c:135:12: note: 	children 0x3c089e8
+PULSE.c:135:12: note: node (external) 0x3c089e8 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+PULSE.c:135:12: note: 	{ _20, _166, _167, prephitmp_176 }
+PULSE.c:135:12: note: Cost model analysis: 
+PULSE.c:135:12: note: Cost model analysis for part in loop 0:
+  Vector cost: 64
+  Scalar cost: 64
+PULSE.c:135:12: note: Basic block will be vectorized using SLP
+PULSE.c:135:12: optimized: basic block part vectorized using 16 byte vectors
+PULSE.c:135:12: note: Vectorizing SLP tree:
+PULSE.c:135:12: note: node 0x3c08668 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+PULSE.c:135:12: note: op template: <retval>.layers = layers_43;
+PULSE.c:135:12: note: 	stmt 0 <retval>.layers = layers_43;
+PULSE.c:135:12: note: 	stmt 1 <retval>.weights = WEIGHTS_168;
+PULSE.c:135:12: note: 	children 0x3c08768
+PULSE.c:135:12: note: node (external) 0x3c08768 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+PULSE.c:135:12: note: 	{ layers_43, WEIGHTS_168 }
+PULSE.c:135:12: note: ------>vectorizing SLP node starting from: <retval>.layers = layers_43;
+PULSE.c:135:12: note: vect_is_simple_use: operand WEIGHTS_168 = PHI <WEIGHTS_48(36), WEIGHTS_89(25)>, type of def: internal
+PULSE.c:135:12: note: conflicting alias set types.
+PULSE.c:135:12: note: transform store. ncopies = 1
+PULSE.c:135:12: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.layers
+PULSE.c:135:12: note: created &<retval>
+PULSE.c:135:12: note: add new stmt: MEM <vector(2) long unsigned int> [(void *)&<retval>] = _19;
+PULSE.c:135:12: note: vectorizing stmts using SLP.
+PULSE.c:135:12: optimized: basic block part vectorized using 16 byte vectors
+PULSE.c:135:12: note: Vectorizing SLP tree:
+PULSE.c:135:12: note: node 0x3c087e8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+PULSE.c:135:12: note: op template: <retval>.io = 0B;
+PULSE.c:135:12: note: 	stmt 0 <retval>.io = 0B;
+PULSE.c:135:12: note: 	stmt 1 <retval>.fixes = 0B;
+PULSE.c:135:12: note: 	children 0x3c08868
+PULSE.c:135:12: note: node (constant) 0x3c08868 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+PULSE.c:135:12: note: 	{ 0B, 0B }
+PULSE.c:135:12: note: ------>vectorizing SLP node starting from: <retval>.io = 0B;
+PULSE.c:135:12: note: vect_is_simple_use: operand 0B, type of def: constant
+PULSE.c:135:12: note: transform store. ncopies = 1
+PULSE.c:135:12: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.io
+PULSE.c:135:12: note: created &<retval>.io
+PULSE.c:135:12: note: add new stmt: MEM <vector(2) long unsigned int> [(float * *)&<retval> + 16B] = { 0, 0 };
+PULSE.c:135:12: note: vectorizing stmts using SLP.
+PULSE.c:135:12: optimized: basic block part vectorized using 32 byte vectors
+PULSE.c:135:12: note: Vectorizing SLP tree:
+PULSE.c:135:12: note: node 0x3c088e8 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+PULSE.c:135:12: note: op template: <retval>.n_layers = _20;
+PULSE.c:135:12: note: 	stmt 0 <retval>.n_layers = _20;
+PULSE.c:135:12: note: 	stmt 1 <retval>.weights_size = _166;
+PULSE.c:135:12: note: 	stmt 2 <retval>.io_size = _167;
+PULSE.c:135:12: note: 	stmt 3 <retval>.fixes_size = prephitmp_176;
+PULSE.c:135:12: note: 	children 0x3c089e8
+PULSE.c:135:12: note: node (external) 0x3c089e8 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+PULSE.c:135:12: note: 	{ _20, _166, _167, prephitmp_176 }
+PULSE.c:135:12: note: ------>vectorizing SLP node starting from: <retval>.n_layers = _20;
+PULSE.c:135:12: note: vect_is_simple_use: operand _166 = PHI <_4(36), 0(25)>, type of def: internal
+PULSE.c:135:12: note: vect_is_simple_use: operand _167 = PHI <_6(36), 0(25)>, type of def: internal
+PULSE.c:135:12: note: vect_is_simple_use: operand prephitmp_176 = PHI <_177(36), 0(25)>, type of def: internal
+PULSE.c:135:12: note: transform store. ncopies = 1
+PULSE.c:135:12: note: create vector_type-pointer variable to type: vector(4) long unsigned int  vectorizing a pointer ref: <retval>.n_layers
+PULSE.c:135:12: note: created &<retval>.n_layers
+PULSE.c:135:12: note: add new stmt: MEM <vector(4) long unsigned int> [(long unsigned int *)&<retval> + 32B] = _255;
+PULSE.c:135:12: note: vectorizing stmts using SLP.
+PULSE.c:135:12: note: ***** The result for vector mode V32QI would be the same
+PULSE.c:143:5: missed: statement clobbers memory: free (_1);
+PULSE.c:144:5: missed: statement clobbers memory: free (_2);
+PULSE.c:145:5: missed: statement clobbers memory: free (_3);
+PULSE.c:146:1: note: ***** Analysis failed with vector mode V4DI
+PULSE.c:146:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+Loss.c:15:19: optimized: loop vectorized using 32 byte vectors
+Loss.c:15:19: optimized:  loop versioned for vectorization because of possible aliasing
+Loss.c:15:19: optimized: loop vectorized using 16 byte vectors
+Loss.c:12:23: note: vectorized 1 loops in function.
+Loss.c:12:23: note: ***** Analysis failed with vector mode V8SF
+Loss.c:12:23: note: ***** The result for vector mode V32QI would be the same
+Loss.c:12:23: note: ***** Re-trying analysis with vector mode V16QI
+Loss.c:12:23: note: ***** Analysis failed with vector mode V16QI
+Loss.c:12:23: note: ***** Re-trying analysis with vector mode V8QI
+Loss.c:12:23: note: ***** Analysis failed with vector mode V8QI
+Loss.c:12:23: note: ***** Re-trying analysis with vector mode V4QI
+Loss.c:12:23: note: ***** Analysis failed with vector mode V4QI
+Loss.c:7:19: missed: couldn't vectorize loop
+Loss.c:8:38: missed: not vectorized: unsupported use in stmt.
+Loss.c:4:23: note: vectorized 0 loops in function.
+Loss.c:9:13: note: ***** Analysis failed with vector mode V8SF
+Loss.c:9:13: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+Loss.c:23:2: note: ***** Analysis failed with vector mode VOID

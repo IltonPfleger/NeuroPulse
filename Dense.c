@@ -176,7 +176,7 @@ unsigned int PULSE_GetDenseWeightsSize(PULSE_DenseLayerArgs args) { return args.
 unsigned int PULSE_GetDenseIOSize(PULSE_DenseLayerArgs args) { return args.n_inputs + args.n_outputs; };
 unsigned int PULSE_GetDenseFixesSize(PULSE_DenseLayerArgs args) { return (args.n_inputs * args.n_outputs) + (2*args.n_outputs); };
 
-static PULSE_Size_t PULSE_PullDenseTmp(PULSE_Layer * this, PULSE_DataType * FIXES) {
+static size_t PULSE_PullDenseTmp(PULSE_Layer * this, PULSE_DataType * FIXES) {
 	this->layer.DENSE.gradients = FIXES;
 	this->layer.DENSE.deltas = FIXES + this->n_inputs*this->n_outputs;
 	this->errors = FIXES + this->n_inputs*this->n_outputs + this->n_outputs;
