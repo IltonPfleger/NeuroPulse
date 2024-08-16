@@ -41010,3 +41010,1767 @@ Dense.c:213:9: note: created &MEM <float *> [(struct PULSE_Layer *)&<retval> + 8
 Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer *)&<retval> + 88B] = _89;
 Dense.c:213:9: note: vectorizing stmts using SLP.
 Dense.c:213:9: note: ***** The result for vector mode V32QI would be the same
+Dense.c:9:27: missed: couldn't vectorize loop
+Dense.c:9:27: missed: not vectorized: unsupported outerloop form.
+Dense.c:12:20: missed: couldn't vectorize loop
+Dense.c:13:21: missed: not vectorized: complicated access pattern.
+Dense.c:6:13: note: vectorized 0 loops in function.
+Dense.c:16:2: missed: statement clobbers memory: _28 (pretmp_91, _51, 0);
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:9:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:24:27: missed: couldn't vectorize loop
+Dense.c:24:27: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:28:20: optimized: loop vectorized using 32 byte vectors
+Dense.c:28:20: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:28:20: optimized: loop vectorized using 16 byte vectors
+Dense.c:28:20: missed: couldn't vectorize loop
+Dense.c:30:19: missed: not vectorized: no vectype for stmt: _19 = *_18;
+ scalar_type: float
+Dense.c:20:13: note: vectorized 1 loops in function.
+Dense.c:23:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:24:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:41:28: missed: couldn't vectorize loop
+Dense.c:41:28: missed: not vectorized: unsupported outerloop form.
+Dense.c:45:21: optimized: loop vectorized using 32 byte vectors
+Dense.c:45:21: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:45:21: optimized: loop vectorized using 16 byte vectors
+Dense.c:37:13: note: vectorized 1 loops in function.
+Dense.c:37:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:37:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:41:55: note: ***** Analysis failed with vector mode V4QI
+Dense.c:167:56: note: ***** Analysis succeeded with vector mode V4DI
+Dense.c:167:56: note: SLPing BB part
+Dense.c:167:56: note: Costing subgraph: 
+Dense.c:167:56: note: node 0x80d20f8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:167:56: note: op template: _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 0 _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 1 _7 = (sizetype) _2;
+Dense.c:167:56: note: 	children 0x80d21f8
+Dense.c:167:56: note: node (external) 0x80d21f8 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Dense.c:167:56: note: 	{ _3, _2 }
+Dense.c:167:56: note: Cost model analysis: 
+Dense.c:167:56: note: Cost model analysis for part in loop 0:
+  Vector cost: 30
+  Scalar cost: 8
+Dense.c:167:56: missed: not vectorized: vectorization is not profitable.
+Dense.c:167:56: note: ***** The result for vector mode V32QI would be the same
+Dense.c:167:56: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:167:56: note: ***** Analysis succeeded with vector mode V16QI
+Dense.c:167:56: note: SLPing BB part
+Dense.c:167:56: note: Costing subgraph: 
+Dense.c:167:56: note: node 0x80d20f8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:167:56: note: op template: _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 0 _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 1 _7 = (sizetype) _2;
+Dense.c:167:56: note: 	children 0x80d2178
+Dense.c:167:56: note: node (external) 0x80d2178 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Dense.c:167:56: note: 	{ _3, _2 }
+Dense.c:167:56: note: Cost model analysis: 
+Dense.c:167:56: note: Cost model analysis for part in loop 0:
+  Vector cost: 30
+  Scalar cost: 8
+Dense.c:167:56: missed: not vectorized: vectorization is not profitable.
+Dense.c:167:56: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:167:56: note: ***** Analysis failed with vector mode V8QI
+Dense.c:167:56: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:167:56: note: ***** Analysis failed with vector mode V4QI
+Dense.c:151:10: optimized: loop vectorized using 32 byte vectors
+Dense.c:151:10: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:151:10: optimized: loop vectorized using 16 byte vectors
+Dense.c:142:10: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_27, _64);
+Dense.c:135:10: optimized: loop vectorized using 32 byte vectors
+Dense.c:135:10: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:135:10: optimized: loop vectorized using 16 byte vectors
+Dense.c:126:10: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_14, _56);
+Dense.c:117:13: note: vectorized 2 loops in function.
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_14, _56);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_15, { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_27, _64);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_28, { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+Dense.c:117:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:117:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:117:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:117:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:117:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:117:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:117:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:117:13: note: ***** Analysis failed with vector mode V4QI
+Dense.c:90:23: missed: couldn't vectorize loop
+Dense.c:90:23: missed: not vectorized: unsupported outerloop form.
+Dense.c:108:11: missed: couldn't vectorize loop
+Dense.c:112:17: missed: not vectorized: no vectype for stmt: _123 = _130->errors;
+ scalar_type: float *
+Dense.c:90:23: missed: couldn't vectorize loop
+Dense.c:90:23: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:108:11: missed: couldn't vectorize loop
+Dense.c:112:17: missed: not vectorized: no vectype for stmt: _34 = _33->errors;
+ scalar_type: float *
+Dense.c:95:16: missed: couldn't vectorize loop
+Dense.c:95:16: missed: not vectorized: unsupported control flow in loop.
+Dense.c:83:13: note: vectorized 0 loops in function.
+Dense.c:86:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+Dense.c:97:16: note: ***** Analysis succeeded with vector mode V4DI
+Dense.c:97:16: note: SLPing BB part
+Dense.c:97:16: note: Costing subgraph: 
+Dense.c:97:16: note: node 0x80d23f8 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:97:16: note: op template: _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 0 _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 1 _141 = (sizetype) wi_100;
+Dense.c:97:16: note: 	children 0x80d24f8
+Dense.c:97:16: note: node (external) 0x80d24f8 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:97:16: note: 	{ j_97, wi_100 }
+Dense.c:97:16: note: Cost model analysis: 
+Dense.c:97:16: note: Scalar 1 and vector 2 loop part do not match up, skipping scalar part
+Dense.c:97:16: note: Cost model analysis for part in loop 2:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:97:16: missed: not vectorized: vectorization is not profitable.
+Dense.c:97:16: note: ***** The result for vector mode V32QI would be the same
+Dense.c:97:16: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:97:16: note: ***** Analysis succeeded with vector mode V16QI
+Dense.c:97:16: note: SLPing BB part
+Dense.c:97:16: note: Costing subgraph: 
+Dense.c:97:16: note: node 0x80d22f8 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:97:16: note: op template: _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 0 _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 1 _141 = (sizetype) wi_100;
+Dense.c:97:16: note: 	children 0x80d26f8
+Dense.c:97:16: note: node (external) 0x80d26f8 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:97:16: note: 	{ j_97, wi_100 }
+Dense.c:97:16: note: Cost model analysis: 
+Dense.c:97:16: note: Scalar 1 and vector 2 loop part do not match up, skipping scalar part
+Dense.c:97:16: note: Cost model analysis for part in loop 2:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:97:16: missed: not vectorized: vectorization is not profitable.
+Dense.c:97:16: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:112:29: note: ***** Analysis failed with vector mode V8QI
+Dense.c:112:29: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:90:50: note: ***** Analysis failed with vector mode V4QI
+Dense.c:62:15: missed: couldn't vectorize loop
+Dense.c:62:15: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:75:11: optimized: loop vectorized using 32 byte vectors
+Dense.c:75:11: optimized: loop vectorized using 16 byte vectors
+Dense.c:66:11: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:881:10: missed: not vectorized: no vectype for stmt: _53 = MEM[(__m256 * {ref-all})w_ptr_82];
+ scalar_type: __m256
+Dense.c:54:13: note: vectorized 1 loops in function.
+Dense.c:57:2: missed: statement clobbers memory: memcpy (_4, dense$baiases_63, _3);
+Dense.c:79:2: missed: statement clobbers memory: _27 (pretmp_163, _68, 0);
+Dense.c:54:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:54:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V4QI
+Dense.c:160:107: note: ***** Analysis failed with vector mode V8SI
+Dense.c:160:107: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V8SI
+Dense.c:161:85: note: ***** The result for vector mode V32QI would be the same
+Dense.c:161:85: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V16QI
+Dense.c:161:85: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V8QI
+Dense.c:161:85: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V4QI
+Dense.c:162:107: note: ***** Analysis failed with vector mode V8SI
+Dense.c:162:107: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+Dense.c:178:19: missed: couldn't vectorize loop
+Dense.c:178:19: missed: not vectorized: unsupported control flow in loop.
+Dense.c:171:13: note: vectorized 0 loops in function.
+Dense.c:179:38: missed: statement clobbers memory: _5 = rand ();
+Dense.c:179:72: missed: statement clobbers memory: _65 = sqrt (_12);
+Dense.c:192:19: missed: statement clobbers memory: _24 = PULSE_GetActivationFunctionPtr (_23);
+Dense.c:208:4: missed: statement clobbers memory: printf ("ERROR: PULSE Layer GPU are not supported on this device");
+Dense.c:209:4: missed: statement clobbers memory: exit (1);
+Dense.c:213:9: note: ***** Analysis succeeded with vector mode V8SI
+Dense.c:213:9: note: SLPing BB part
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7fec8d8 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 0 <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 1 <retval>.n_outputs = args$n_outputs_42;
+Dense.c:213:9: note: 	children 0x7fec958
+Dense.c:213:9: note: node 0x7fec958 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 0 args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 1 args$n_outputs_42 = args.n_outputs;
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 40
+  Scalar cost: 56
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7feca58 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 0 <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 1 <retval>.outputs = _22;
+Dense.c:213:9: note: 	children 0x7fecad8
+Dense.c:213:9: note: node (external) 0x7fecad8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ IO_31(D), _22 }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7fecbd8 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: op template: <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 0 <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 1 <retval>.back = layer$back_39;
+Dense.c:213:9: note: 	stmt 2 <retval>.fix = layer$fix_40;
+Dense.c:213:9: note: 	stmt 3 <retval>.activate = _25;
+Dense.c:213:9: note: 	children 0x7feccd8
+Dense.c:213:9: note: node (external) 0x7feccd8 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: 	{ layer$feed_30, layer$back_39, layer$fix_40, _25 }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 64
+  Scalar cost: 64
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7fecdd8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 0 <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 1 <retval>.child = 0B;
+Dense.c:213:9: note: 	children 0x7fece58
+Dense.c:213:9: note: node (constant) 0x7fece58 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ 0B, 0B }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7feced8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 0 MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 1 MEM <float *> [(struct PULSE_Layer *)&<retval> + 96B] = _4;
+Dense.c:213:9: note: 	children 0x7fecf58
+Dense.c:213:9: note: node (external) 0x7fecf58 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ MODEL_29(D), _4 }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:213:9: note: Basic block will be vectorized using SLP
+Dense.c:213:9: optimized: basic block part vectorized using 8 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7fec8d8 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 0 <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 1 <retval>.n_outputs = args$n_outputs_42;
+Dense.c:213:9: note: 	children 0x7fec958
+Dense.c:213:9: note: node 0x7fec958 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 0 args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 1 args$n_outputs_42 = args.n_outputs;
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: transform load. ncopies = 1
+Dense.c:213:9: note: conflicting alias set types.
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: args.n_inputs
+Dense.c:213:9: note: created &args
+Dense.c:213:9: note: add new stmt: vect_args_n_inputs_41.500_26 = MEM <vector(2) unsigned int> [(void *)&args];
+Dense.c:213:9: note: extracting lane for live stmt args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: extracting lane for live stmt args$n_outputs_42 = args.n_outputs;
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: vect_is_simple_use: operand args.n_inputs, type of def: internal
+Dense.c:213:9: note: vect_is_simple_use: operand args.n_outputs, type of def: internal
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: <retval>.n_inputs
+Dense.c:213:9: note: created &<retval>.n_inputs
+Dense.c:213:9: note: add new stmt: MEM <vector(2) unsigned int> [(unsigned int *)&<retval> + 128B] = vect_args_n_inputs_41.500_26;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7feca58 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 0 <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 1 <retval>.outputs = _22;
+Dense.c:213:9: note: 	children 0x7fecad8
+Dense.c:213:9: note: node (external) 0x7fecad8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ IO_31(D), _22 }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: vect_is_simple_use: operand IO_31(D) + _21, type of def: internal
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.inputs
+Dense.c:213:9: note: created &<retval>
+Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(float * *)&<retval>] = _78;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 32 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7fecbd8 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: op template: <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 0 <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 1 <retval>.back = layer$back_39;
+Dense.c:213:9: note: 	stmt 2 <retval>.fix = layer$fix_40;
+Dense.c:213:9: note: 	stmt 3 <retval>.activate = _25;
+Dense.c:213:9: note: 	children 0x7feccd8
+Dense.c:213:9: note: node (external) 0x7feccd8 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: 	{ layer$feed_30, layer$back_39, layer$fix_40, _25 }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: vect_is_simple_use: operand layer$back_39 = PHI <layer$back_45(D)(11), _BackDense(9), _SIMD_BackDense(15)>, type of def: internal
+Dense.c:213:9: note: vect_is_simple_use: operand layer$fix_40 = PHI <layer$fix_46(D)(11), _FixDense(9), _SIMD_FixDense(15)>, type of def: internal
+Dense.c:213:9: note: vect_is_simple_use: operand (void (*<T91a>) (float *, unsigned int, char)) _24, type of def: internal
+Dense.c:213:9: note: conflicting alias set types.
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(4) long unsigned int  vectorizing a pointer ref: <retval>.feed
+Dense.c:213:9: note: created &<retval>.feed
+Dense.c:213:9: note: add new stmt: MEM <vector(4) long unsigned int> [(void *)&<retval> + 32B] = _84;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7fecdd8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 0 <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 1 <retval>.child = 0B;
+Dense.c:213:9: note: 	children 0x7fece58
+Dense.c:213:9: note: node (constant) 0x7fece58 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ 0B, 0B }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.parent = 0B;
+Dense.c:213:9: note: vect_is_simple_use: operand 0B, type of def: constant
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.parent
+Dense.c:213:9: note: created &<retval>.parent
+Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer * *)&<retval> + 72B] = { 0, 0 };
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7feced8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 0 MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 1 MEM <float *> [(struct PULSE_Layer *)&<retval> + 96B] = _4;
+Dense.c:213:9: note: 	children 0x7fecf58
+Dense.c:213:9: note: node (external) 0x7fecf58 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ MODEL_29(D), _4 }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: vect_is_simple_use: operand MODEL_29(D) + _3, type of def: internal
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B]
+Dense.c:213:9: note: created &MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B]
+Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer *)&<retval> + 88B] = _89;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: note: ***** The result for vector mode V32QI would be the same
+Dense.c:9:27: missed: couldn't vectorize loop
+Dense.c:9:27: missed: not vectorized: unsupported outerloop form.
+Dense.c:12:20: missed: couldn't vectorize loop
+Dense.c:13:21: missed: not vectorized: complicated access pattern.
+Dense.c:6:13: note: vectorized 0 loops in function.
+Dense.c:16:2: missed: statement clobbers memory: _28 (pretmp_91, _51, 0);
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:9:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:24:27: missed: couldn't vectorize loop
+Dense.c:24:27: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:28:20: optimized: loop vectorized using 32 byte vectors
+Dense.c:28:20: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:28:20: optimized: loop vectorized using 16 byte vectors
+Dense.c:28:20: missed: couldn't vectorize loop
+Dense.c:30:19: missed: not vectorized: no vectype for stmt: _19 = *_18;
+ scalar_type: float
+Dense.c:20:13: note: vectorized 1 loops in function.
+Dense.c:23:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:24:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:41:28: missed: couldn't vectorize loop
+Dense.c:41:28: missed: not vectorized: unsupported outerloop form.
+Dense.c:45:21: optimized: loop vectorized using 32 byte vectors
+Dense.c:45:21: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:45:21: optimized: loop vectorized using 16 byte vectors
+Dense.c:37:13: note: vectorized 1 loops in function.
+Dense.c:37:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:37:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:41:55: note: ***** Analysis failed with vector mode V4QI
+Dense.c:167:56: note: ***** Analysis succeeded with vector mode V4DI
+Dense.c:167:56: note: SLPing BB part
+Dense.c:167:56: note: Costing subgraph: 
+Dense.c:167:56: note: node 0x81df4b8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:167:56: note: op template: _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 0 _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 1 _7 = (sizetype) _2;
+Dense.c:167:56: note: 	children 0x81df5b8
+Dense.c:167:56: note: node (external) 0x81df5b8 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Dense.c:167:56: note: 	{ _3, _2 }
+Dense.c:167:56: note: Cost model analysis: 
+Dense.c:167:56: note: Cost model analysis for part in loop 0:
+  Vector cost: 30
+  Scalar cost: 8
+Dense.c:167:56: missed: not vectorized: vectorization is not profitable.
+Dense.c:167:56: note: ***** The result for vector mode V32QI would be the same
+Dense.c:167:56: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:167:56: note: ***** Analysis succeeded with vector mode V16QI
+Dense.c:167:56: note: SLPing BB part
+Dense.c:167:56: note: Costing subgraph: 
+Dense.c:167:56: note: node 0x81df4b8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:167:56: note: op template: _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 0 _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 1 _7 = (sizetype) _2;
+Dense.c:167:56: note: 	children 0x81df538
+Dense.c:167:56: note: node (external) 0x81df538 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Dense.c:167:56: note: 	{ _3, _2 }
+Dense.c:167:56: note: Cost model analysis: 
+Dense.c:167:56: note: Cost model analysis for part in loop 0:
+  Vector cost: 30
+  Scalar cost: 8
+Dense.c:167:56: missed: not vectorized: vectorization is not profitable.
+Dense.c:167:56: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:167:56: note: ***** Analysis failed with vector mode V8QI
+Dense.c:167:56: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:167:56: note: ***** Analysis failed with vector mode V4QI
+Dense.c:151:10: optimized: loop vectorized using 32 byte vectors
+Dense.c:151:10: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:151:10: optimized: loop vectorized using 16 byte vectors
+Dense.c:142:10: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_27, _64);
+Dense.c:135:10: optimized: loop vectorized using 32 byte vectors
+Dense.c:135:10: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:135:10: optimized: loop vectorized using 16 byte vectors
+Dense.c:126:10: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_14, _56);
+Dense.c:117:13: note: vectorized 2 loops in function.
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_14, _56);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_15, { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_27, _64);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_28, { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+Dense.c:117:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:117:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:117:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:117:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:117:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:117:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:117:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:117:13: note: ***** Analysis failed with vector mode V4QI
+Dense.c:90:23: missed: couldn't vectorize loop
+Dense.c:90:23: missed: not vectorized: unsupported outerloop form.
+Dense.c:108:11: missed: couldn't vectorize loop
+Dense.c:112:17: missed: not vectorized: no vectype for stmt: _123 = _130->errors;
+ scalar_type: float *
+Dense.c:90:23: missed: couldn't vectorize loop
+Dense.c:90:23: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:108:11: missed: couldn't vectorize loop
+Dense.c:112:17: missed: not vectorized: no vectype for stmt: _34 = _33->errors;
+ scalar_type: float *
+Dense.c:95:16: missed: couldn't vectorize loop
+Dense.c:95:16: missed: not vectorized: unsupported control flow in loop.
+Dense.c:83:13: note: vectorized 0 loops in function.
+Dense.c:86:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_19, _71);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_26, _68);
+Dense.c:97:16: note: ***** Analysis succeeded with vector mode V4DI
+Dense.c:97:16: note: SLPing BB part
+Dense.c:97:16: note: Costing subgraph: 
+Dense.c:97:16: note: node 0x81df7b8 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:97:16: note: op template: _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 0 _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 1 _141 = (sizetype) wi_100;
+Dense.c:97:16: note: 	children 0x81df8b8
+Dense.c:97:16: note: node (external) 0x81df8b8 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:97:16: note: 	{ j_97, wi_100 }
+Dense.c:97:16: note: Cost model analysis: 
+Dense.c:97:16: note: Scalar 1 and vector 2 loop part do not match up, skipping scalar part
+Dense.c:97:16: note: Cost model analysis for part in loop 2:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:97:16: missed: not vectorized: vectorization is not profitable.
+Dense.c:97:16: note: ***** The result for vector mode V32QI would be the same
+Dense.c:97:16: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:97:16: note: ***** Analysis succeeded with vector mode V16QI
+Dense.c:97:16: note: SLPing BB part
+Dense.c:97:16: note: Costing subgraph: 
+Dense.c:97:16: note: node 0x81df6b8 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:97:16: note: op template: _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 0 _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 1 _141 = (sizetype) wi_100;
+Dense.c:97:16: note: 	children 0x81dfab8
+Dense.c:97:16: note: node (external) 0x81dfab8 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:97:16: note: 	{ j_97, wi_100 }
+Dense.c:97:16: note: Cost model analysis: 
+Dense.c:97:16: note: Scalar 1 and vector 2 loop part do not match up, skipping scalar part
+Dense.c:97:16: note: Cost model analysis for part in loop 2:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:97:16: missed: not vectorized: vectorization is not profitable.
+Dense.c:97:16: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:112:29: note: ***** Analysis failed with vector mode V8QI
+Dense.c:112:29: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:90:50: note: ***** Analysis failed with vector mode V4QI
+Dense.c:62:15: missed: couldn't vectorize loop
+Dense.c:62:15: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:75:11: optimized: loop vectorized using 32 byte vectors
+Dense.c:75:11: optimized: loop vectorized using 16 byte vectors
+Dense.c:66:11: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:881:10: missed: not vectorized: no vectype for stmt: _53 = MEM[(__m256 * {ref-all})w_ptr_82];
+ scalar_type: __m256
+Dense.c:54:13: note: vectorized 1 loops in function.
+Dense.c:57:2: missed: statement clobbers memory: memcpy (_4, dense$baiases_63, _3);
+Dense.c:79:2: missed: statement clobbers memory: _27 (pretmp_163, _68, 0);
+Dense.c:54:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:54:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V4QI
+Dense.c:160:107: note: ***** Analysis failed with vector mode V8SI
+Dense.c:160:107: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V8SI
+Dense.c:161:85: note: ***** The result for vector mode V32QI would be the same
+Dense.c:161:85: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V16QI
+Dense.c:161:85: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V8QI
+Dense.c:161:85: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V4QI
+Dense.c:162:107: note: ***** Analysis failed with vector mode V8SI
+Dense.c:162:107: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+Dense.c:178:19: missed: couldn't vectorize loop
+Dense.c:178:19: missed: not vectorized: unsupported control flow in loop.
+Dense.c:171:13: note: vectorized 0 loops in function.
+Dense.c:179:38: missed: statement clobbers memory: _5 = rand ();
+Dense.c:179:72: missed: statement clobbers memory: _65 = sqrt (_12);
+Dense.c:192:19: missed: statement clobbers memory: _24 = PULSE_GetActivationFunctionPtr (_23);
+Dense.c:208:4: missed: statement clobbers memory: printf ("ERROR: PULSE Layer GPU are not supported on this device");
+Dense.c:209:4: missed: statement clobbers memory: exit (1);
+Dense.c:213:9: note: ***** Analysis succeeded with vector mode V8SI
+Dense.c:213:9: note: SLPing BB part
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x80e8558 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 0 <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 1 <retval>.n_outputs = args$n_outputs_42;
+Dense.c:213:9: note: 	children 0x80e85d8
+Dense.c:213:9: note: node 0x80e85d8 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 0 args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 1 args$n_outputs_42 = args.n_outputs;
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 40
+  Scalar cost: 56
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x80e86d8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 0 <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 1 <retval>.outputs = _22;
+Dense.c:213:9: note: 	children 0x80e8758
+Dense.c:213:9: note: node (external) 0x80e8758 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ IO_31(D), _22 }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x80e8858 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: op template: <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 0 <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 1 <retval>.back = layer$back_39;
+Dense.c:213:9: note: 	stmt 2 <retval>.fix = layer$fix_40;
+Dense.c:213:9: note: 	stmt 3 <retval>.activate = _25;
+Dense.c:213:9: note: 	children 0x80e8958
+Dense.c:213:9: note: node (external) 0x80e8958 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: 	{ layer$feed_30, layer$back_39, layer$fix_40, _25 }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 64
+  Scalar cost: 64
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x80e8a58 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 0 <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 1 <retval>.child = 0B;
+Dense.c:213:9: note: 	children 0x80e8ad8
+Dense.c:213:9: note: node (constant) 0x80e8ad8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ 0B, 0B }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x80e8b58 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 0 MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 1 MEM <float *> [(struct PULSE_Layer *)&<retval> + 96B] = _4;
+Dense.c:213:9: note: 	children 0x80e8bd8
+Dense.c:213:9: note: node (external) 0x80e8bd8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ MODEL_29(D), _4 }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:213:9: note: Basic block will be vectorized using SLP
+Dense.c:213:9: optimized: basic block part vectorized using 8 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x80e8558 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 0 <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 1 <retval>.n_outputs = args$n_outputs_42;
+Dense.c:213:9: note: 	children 0x80e85d8
+Dense.c:213:9: note: node 0x80e85d8 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 0 args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 1 args$n_outputs_42 = args.n_outputs;
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: transform load. ncopies = 1
+Dense.c:213:9: note: conflicting alias set types.
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: args.n_inputs
+Dense.c:213:9: note: created &args
+Dense.c:213:9: note: add new stmt: vect_args_n_inputs_41.498_26 = MEM <vector(2) unsigned int> [(void *)&args];
+Dense.c:213:9: note: extracting lane for live stmt args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: extracting lane for live stmt args$n_outputs_42 = args.n_outputs;
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: vect_is_simple_use: operand args.n_inputs, type of def: internal
+Dense.c:213:9: note: vect_is_simple_use: operand args.n_outputs, type of def: internal
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: <retval>.n_inputs
+Dense.c:213:9: note: created &<retval>.n_inputs
+Dense.c:213:9: note: add new stmt: MEM <vector(2) unsigned int> [(unsigned int *)&<retval> + 128B] = vect_args_n_inputs_41.498_26;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x80e86d8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 0 <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 1 <retval>.outputs = _22;
+Dense.c:213:9: note: 	children 0x80e8758
+Dense.c:213:9: note: node (external) 0x80e8758 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ IO_31(D), _22 }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: vect_is_simple_use: operand IO_31(D) + _21, type of def: internal
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.inputs
+Dense.c:213:9: note: created &<retval>
+Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(float * *)&<retval>] = _78;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 32 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x80e8858 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: op template: <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 0 <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 1 <retval>.back = layer$back_39;
+Dense.c:213:9: note: 	stmt 2 <retval>.fix = layer$fix_40;
+Dense.c:213:9: note: 	stmt 3 <retval>.activate = _25;
+Dense.c:213:9: note: 	children 0x80e8958
+Dense.c:213:9: note: node (external) 0x80e8958 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: 	{ layer$feed_30, layer$back_39, layer$fix_40, _25 }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: vect_is_simple_use: operand layer$back_39 = PHI <layer$back_45(D)(11), _BackDense(9), _SIMD_BackDense(15)>, type of def: internal
+Dense.c:213:9: note: vect_is_simple_use: operand layer$fix_40 = PHI <layer$fix_46(D)(11), _FixDense(9), _SIMD_FixDense(15)>, type of def: internal
+Dense.c:213:9: note: vect_is_simple_use: operand (void (*<T91a>) (float *, unsigned int, char)) _24, type of def: internal
+Dense.c:213:9: note: conflicting alias set types.
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(4) long unsigned int  vectorizing a pointer ref: <retval>.feed
+Dense.c:213:9: note: created &<retval>.feed
+Dense.c:213:9: note: add new stmt: MEM <vector(4) long unsigned int> [(void *)&<retval> + 32B] = _84;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x80e8a58 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 0 <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 1 <retval>.child = 0B;
+Dense.c:213:9: note: 	children 0x80e8ad8
+Dense.c:213:9: note: node (constant) 0x80e8ad8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ 0B, 0B }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.parent = 0B;
+Dense.c:213:9: note: vect_is_simple_use: operand 0B, type of def: constant
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.parent
+Dense.c:213:9: note: created &<retval>.parent
+Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer * *)&<retval> + 72B] = { 0, 0 };
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x80e8b58 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 0 MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 1 MEM <float *> [(struct PULSE_Layer *)&<retval> + 96B] = _4;
+Dense.c:213:9: note: 	children 0x80e8bd8
+Dense.c:213:9: note: node (external) 0x80e8bd8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ MODEL_29(D), _4 }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: vect_is_simple_use: operand MODEL_29(D) + _3, type of def: internal
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B]
+Dense.c:213:9: note: created &MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B]
+Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer *)&<retval> + 88B] = _89;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: note: ***** The result for vector mode V32QI would be the same
+Dense.c:9:27: missed: couldn't vectorize loop
+Dense.c:9:27: missed: not vectorized: unsupported outerloop form.
+Dense.c:12:20: missed: couldn't vectorize loop
+Dense.c:13:21: missed: not vectorized: complicated access pattern.
+Dense.c:6:13: note: vectorized 0 loops in function.
+Dense.c:16:2: missed: statement clobbers memory: _28 (pretmp_91, _51, 0);
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:9:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:24:27: missed: couldn't vectorize loop
+Dense.c:24:27: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:28:20: optimized: loop vectorized using 32 byte vectors
+Dense.c:28:20: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:28:20: optimized: loop vectorized using 16 byte vectors
+Dense.c:28:20: missed: couldn't vectorize loop
+Dense.c:30:19: missed: not vectorized: no vectype for stmt: _19 = *_18;
+ scalar_type: float
+Dense.c:20:13: note: vectorized 1 loops in function.
+Dense.c:23:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:24:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:41:28: missed: couldn't vectorize loop
+Dense.c:41:28: missed: not vectorized: unsupported outerloop form.
+Dense.c:45:21: optimized: loop vectorized using 32 byte vectors
+Dense.c:45:21: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:45:21: optimized: loop vectorized using 16 byte vectors
+Dense.c:37:13: note: vectorized 1 loops in function.
+Dense.c:37:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:37:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:41:55: note: ***** Analysis failed with vector mode V4QI
+Dense.c:167:56: note: ***** Analysis succeeded with vector mode V4DI
+Dense.c:167:56: note: SLPing BB part
+Dense.c:167:56: note: Costing subgraph: 
+Dense.c:167:56: note: node 0x7be9b08 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:167:56: note: op template: _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 0 _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 1 _7 = (sizetype) _2;
+Dense.c:167:56: note: 	children 0x7be9c08
+Dense.c:167:56: note: node (external) 0x7be9c08 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Dense.c:167:56: note: 	{ _3, _2 }
+Dense.c:167:56: note: Cost model analysis: 
+Dense.c:167:56: note: Cost model analysis for part in loop 0:
+  Vector cost: 30
+  Scalar cost: 8
+Dense.c:167:56: missed: not vectorized: vectorization is not profitable.
+Dense.c:167:56: note: ***** The result for vector mode V32QI would be the same
+Dense.c:167:56: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:167:56: note: ***** Analysis succeeded with vector mode V16QI
+Dense.c:167:56: note: SLPing BB part
+Dense.c:167:56: note: Costing subgraph: 
+Dense.c:167:56: note: node 0x7be9b08 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:167:56: note: op template: _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 0 _4 = (long unsigned int) _3;
+Dense.c:167:56: note: 	stmt 1 _7 = (sizetype) _2;
+Dense.c:167:56: note: 	children 0x7be9b88
+Dense.c:167:56: note: node (external) 0x7be9b88 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Dense.c:167:56: note: 	{ _3, _2 }
+Dense.c:167:56: note: Cost model analysis: 
+Dense.c:167:56: note: Cost model analysis for part in loop 0:
+  Vector cost: 30
+  Scalar cost: 8
+Dense.c:167:56: missed: not vectorized: vectorization is not profitable.
+Dense.c:167:56: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:167:56: note: ***** Analysis failed with vector mode V8QI
+Dense.c:167:56: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:167:56: note: ***** Analysis failed with vector mode V4QI
+Dense.c:151:10: optimized: loop vectorized using 32 byte vectors
+Dense.c:151:10: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:151:10: optimized: loop vectorized using 16 byte vectors
+Dense.c:142:10: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_27, _64);
+Dense.c:135:10: optimized: loop vectorized using 32 byte vectors
+Dense.c:135:10: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:135:10: optimized: loop vectorized using 16 byte vectors
+Dense.c:126:10: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_14, _56);
+Dense.c:117:13: note: vectorized 2 loops in function.
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_14, _56);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_15, { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_27, _64);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_28, { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+Dense.c:117:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:117:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:117:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:117:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:117:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:117:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:117:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:117:13: note: ***** Analysis failed with vector mode V4QI
+Dense.c:90:23: missed: couldn't vectorize loop
+Dense.c:90:23: missed: not vectorized: unsupported outerloop form.
+Dense.c:108:11: missed: couldn't vectorize loop
+Dense.c:112:17: missed: not vectorized: no vectype for stmt: _123 = _130->errors;
+ scalar_type: float *
+Dense.c:90:23: missed: couldn't vectorize loop
+Dense.c:90:23: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:108:11: missed: couldn't vectorize loop
+Dense.c:112:17: missed: not vectorized: no vectype for stmt: _34 = _33->errors;
+ scalar_type: float *
+Dense.c:95:16: missed: couldn't vectorize loop
+Dense.c:95:16: missed: not vectorized: unsupported control flow in loop.
+Dense.c:83:13: note: vectorized 0 loops in function.
+Dense.c:86:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+Dense.c:97:16: note: ***** Analysis succeeded with vector mode V4DI
+Dense.c:97:16: note: SLPing BB part
+Dense.c:97:16: note: Costing subgraph: 
+Dense.c:97:16: note: node 0x7be9e08 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:97:16: note: op template: _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 0 _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 1 _141 = (sizetype) wi_100;
+Dense.c:97:16: note: 	children 0x7be9f08
+Dense.c:97:16: note: node (external) 0x7be9f08 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:97:16: note: 	{ j_97, wi_100 }
+Dense.c:97:16: note: Cost model analysis: 
+Dense.c:97:16: note: Scalar 1 and vector 2 loop part do not match up, skipping scalar part
+Dense.c:97:16: note: Cost model analysis for part in loop 2:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:97:16: missed: not vectorized: vectorization is not profitable.
+Dense.c:97:16: note: ***** The result for vector mode V32QI would be the same
+Dense.c:97:16: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:97:16: note: ***** Analysis succeeded with vector mode V16QI
+Dense.c:97:16: note: SLPing BB part
+Dense.c:97:16: note: Costing subgraph: 
+Dense.c:97:16: note: node 0x7be9d08 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:97:16: note: op template: _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 0 _16 = (sizetype) j_97;
+Dense.c:97:16: note: 	stmt 1 _141 = (sizetype) wi_100;
+Dense.c:97:16: note: 	children 0x7bea108
+Dense.c:97:16: note: node (external) 0x7bea108 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:97:16: note: 	{ j_97, wi_100 }
+Dense.c:97:16: note: Cost model analysis: 
+Dense.c:97:16: note: Scalar 1 and vector 2 loop part do not match up, skipping scalar part
+Dense.c:97:16: note: Cost model analysis for part in loop 2:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:97:16: missed: not vectorized: vectorization is not profitable.
+Dense.c:97:16: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:112:29: note: ***** Analysis failed with vector mode V8QI
+Dense.c:112:29: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:90:50: note: ***** Analysis failed with vector mode V4QI
+Dense.c:62:15: missed: couldn't vectorize loop
+Dense.c:62:15: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:75:11: optimized: loop vectorized using 32 byte vectors
+Dense.c:75:11: optimized: loop vectorized using 16 byte vectors
+Dense.c:66:11: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:881:10: missed: not vectorized: no vectype for stmt: _53 = MEM[(__m256 * {ref-all})w_ptr_82];
+ scalar_type: __m256
+Dense.c:54:13: note: vectorized 1 loops in function.
+Dense.c:57:2: missed: statement clobbers memory: memcpy (_4, dense$baiases_63, _3);
+Dense.c:79:2: missed: statement clobbers memory: _27 (pretmp_163, _68, 0);
+Dense.c:54:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:54:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V4QI
+Dense.c:160:107: note: ***** Analysis failed with vector mode V8SI
+Dense.c:160:107: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V8SI
+Dense.c:161:85: note: ***** The result for vector mode V32QI would be the same
+Dense.c:161:85: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V16QI
+Dense.c:161:85: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V8QI
+Dense.c:161:85: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:161:85: note: ***** Analysis failed with vector mode V4QI
+Dense.c:162:107: note: ***** Analysis failed with vector mode V8SI
+Dense.c:162:107: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+Dense.c:178:19: missed: couldn't vectorize loop
+Dense.c:178:19: missed: not vectorized: unsupported control flow in loop.
+Dense.c:171:13: note: vectorized 0 loops in function.
+Dense.c:179:38: missed: statement clobbers memory: _5 = rand ();
+Dense.c:179:72: missed: statement clobbers memory: _65 = sqrt (_12);
+Dense.c:192:19: missed: statement clobbers memory: _24 = PULSE_GetActivationFunctionPtr (_23);
+Dense.c:208:4: missed: statement clobbers memory: printf ("ERROR: PULSE Layer GPU are not supported on this device");
+Dense.c:209:4: missed: statement clobbers memory: exit (1);
+Dense.c:213:9: note: ***** Analysis succeeded with vector mode V8SI
+Dense.c:213:9: note: SLPing BB part
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7a2ab68 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 0 <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 1 <retval>.n_outputs = args$n_outputs_42;
+Dense.c:213:9: note: 	children 0x7a2abe8
+Dense.c:213:9: note: node 0x7a2abe8 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 0 args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 1 args$n_outputs_42 = args.n_outputs;
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 40
+  Scalar cost: 56
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7a2ace8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 0 <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 1 <retval>.outputs = _22;
+Dense.c:213:9: note: 	children 0x7a2ad68
+Dense.c:213:9: note: node (external) 0x7a2ad68 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ IO_31(D), _22 }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7a2ae68 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: op template: <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 0 <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 1 <retval>.back = layer$back_39;
+Dense.c:213:9: note: 	stmt 2 <retval>.fix = layer$fix_40;
+Dense.c:213:9: note: 	stmt 3 <retval>.activate = _25;
+Dense.c:213:9: note: 	children 0x7a2af68
+Dense.c:213:9: note: node (external) 0x7a2af68 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: 	{ layer$feed_30, layer$back_39, layer$fix_40, _25 }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 64
+  Scalar cost: 64
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7a2b068 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 0 <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 1 <retval>.child = 0B;
+Dense.c:213:9: note: 	children 0x7a2b0e8
+Dense.c:213:9: note: node (constant) 0x7a2b0e8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ 0B, 0B }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:213:9: note: Costing subgraph: 
+Dense.c:213:9: note: node 0x7a2b168 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 0 MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 1 MEM <float *> [(struct PULSE_Layer *)&<retval> + 96B] = _4;
+Dense.c:213:9: note: 	children 0x7a2b1e8
+Dense.c:213:9: note: node (external) 0x7a2b1e8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ MODEL_29(D), _4 }
+Dense.c:213:9: note: Cost model analysis: 
+Dense.c:213:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:213:9: note: Basic block will be vectorized using SLP
+Dense.c:213:9: optimized: basic block part vectorized using 8 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7a2ab68 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 0 <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: 	stmt 1 <retval>.n_outputs = args$n_outputs_42;
+Dense.c:213:9: note: 	children 0x7a2abe8
+Dense.c:213:9: note: node 0x7a2abe8 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:213:9: note: op template: args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 0 args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: 	stmt 1 args$n_outputs_42 = args.n_outputs;
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: transform load. ncopies = 1
+Dense.c:213:9: note: conflicting alias set types.
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: args.n_inputs
+Dense.c:213:9: note: created &args
+Dense.c:213:9: note: add new stmt: vect_args_n_inputs_41.499_26 = MEM <vector(2) unsigned int> [(void *)&args];
+Dense.c:213:9: note: extracting lane for live stmt args$n_inputs_41 = args.n_inputs;
+Dense.c:213:9: note: extracting lane for live stmt args$n_outputs_42 = args.n_outputs;
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:213:9: note: vect_is_simple_use: operand args.n_inputs, type of def: internal
+Dense.c:213:9: note: vect_is_simple_use: operand args.n_outputs, type of def: internal
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: <retval>.n_inputs
+Dense.c:213:9: note: created &<retval>.n_inputs
+Dense.c:213:9: note: add new stmt: MEM <vector(2) unsigned int> [(unsigned int *)&<retval> + 128B] = vect_args_n_inputs_41.499_26;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7a2ace8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 0 <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: 	stmt 1 <retval>.outputs = _22;
+Dense.c:213:9: note: 	children 0x7a2ad68
+Dense.c:213:9: note: node (external) 0x7a2ad68 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ IO_31(D), _22 }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.inputs = IO_31(D);
+Dense.c:213:9: note: vect_is_simple_use: operand IO_31(D) + _21, type of def: internal
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.inputs
+Dense.c:213:9: note: created &<retval>
+Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(float * *)&<retval>] = _78;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 32 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7a2ae68 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: op template: <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 0 <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: 	stmt 1 <retval>.back = layer$back_39;
+Dense.c:213:9: note: 	stmt 2 <retval>.fix = layer$fix_40;
+Dense.c:213:9: note: 	stmt 3 <retval>.activate = _25;
+Dense.c:213:9: note: 	children 0x7a2af68
+Dense.c:213:9: note: node (external) 0x7a2af68 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Dense.c:213:9: note: 	{ layer$feed_30, layer$back_39, layer$fix_40, _25 }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.feed = layer$feed_30;
+Dense.c:213:9: note: vect_is_simple_use: operand layer$back_39 = PHI <layer$back_45(D)(11), _BackDense(9), _SIMD_BackDense(15)>, type of def: internal
+Dense.c:213:9: note: vect_is_simple_use: operand layer$fix_40 = PHI <layer$fix_46(D)(11), _FixDense(9), _SIMD_FixDense(15)>, type of def: internal
+Dense.c:213:9: note: vect_is_simple_use: operand (void (*<T91a>) (float *, unsigned int, char)) _24, type of def: internal
+Dense.c:213:9: note: conflicting alias set types.
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(4) long unsigned int  vectorizing a pointer ref: <retval>.feed
+Dense.c:213:9: note: created &<retval>.feed
+Dense.c:213:9: note: add new stmt: MEM <vector(4) long unsigned int> [(void *)&<retval> + 32B] = _84;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7a2b068 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 0 <retval>.parent = 0B;
+Dense.c:213:9: note: 	stmt 1 <retval>.child = 0B;
+Dense.c:213:9: note: 	children 0x7a2b0e8
+Dense.c:213:9: note: node (constant) 0x7a2b0e8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ 0B, 0B }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: <retval>.parent = 0B;
+Dense.c:213:9: note: vect_is_simple_use: operand 0B, type of def: constant
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.parent
+Dense.c:213:9: note: created &<retval>.parent
+Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer * *)&<retval> + 72B] = { 0, 0 };
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:213:9: note: Vectorizing SLP tree:
+Dense.c:213:9: note: node 0x7a2b168 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: op template: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 0 MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: 	stmt 1 MEM <float *> [(struct PULSE_Layer *)&<retval> + 96B] = _4;
+Dense.c:213:9: note: 	children 0x7a2b1e8
+Dense.c:213:9: note: node (external) 0x7a2b1e8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:213:9: note: 	{ MODEL_29(D), _4 }
+Dense.c:213:9: note: ------>vectorizing SLP node starting from: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:213:9: note: vect_is_simple_use: operand MODEL_29(D) + _3, type of def: internal
+Dense.c:213:9: note: transform store. ncopies = 1
+Dense.c:213:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B]
+Dense.c:213:9: note: created &MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B]
+Dense.c:213:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer *)&<retval> + 88B] = _89;
+Dense.c:213:9: note: vectorizing stmts using SLP.
+Dense.c:213:9: note: ***** The result for vector mode V32QI would be the same
+Activations.c:17:19: optimized: loop vectorized using 32 byte vectors
+Activations.c:17:19: optimized: loop vectorized using 16 byte vectors
+Activations.c:17:19: optimized: loop vectorized using 32 byte vectors
+Activations.c:17:19: optimized: loop vectorized using 16 byte vectors
+Activations.c:14:13: note: vectorized 2 loops in function.
+Activations.c:14:13: note: ***** Analysis failed with vector mode V8SF
+Activations.c:14:13: note: ***** The result for vector mode V32QI would be the same
+Activations.c:14:13: note: ***** Re-trying analysis with vector mode V16QI
+Activations.c:14:13: note: ***** Analysis failed with vector mode V16QI
+Activations.c:14:13: note: ***** Re-trying analysis with vector mode V8QI
+Activations.c:14:13: note: ***** Analysis failed with vector mode V8QI
+Activations.c:14:13: note: ***** Re-trying analysis with vector mode V4QI
+Activations.c:14:13: note: ***** Analysis failed with vector mode V4QI
+Activations.c:28:19: missed: couldn't vectorize loop
+Activations.c:28:19: missed: not vectorized: unsupported control flow in loop.
+Activations.c:28:19: optimized: loop vectorized using 32 byte vectors
+Activations.c:28:19: optimized: loop vectorized using 16 byte vectors
+Activations.c:25:13: note: vectorized 1 loops in function.
+Activations.c:25:13: note: ***** Analysis failed with vector mode V8SF
+Activations.c:25:13: note: ***** The result for vector mode V32QI would be the same
+Activations.c:25:13: note: ***** Re-trying analysis with vector mode V16QI
+Activations.c:25:13: note: ***** Analysis failed with vector mode V16QI
+Activations.c:25:13: note: ***** Re-trying analysis with vector mode V8QI
+Activations.c:25:13: note: ***** Analysis failed with vector mode V8QI
+Activations.c:25:13: note: ***** Re-trying analysis with vector mode V4QI
+Activations.c:25:13: note: ***** Analysis failed with vector mode V4QI
+Activations.c:38:1: note: ***** Analysis failed with vector mode VOID
+Activations.c:5:19: missed: couldn't vectorize loop
+Activations.c:9:21: missed: statement clobbers memory: _36 = expf (_18);
+Activations.c:5:19: missed: couldn't vectorize loop
+Activations.c:9:21: missed: statement clobbers memory: _12 = expf (_11);
+Activations.c:3:13: note: vectorized 0 loops in function.
+Activations.c:9:21: missed: statement clobbers memory: _12 = expf (_11);
+Activations.c:9:21: missed: statement clobbers memory: _36 = expf (_18);
+Activations.c:11:1: note: ***** Analysis failed with vector mode V8SF
+Activations.c:11:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+Activations.c:44:2: note: ***** Analysis failed with vector mode VOID
+PULSE.c:10:4: missed: couldn't vectorize loop
+PULSE.c:10:4: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:4:18: note: vectorized 0 loops in function.
+PULSE.c:7:3: missed: statement clobbers memory: memcpy (_4, inputs_15, _3);
+PULSE.c:8:2: missed: statement clobbers memory: _5 (layer_17);
+PULSE.c:12:3: missed: statement clobbers memory: memcpy (_12, pretmp_26, _9);
+PULSE.c:13:28: note: ***** Analysis failed with vector mode V8SI
+PULSE.c:13:28: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+PULSE.c:22:2: missed: statement clobbers memory: _1 (layer_10(D));
+PULSE.c:22:2: missed: statement clobbers memory: _14 (_2);
+PULSE.c:22:2: missed: statement clobbers memory: _21 (_15);
+PULSE.c:22:2: missed: statement clobbers memory: _28 (_22);
+PULSE.c:25:3: missed: statement clobbers memory: PULSE_Back (_29);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_34, 0, _32);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_27, 0, _25);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_20, 0, _18);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_7, 0, _5);
+PULSE.c:28:1: note: ***** Analysis failed with vector mode V4DI
+PULSE.c:28:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+PULSE.c:37:20: missed: couldn't vectorize loop
+PULSE.c:39:39: missed: statement clobbers memory: _7 = rand ();
+PULSE.c:35:20: optimized: loop vectorized using 32 byte vectors
+PULSE.c:35:20: optimized: loop vectorized using 16 byte vectors
+PULSE.c:32:6: note: vectorized 1 loops in function.
+PULSE.c:34:8: missed: statement clobbers memory: _1 = time (0B);
+PULSE.c:34:2: missed: statement clobbers memory: srand (_2);
+PULSE.c:39:39: missed: statement clobbers memory: _7 = rand ();
+PULSE.c:40:40: missed: statement clobbers memory: _9 = rand ();
+PULSE.c:32:6: note: ***** Analysis failed with vector mode V8SI
+PULSE.c:32:6: note: ***** The result for vector mode V32QI would be the same
+PULSE.c:32:6: note: ***** Re-trying analysis with vector mode V16QI
+PULSE.c:32:6: note: ***** Analysis failed with vector mode V16QI
+PULSE.c:32:6: note: ***** Re-trying analysis with vector mode V8QI
+PULSE.c:32:6: note: ***** Analysis failed with vector mode V8QI
+PULSE.c:32:6: note: ***** Re-trying analysis with vector mode V4QI
+PULSE.c:32:6: note: ***** Analysis failed with vector mode V4QI
+PULSE.c:60:16: missed: couldn't vectorize loop
+PULSE.c:60:16: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+PULSE.c:63:17: missed: couldn't vectorize loop
+PULSE.c:63:17: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+PULSE.c:72:19: missed: couldn't vectorize loop
+PULSE.c:72:19: missed: not vectorized: number of iterations cannot be computed.
+PULSE.c:10:4: missed: couldn't vectorize loop
+PULSE.c:10:4: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:37:20: missed: couldn't vectorize loop
+PULSE.c:39:39: missed: statement clobbers memory: _92 = rand ();
+PULSE.c:35:20: optimized: loop vectorized using 32 byte vectors
+PULSE.c:35:20: optimized: loop vectorized using 16 byte vectors
+PULSE.c:55:15: missed: couldn't vectorize loop
+PULSE.c:56:14: missed: statement clobbers memory: _81 = _11 (_10, TMP_PTR_215);
+PULSE.c:47:6: note: vectorized 1 loops in function.
+PULSE.c:48:1: missed: statement clobbers memory: saved_stack.8_53 = __builtin_stack_save ();
+PULSE.c:49:46: missed: statement clobbers memory: _1 = PULSE_GetLossFunctionPtr (loss_function_54(D));
+PULSE.c:50:42: missed: statement clobbers memory: TMP_58 = aligned_alloc (64, _4);
+PULSE.c:56:14: missed: statement clobbers memory: _81 = _11 (_10, TMP_PTR_215);
+PULSE.c:59:15: missed: statement clobbers memory: random.5_64 = __builtin_alloca_with_align (_16, 32);
+PULSE.c:34:8: missed: statement clobbers memory: _84 = time (0B);
+PULSE.c:34:2: missed: statement clobbers memory: srand (_85);
+PULSE.c:39:39: missed: statement clobbers memory: _92 = rand ();
+PULSE.c:40:40: missed: statement clobbers memory: _95 = rand ();
+PULSE.c:7:3: missed: statement clobbers memory: memcpy (_121, inputs_116, _120);
+PULSE.c:8:2: missed: statement clobbers memory: _122 (layer_117);
+PULSE.c:12:3: missed: statement clobbers memory: memcpy (_128, _127, _126);
+PULSE.c:66:11: missed: statement clobbers memory: loss_74 = PULSE_GetLoss_56 (_29, _28, _24, _23);
+PULSE.c:22:2: missed: statement clobbers memory: _109 (output_60);
+PULSE.c:22:2: missed: statement clobbers memory: _131 (_110);
+PULSE.c:22:2: missed: statement clobbers memory: _138 (_132);
+PULSE.c:22:2: missed: statement clobbers memory: _145 (_139);
+PULSE.c:22:2: missed: statement clobbers memory: _152 (_146);
+PULSE.c:22:2: missed: statement clobbers memory: _159 (_153);
+PULSE.c:25:3: missed: statement clobbers memory: PULSE_Back (_160);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_165, 0, _163);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_158, 0, _156);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_151, 0, _149);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_144, 0, _142);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_137, 0, _135);
+PULSE.c:26:3: missed: statement clobbers memory: memset (_115, 0, _113);
+PULSE.c:74:6: missed: statement clobbers memory: _33 (current_220, args);
+PULSE.c:80:4: missed: statement clobbers memory: printf ("Epoch: %d | Item: %d | Loss: %.10f | Batch Loss: %.10f\r", i_217, j_218, _37, _36);
+PULSE.c:84:2: missed: statement clobbers memory: free (TMP_58);
+PULSE.c:47:6: missed: statement clobbers memory: __builtin_stack_restore (saved_stack.8_53);
+PULSE.c:47:6: note: ***** Analysis failed with vector mode V4DI
+PULSE.c:47:6: note: ***** The result for vector mode V32QI would be the same
+PULSE.c:47:6: note: ***** Re-trying analysis with vector mode V16QI
+PULSE.c:47:6: note: ***** Analysis failed with vector mode V16QI
+PULSE.c:47:6: note: ***** Re-trying analysis with vector mode V8QI
+PULSE.c:47:6: note: ***** Analysis failed with vector mode V8QI
+PULSE.c:47:6: note: ***** Re-trying analysis with vector mode V4QI
+PULSE.c:47:6: note: ***** Analysis failed with vector mode V4QI
+PULSE.c:91:1: note: ***** Analysis failed with vector mode V4DI
+PULSE.c:91:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+PULSE.c:125:20: missed: couldn't vectorize loop
+PULSE.c:125:20: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:125:20: missed: couldn't vectorize loop
+PULSE.c:125:20: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:104:20: missed: couldn't vectorize loop
+PULSE.c:104:20: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:104:20: missed: couldn't vectorize loop
+PULSE.c:104:20: missed: not vectorized: unsupported control flow in loop.
+PULSE.c:93:13: note: vectorized 0 loops in function.
+PULSE.c:96:39: missed: statement clobbers memory: layers_42 = malloc (_3);
+PULSE.c:99:2: missed: statement clobbers memory: __builtin_va_start (&layers_info, 0);
+PULSE.c:118:2: missed: statement clobbers memory: __builtin_va_end (&layers_info);
+PULSE.c:119:2: missed: statement clobbers memory: __builtin_va_start (&layers_info, 0);
+PULSE.c:120:46: missed: statement clobbers memory: WEIGHTS_88 = aligned_alloc (64, 0);
+PULSE.c:110:26: missed: not vectorized: more than one data ref in stmt: args = MEM[(struct PULSE_DenseLayerArgs * {ref-all})addr.115_96];
+PULSE.c:111:21: missed: statement clobbers memory: _77 = PULSE_GetDenseWeightsSize (args);
+PULSE.c:112:16: missed: statement clobbers memory: _80 = PULSE_GetDenseIOSize (args);
+PULSE.c:113:19: missed: statement clobbers memory: _83 = PULSE_GetDenseFixesSize (args);
+PULSE.c:110:26: missed: not vectorized: more than one data ref in stmt: args = MEM[(struct PULSE_DenseLayerArgs * {ref-all})_226];
+PULSE.c:111:21: missed: statement clobbers memory: _212 = PULSE_GetDenseWeightsSize (args);
+PULSE.c:112:16: missed: statement clobbers memory: _215 = PULSE_GetDenseIOSize (args);
+PULSE.c:113:19: missed: statement clobbers memory: _218 = PULSE_GetDenseFixesSize (args);
+PULSE.c:118:2: missed: statement clobbers memory: __builtin_va_end (&layers_info);
+PULSE.c:119:2: missed: statement clobbers memory: __builtin_va_start (&layers_info, 0);
+PULSE.c:120:46: missed: statement clobbers memory: WEIGHTS_47 = aligned_alloc (64, _5);
+PULSE.c:121:41: missed: statement clobbers memory: IO_49 = aligned_alloc (64, _7);
+PULSE.c:131:26: missed: not vectorized: more than one data ref in stmt: args = MEM[(struct PULSE_DenseLayerArgs * {ref-all})addr.117_98];
+PULSE.c:132:17: missed: statement clobbers memory: *_10 = PULSE_CreateDenseLayer (args, WEIGHTS_PTR_154, IO_PTR_155); [return slot optimization]
+PULSE.c:133:20: missed: statement clobbers memory: _66 = PULSE_GetDenseWeightsSize (args);
+PULSE.c:134:15: missed: statement clobbers memory: _69 = PULSE_GetDenseIOSize (args);
+PULSE.c:131:26: missed: not vectorized: more than one data ref in stmt: args = MEM[(struct PULSE_DenseLayerArgs * {ref-all})addr.117_126];
+PULSE.c:132:17: missed: statement clobbers memory: *_108 = PULSE_CreateDenseLayer (args, WEIGHTS_PTR_150, IO_PTR_145); [return slot optimization]
+PULSE.c:133:20: missed: statement clobbers memory: _97 = PULSE_GetDenseWeightsSize (args);
+PULSE.c:134:15: missed: statement clobbers memory: _61 = PULSE_GetDenseIOSize (args);
+PULSE.c:140:2: missed: statement clobbers memory: __builtin_va_end (&layers_info);
+PULSE.c:141:9: note: ***** Analysis succeeded with vector mode V8SI
+PULSE.c:141:9: note: SLPing BB part
+PULSE.c:141:9: note: Costing subgraph: 
+PULSE.c:141:9: note: node 0x46b6d18 (max_nunits=4, refcnt=1) vector(4) unsigned int
+PULSE.c:141:9: note: op template: <retval>.n_layers = _20;
+PULSE.c:141:9: note: 	stmt 0 <retval>.n_layers = _20;
+PULSE.c:141:9: note: 	stmt 1 <retval>.weights_size = WEIGHTS_SIZE_166;
+PULSE.c:141:9: note: 	stmt 2 <retval>.io_size = IO_SIZE_169;
+PULSE.c:141:9: note: 	stmt 3 <retval>.fixes_size = FIXES_SIZE_170;
+PULSE.c:141:9: note: 	children 0x46b6e18
+PULSE.c:141:9: note: node (external) 0x46b6e18 (max_nunits=1, refcnt=1) vector(4) unsigned int
+PULSE.c:141:9: note: 	{ _20, WEIGHTS_SIZE_166, IO_SIZE_169, FIXES_SIZE_170 }
+PULSE.c:141:9: note: Cost model analysis: 
+PULSE.c:141:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 52
+  Scalar cost: 64
+PULSE.c:141:9: note: Costing subgraph: 
+PULSE.c:141:9: note: node 0x46b6f18 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+PULSE.c:141:9: note: op template: <retval>.layers = layers_42;
+PULSE.c:141:9: note: 	stmt 0 <retval>.layers = layers_42;
+PULSE.c:141:9: note: 	stmt 1 <retval>.weights = WEIGHTS_165;
+PULSE.c:141:9: note: 	children 0x46b7018
+PULSE.c:141:9: note: node (external) 0x46b7018 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+PULSE.c:141:9: note: 	{ layers_42, WEIGHTS_165 }
+PULSE.c:141:9: note: Cost model analysis: 
+PULSE.c:141:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+PULSE.c:141:9: note: Costing subgraph: 
+PULSE.c:141:9: note: node 0x46b7098 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+PULSE.c:141:9: note: op template: <retval>.io = 0B;
+PULSE.c:141:9: note: 	stmt 0 <retval>.io = 0B;
+PULSE.c:141:9: note: 	stmt 1 <retval>.fixes = 0B;
+PULSE.c:141:9: note: 	children 0x46b7118
+PULSE.c:141:9: note: node (constant) 0x46b7118 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+PULSE.c:141:9: note: 	{ 0B, 0B }
+PULSE.c:141:9: note: Cost model analysis: 
+PULSE.c:141:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+PULSE.c:141:9: note: Basic block will be vectorized using SLP
+PULSE.c:141:9: optimized: basic block part vectorized using 16 byte vectors
+PULSE.c:141:9: note: Vectorizing SLP tree:
+PULSE.c:141:9: note: node 0x46b6d18 (max_nunits=4, refcnt=1) vector(4) unsigned int
+PULSE.c:141:9: note: op template: <retval>.n_layers = _20;
+PULSE.c:141:9: note: 	stmt 0 <retval>.n_layers = _20;
+PULSE.c:141:9: note: 	stmt 1 <retval>.weights_size = WEIGHTS_SIZE_166;
+PULSE.c:141:9: note: 	stmt 2 <retval>.io_size = IO_SIZE_169;
+PULSE.c:141:9: note: 	stmt 3 <retval>.fixes_size = FIXES_SIZE_170;
+PULSE.c:141:9: note: 	children 0x46b6e18
+PULSE.c:141:9: note: node (external) 0x46b6e18 (max_nunits=1, refcnt=1) vector(4) unsigned int
+PULSE.c:141:9: note: 	{ _20, WEIGHTS_SIZE_166, IO_SIZE_169, FIXES_SIZE_170 }
+PULSE.c:141:9: note: ------>vectorizing SLP node starting from: <retval>.n_layers = _20;
+PULSE.c:141:9: note: vect_is_simple_use: operand WEIGHTS_SIZE_166 = PHI <WEIGHTS_SIZE_163(36), 0(25)>, type of def: internal
+PULSE.c:141:9: note: vect_is_simple_use: operand IO_SIZE_169 = PHI <IO_SIZE_162(36), 0(25)>, type of def: internal
+PULSE.c:141:9: note: vect_is_simple_use: operand FIXES_SIZE_170 = PHI <FIXES_SIZE_161(36), 0(25)>, type of def: internal
+PULSE.c:141:9: note: transform store. ncopies = 1
+PULSE.c:141:9: note: create vector_type-pointer variable to type: vector(4) unsigned int  vectorizing a pointer ref: <retval>.n_layers
+PULSE.c:141:9: note: created &<retval>.n_layers
+PULSE.c:141:9: note: add new stmt: MEM <vector(4) unsigned int> [(unsigned int *)&<retval> + 32B] = _17;
+PULSE.c:141:9: note: vectorizing stmts using SLP.
+PULSE.c:141:9: optimized: basic block part vectorized using 16 byte vectors
+PULSE.c:141:9: note: Vectorizing SLP tree:
+PULSE.c:141:9: note: node 0x46b6f18 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+PULSE.c:141:9: note: op template: <retval>.layers = layers_42;
+PULSE.c:141:9: note: 	stmt 0 <retval>.layers = layers_42;
+PULSE.c:141:9: note: 	stmt 1 <retval>.weights = WEIGHTS_165;
+PULSE.c:141:9: note: 	children 0x46b7018
+PULSE.c:141:9: note: node (external) 0x46b7018 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+PULSE.c:141:9: note: 	{ layers_42, WEIGHTS_165 }
+PULSE.c:141:9: note: ------>vectorizing SLP node starting from: <retval>.layers = layers_42;
+PULSE.c:141:9: note: vect_is_simple_use: operand WEIGHTS_165 = PHI <WEIGHTS_47(36), WEIGHTS_88(25)>, type of def: internal
+PULSE.c:141:9: note: conflicting alias set types.
+PULSE.c:141:9: note: transform store. ncopies = 1
+PULSE.c:141:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.layers
+PULSE.c:141:9: note: created &<retval>
+PULSE.c:141:9: note: add new stmt: MEM <vector(2) long unsigned int> [(void *)&<retval>] = _87;
+PULSE.c:141:9: note: vectorizing stmts using SLP.
+PULSE.c:141:9: optimized: basic block part vectorized using 16 byte vectors
+PULSE.c:141:9: note: Vectorizing SLP tree:
+PULSE.c:141:9: note: node 0x46b7098 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+PULSE.c:141:9: note: op template: <retval>.io = 0B;
+PULSE.c:141:9: note: 	stmt 0 <retval>.io = 0B;
+PULSE.c:141:9: note: 	stmt 1 <retval>.fixes = 0B;
+PULSE.c:141:9: note: 	children 0x46b7118
+PULSE.c:141:9: note: node (constant) 0x46b7118 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+PULSE.c:141:9: note: 	{ 0B, 0B }
+PULSE.c:141:9: note: ------>vectorizing SLP node starting from: <retval>.io = 0B;
+PULSE.c:141:9: note: vect_is_simple_use: operand 0B, type of def: constant
+PULSE.c:141:9: note: transform store. ncopies = 1
+PULSE.c:141:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.io
+PULSE.c:141:9: note: created &<retval>.io
+PULSE.c:141:9: note: add new stmt: MEM <vector(2) long unsigned int> [(float * *)&<retval> + 16B] = { 0, 0 };
+PULSE.c:141:9: note: vectorizing stmts using SLP.
+PULSE.c:141:9: note: ***** The result for vector mode V32QI would be the same
+PULSE.c:147:2: missed: statement clobbers memory: free (_1);
+PULSE.c:148:2: missed: statement clobbers memory: free (_2);
+PULSE.c:149:2: missed: statement clobbers memory: free (_3);
+PULSE.c:150:1: note: ***** Analysis failed with vector mode V4DI
+PULSE.c:150:1: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+Loss.c:15:19: optimized: loop vectorized using 32 byte vectors
+Loss.c:15:19: optimized:  loop versioned for vectorization because of possible aliasing
+Loss.c:15:19: optimized: loop vectorized using 16 byte vectors
+Loss.c:12:23: note: vectorized 1 loops in function.
+Loss.c:12:23: note: ***** Analysis failed with vector mode V8SF
+Loss.c:12:23: note: ***** The result for vector mode V32QI would be the same
+Loss.c:12:23: note: ***** Re-trying analysis with vector mode V16QI
+Loss.c:12:23: note: ***** Analysis failed with vector mode V16QI
+Loss.c:12:23: note: ***** Re-trying analysis with vector mode V8QI
+Loss.c:12:23: note: ***** Analysis failed with vector mode V8QI
+Loss.c:12:23: note: ***** Re-trying analysis with vector mode V4QI
+Loss.c:12:23: note: ***** Analysis failed with vector mode V4QI
+Loss.c:7:19: missed: couldn't vectorize loop
+Loss.c:8:38: missed: not vectorized: unsupported use in stmt.
+Loss.c:4:23: note: vectorized 0 loops in function.
+Loss.c:9:13: note: ***** Analysis failed with vector mode V8SF
+Loss.c:9:13: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+Loss.c:23:2: note: ***** Analysis failed with vector mode VOID
+Dense.c:9:27: missed: couldn't vectorize loop
+Dense.c:9:27: missed: not vectorized: unsupported outerloop form.
+Dense.c:12:20: missed: couldn't vectorize loop
+Dense.c:13:21: missed: not vectorized: complicated access pattern.
+Dense.c:6:13: note: vectorized 0 loops in function.
+Dense.c:16:2: missed: statement clobbers memory: _28 (pretmp_91, _51, 0);
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:9:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:9:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:9:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:24:27: missed: couldn't vectorize loop
+Dense.c:24:27: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:28:20: optimized: loop vectorized using 32 byte vectors
+Dense.c:28:20: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:28:20: optimized: loop vectorized using 16 byte vectors
+Dense.c:28:20: missed: couldn't vectorize loop
+Dense.c:30:19: missed: not vectorized: no vectype for stmt: _19 = *_18;
+ scalar_type: float
+Dense.c:20:13: note: vectorized 1 loops in function.
+Dense.c:23:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4DI
+Dense.c:24:54: note: ***** The result for vector mode V32QI would be the same
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V16QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V8QI
+Dense.c:24:54: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:24:54: note: ***** Analysis failed with vector mode V4QI
+Dense.c:41:28: missed: couldn't vectorize loop
+Dense.c:41:28: missed: not vectorized: unsupported outerloop form.
+Dense.c:45:21: optimized: loop vectorized using 32 byte vectors
+Dense.c:45:21: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:45:21: optimized: loop vectorized using 16 byte vectors
+Dense.c:37:13: note: vectorized 1 loops in function.
+Dense.c:37:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:37:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:37:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:37:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:41:55: note: ***** Analysis failed with vector mode V4QI
+Dense.c:182:56: note: ***** Analysis succeeded with vector mode V4DI
+Dense.c:182:56: note: SLPing BB part
+Dense.c:182:56: note: Costing subgraph: 
+Dense.c:182:56: note: node 0x7170e38 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:182:56: note: op template: _4 = (long unsigned int) _3;
+Dense.c:182:56: note: 	stmt 0 _4 = (long unsigned int) _3;
+Dense.c:182:56: note: 	stmt 1 _7 = (sizetype) _2;
+Dense.c:182:56: note: 	children 0x7170f38
+Dense.c:182:56: note: node (external) 0x7170f38 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Dense.c:182:56: note: 	{ _3, _2 }
+Dense.c:182:56: note: Cost model analysis: 
+Dense.c:182:56: note: Cost model analysis for part in loop 0:
+  Vector cost: 30
+  Scalar cost: 8
+Dense.c:182:56: missed: not vectorized: vectorization is not profitable.
+Dense.c:182:56: note: ***** The result for vector mode V32QI would be the same
+Dense.c:182:56: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:182:56: note: ***** Analysis succeeded with vector mode V16QI
+Dense.c:182:56: note: SLPing BB part
+Dense.c:182:56: note: Costing subgraph: 
+Dense.c:182:56: note: node 0x7170e38 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:182:56: note: op template: _4 = (long unsigned int) _3;
+Dense.c:182:56: note: 	stmt 0 _4 = (long unsigned int) _3;
+Dense.c:182:56: note: 	stmt 1 _7 = (sizetype) _2;
+Dense.c:182:56: note: 	children 0x7170eb8
+Dense.c:182:56: note: node (external) 0x7170eb8 (max_nunits=1, refcnt=1) vector(2) unsigned int
+Dense.c:182:56: note: 	{ _3, _2 }
+Dense.c:182:56: note: Cost model analysis: 
+Dense.c:182:56: note: Cost model analysis for part in loop 0:
+  Vector cost: 30
+  Scalar cost: 8
+Dense.c:182:56: missed: not vectorized: vectorization is not profitable.
+Dense.c:182:56: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:182:56: note: ***** Analysis failed with vector mode V8QI
+Dense.c:182:56: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:182:56: note: ***** Analysis failed with vector mode V4QI
+Dense.c:166:10: optimized: loop vectorized using 32 byte vectors
+Dense.c:166:10: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:166:10: optimized: loop vectorized using 16 byte vectors
+Dense.c:157:10: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_27, _64);
+Dense.c:150:10: optimized: loop vectorized using 32 byte vectors
+Dense.c:150:10: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:150:10: optimized: loop vectorized using 16 byte vectors
+Dense.c:141:10: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_14, _56);
+Dense.c:132:13: note: vectorized 2 loops in function.
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_14, _56);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_15, { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_27, _64);
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:1029:3: missed: statement clobbers memory: __builtin_ia32_movntps256 (_28, { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 });
+Dense.c:132:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:132:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:132:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:132:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:132:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:132:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:132:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:132:13: note: ***** Analysis failed with vector mode V4QI
+Dense.c:92:24: missed: couldn't vectorize loop
+Dense.c:110:25: missed: failed: evolution of base is not affine.
+Dense.c:107:12: optimized: loop vectorized using 32 byte vectors
+Dense.c:107:12: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:92:24: missed: couldn't vectorize loop
+Dense.c:92:24: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:107:12: optimized: loop vectorized using 32 byte vectors
+Dense.c:107:12: optimized:  loop versioned for vectorization because of possible aliasing
+Dense.c:97:17: missed: couldn't vectorize loop
+Dense.c:97:17: missed: not vectorized: number of iterations cannot be computed.
+Dense.c:114:24: missed: couldn't vectorize loop
+Dense.c:116:32: missed: not vectorized: no vectype for stmt: _188 = this_89(D)->outputs;
+ scalar_type: float *
+Dense.c:114:24: missed: couldn't vectorize loop
+Dense.c:114:24: missed: not vectorized: could not determine main exit from loop with multiple exits.
+Dense.c:119:17: missed: couldn't vectorize loop
+Dense.c:119:17: missed: not vectorized: number of iterations cannot be computed.
+Dense.c:83:13: note: vectorized 2 loops in function.
+Dense.c:86:2: missed: statement clobbers memory: _1 (_3, _2, 1);
+Dense.c:83:13: note: ***** Analysis succeeded with vector mode V4DI
+Dense.c:83:13: note: SLPing BB part
+Dense.c:121:17: note: Costing subgraph: 
+Dense.c:121:17: note: node 0x7171138 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:121:17: note: op template: _61 = (sizetype) j_153;
+Dense.c:121:17: note: 	stmt 0 _61 = (sizetype) j_153;
+Dense.c:121:17: note: 	stmt 1 _247 = (sizetype) wi_155;
+Dense.c:121:17: note: 	children 0x7171238
+Dense.c:121:17: note: node (external) 0x7171238 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:121:17: note: 	{ j_153, wi_155 }
+Dense.c:121:17: note: Cost model analysis: 
+Dense.c:121:17: note: Scalar 1 and vector 2 loop part do not match up, skipping scalar part
+Dense.c:121:17: note: Cost model analysis for part in loop 2:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:121:17: missed: not vectorized: vectorization is not profitable.
+Dense.c:83:13: note: Costing subgraph: 
+Dense.c:83:13: note: node 0x7171338 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:83:13: note: op template: _17 = (sizetype) j_150;
+Dense.c:83:13: note: 	stmt 0 _17 = (sizetype) j_150;
+Dense.c:83:13: note: 	stmt 1 _311 = (sizetype) wi_154;
+Dense.c:83:13: note: 	children 0x7171438
+Dense.c:83:13: note: node (external) 0x7171438 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:83:13: note: 	{ j_150, wi_154 }
+Dense.c:83:13: note: node 0x7171538 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:83:13: note: op template: _249 = (sizetype) j_142;
+Dense.c:83:13: note: 	stmt 0 _249 = (sizetype) j_142;
+Dense.c:83:13: note: 	stmt 1 _311 = (sizetype) wi_154;
+Dense.c:83:13: note: 	children 0x7171638
+Dense.c:83:13: note: node (external) 0x7171638 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:83:13: note: 	{ j_142, wi_154 }
+Dense.c:83:13: note: Cost model analysis: 
+Dense.c:83:13: note: Cost model analysis for part in loop 4:
+  Vector cost: 36
+  Scalar cost: 12
+Dense.c:83:13: missed: not vectorized: vectorization is not profitable.
+Dense.c:83:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:83:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:83:13: note: ***** Analysis succeeded with vector mode V16QI
+Dense.c:83:13: note: SLPing BB part
+Dense.c:121:17: note: Costing subgraph: 
+Dense.c:121:17: note: node 0x7170e38 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:121:17: note: op template: _61 = (sizetype) j_153;
+Dense.c:121:17: note: 	stmt 0 _61 = (sizetype) j_153;
+Dense.c:121:17: note: 	stmt 1 _247 = (sizetype) wi_155;
+Dense.c:121:17: note: 	children 0x7170fb8
+Dense.c:121:17: note: node (external) 0x7170fb8 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:121:17: note: 	{ j_153, wi_155 }
+Dense.c:121:17: note: Cost model analysis: 
+Dense.c:121:17: note: Scalar 1 and vector 2 loop part do not match up, skipping scalar part
+Dense.c:121:17: note: Cost model analysis for part in loop 2:
+  Vector cost: 36
+  Scalar cost: 8
+Dense.c:121:17: missed: not vectorized: vectorization is not profitable.
+Dense.c:83:13: note: Costing subgraph: 
+Dense.c:83:13: note: node 0x7171038 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:83:13: note: op template: _17 = (sizetype) j_150;
+Dense.c:83:13: note: 	stmt 0 _17 = (sizetype) j_150;
+Dense.c:83:13: note: 	stmt 1 _311 = (sizetype) wi_154;
+Dense.c:83:13: note: 	children 0x71716b8
+Dense.c:83:13: note: node (external) 0x71716b8 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:83:13: note: 	{ j_150, wi_154 }
+Dense.c:83:13: note: node 0x71717b8 (max_nunits=2, refcnt=1) vector(2) sizetype
+Dense.c:83:13: note: op template: _249 = (sizetype) j_142;
+Dense.c:83:13: note: 	stmt 0 _249 = (sizetype) j_142;
+Dense.c:83:13: note: 	stmt 1 _311 = (sizetype) wi_154;
+Dense.c:83:13: note: 	children 0x71713b8
+Dense.c:83:13: note: node (external) 0x71713b8 (max_nunits=1, refcnt=1) vector(2) int
+Dense.c:83:13: note: 	{ j_142, wi_154 }
+Dense.c:83:13: note: Cost model analysis: 
+Dense.c:83:13: note: Cost model analysis for part in loop 4:
+  Vector cost: 36
+  Scalar cost: 12
+Dense.c:83:13: missed: not vectorized: vectorization is not profitable.
+Dense.c:83:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:110:29: note: ***** Analysis failed with vector mode V8QI
+Dense.c:110:29: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:92:51: note: ***** Analysis failed with vector mode V4QI
+Dense.c:62:15: missed: couldn't vectorize loop
+Dense.c:62:15: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+Dense.c:75:11: optimized: loop vectorized using 32 byte vectors
+Dense.c:75:11: optimized: loop vectorized using 16 byte vectors
+Dense.c:66:11: missed: couldn't vectorize loop
+/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/avxintrin.h:881:10: missed: not vectorized: no vectype for stmt: _53 = MEM[(__m256 * {ref-all})w_ptr_82];
+ scalar_type: __m256
+Dense.c:54:13: note: vectorized 1 loops in function.
+Dense.c:57:2: missed: statement clobbers memory: memcpy (_4, dense$baiases_63, _3);
+Dense.c:79:2: missed: statement clobbers memory: _27 (pretmp_163, _68, 0);
+Dense.c:54:13: note: ***** Analysis failed with vector mode V4DI
+Dense.c:54:13: note: ***** The result for vector mode V32QI would be the same
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V16QI
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V8QI
+Dense.c:54:13: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:54:13: note: ***** Analysis failed with vector mode V4QI
+Dense.c:175:107: note: ***** Analysis failed with vector mode V8SI
+Dense.c:175:107: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+Dense.c:176:85: note: ***** Analysis failed with vector mode V8SI
+Dense.c:176:85: note: ***** The result for vector mode V32QI would be the same
+Dense.c:176:85: note: ***** Re-trying analysis with vector mode V16QI
+Dense.c:176:85: note: ***** Analysis failed with vector mode V16QI
+Dense.c:176:85: note: ***** Re-trying analysis with vector mode V8QI
+Dense.c:176:85: note: ***** Analysis failed with vector mode V8QI
+Dense.c:176:85: note: ***** Re-trying analysis with vector mode V4QI
+Dense.c:176:85: note: ***** Analysis failed with vector mode V4QI
+Dense.c:177:107: note: ***** Analysis failed with vector mode V8SI
+Dense.c:177:107: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+Dense.c:193:19: missed: couldn't vectorize loop
+Dense.c:193:19: missed: not vectorized: unsupported control flow in loop.
+Dense.c:186:13: note: vectorized 0 loops in function.
+Dense.c:194:38: missed: statement clobbers memory: _5 = rand ();
+Dense.c:194:72: missed: statement clobbers memory: _65 = sqrt (_12);
+Dense.c:207:19: missed: statement clobbers memory: _24 = PULSE_GetActivationFunctionPtr (_23);
+Dense.c:223:4: missed: statement clobbers memory: printf ("ERROR: PULSE Layer GPU are not supported on this device");
+Dense.c:224:4: missed: statement clobbers memory: exit (1);
+Dense.c:228:9: note: ***** Analysis succeeded with vector mode V8SI
+Dense.c:228:9: note: SLPing BB part
+Dense.c:228:9: note: Costing subgraph: 
+Dense.c:228:9: note: node 0x6f92dc8 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:228:9: note: op template: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:228:9: note: 	stmt 0 <retval>.n_inputs = args$n_inputs_41;
+Dense.c:228:9: note: 	stmt 1 <retval>.n_outputs = args$n_outputs_42;
+Dense.c:228:9: note: 	children 0x6f92e48
+Dense.c:228:9: note: node 0x6f92e48 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:228:9: note: op template: args$n_inputs_41 = args.n_inputs;
+Dense.c:228:9: note: 	stmt 0 args$n_inputs_41 = args.n_inputs;
+Dense.c:228:9: note: 	stmt 1 args$n_outputs_42 = args.n_outputs;
+Dense.c:228:9: note: Cost model analysis: 
+Dense.c:228:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 40
+  Scalar cost: 56
+Dense.c:228:9: note: Costing subgraph: 
+Dense.c:228:9: note: node 0x6f92f48 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: op template: <retval>.inputs = IO_31(D);
+Dense.c:228:9: note: 	stmt 0 <retval>.inputs = IO_31(D);
+Dense.c:228:9: note: 	stmt 1 <retval>.outputs = _22;
+Dense.c:228:9: note: 	children 0x6f92fc8
+Dense.c:228:9: note: node (external) 0x6f92fc8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: 	{ IO_31(D), _22 }
+Dense.c:228:9: note: Cost model analysis: 
+Dense.c:228:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:228:9: note: Costing subgraph: 
+Dense.c:228:9: note: node 0x6f930c8 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Dense.c:228:9: note: op template: <retval>.feed = layer$feed_30;
+Dense.c:228:9: note: 	stmt 0 <retval>.feed = layer$feed_30;
+Dense.c:228:9: note: 	stmt 1 <retval>.back = layer$back_39;
+Dense.c:228:9: note: 	stmt 2 <retval>.fix = layer$fix_40;
+Dense.c:228:9: note: 	stmt 3 <retval>.activate = _25;
+Dense.c:228:9: note: 	children 0x6f931c8
+Dense.c:228:9: note: node (external) 0x6f931c8 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Dense.c:228:9: note: 	{ layer$feed_30, layer$back_39, layer$fix_40, _25 }
+Dense.c:228:9: note: Cost model analysis: 
+Dense.c:228:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 64
+  Scalar cost: 64
+Dense.c:228:9: note: Costing subgraph: 
+Dense.c:228:9: note: node 0x6f932c8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: op template: <retval>.parent = 0B;
+Dense.c:228:9: note: 	stmt 0 <retval>.parent = 0B;
+Dense.c:228:9: note: 	stmt 1 <retval>.child = 0B;
+Dense.c:228:9: note: 	children 0x6f93348
+Dense.c:228:9: note: node (constant) 0x6f93348 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: 	{ 0B, 0B }
+Dense.c:228:9: note: Cost model analysis: 
+Dense.c:228:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:228:9: note: Costing subgraph: 
+Dense.c:228:9: note: node 0x6f933c8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: op template: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:228:9: note: 	stmt 0 MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:228:9: note: 	stmt 1 MEM <float *> [(struct PULSE_Layer *)&<retval> + 96B] = _4;
+Dense.c:228:9: note: 	children 0x6f93448
+Dense.c:228:9: note: node (external) 0x6f93448 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: 	{ MODEL_29(D), _4 }
+Dense.c:228:9: note: Cost model analysis: 
+Dense.c:228:9: note: Cost model analysis for part in loop 0:
+  Vector cost: 32
+  Scalar cost: 32
+Dense.c:228:9: note: Basic block will be vectorized using SLP
+Dense.c:228:9: optimized: basic block part vectorized using 8 byte vectors
+Dense.c:228:9: note: Vectorizing SLP tree:
+Dense.c:228:9: note: node 0x6f92dc8 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:228:9: note: op template: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:228:9: note: 	stmt 0 <retval>.n_inputs = args$n_inputs_41;
+Dense.c:228:9: note: 	stmt 1 <retval>.n_outputs = args$n_outputs_42;
+Dense.c:228:9: note: 	children 0x6f92e48
+Dense.c:228:9: note: node 0x6f92e48 (max_nunits=2, refcnt=1) vector(2) unsigned int
+Dense.c:228:9: note: op template: args$n_inputs_41 = args.n_inputs;
+Dense.c:228:9: note: 	stmt 0 args$n_inputs_41 = args.n_inputs;
+Dense.c:228:9: note: 	stmt 1 args$n_outputs_42 = args.n_outputs;
+Dense.c:228:9: note: ------>vectorizing SLP node starting from: args$n_inputs_41 = args.n_inputs;
+Dense.c:228:9: note: transform load. ncopies = 1
+Dense.c:228:9: note: conflicting alias set types.
+Dense.c:228:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: args.n_inputs
+Dense.c:228:9: note: created &args
+Dense.c:228:9: note: add new stmt: vect_args_n_inputs_41.553_26 = MEM <vector(2) unsigned int> [(void *)&args];
+Dense.c:228:9: note: extracting lane for live stmt args$n_inputs_41 = args.n_inputs;
+Dense.c:228:9: note: extracting lane for live stmt args$n_outputs_42 = args.n_outputs;
+Dense.c:228:9: note: ------>vectorizing SLP node starting from: <retval>.n_inputs = args$n_inputs_41;
+Dense.c:228:9: note: vect_is_simple_use: operand args.n_inputs, type of def: internal
+Dense.c:228:9: note: vect_is_simple_use: operand args.n_outputs, type of def: internal
+Dense.c:228:9: note: transform store. ncopies = 1
+Dense.c:228:9: note: create vector_type-pointer variable to type: vector(2) unsigned int  vectorizing a pointer ref: <retval>.n_inputs
+Dense.c:228:9: note: created &<retval>.n_inputs
+Dense.c:228:9: note: add new stmt: MEM <vector(2) unsigned int> [(unsigned int *)&<retval> + 128B] = vect_args_n_inputs_41.553_26;
+Dense.c:228:9: note: vectorizing stmts using SLP.
+Dense.c:228:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:228:9: note: Vectorizing SLP tree:
+Dense.c:228:9: note: node 0x6f92f48 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: op template: <retval>.inputs = IO_31(D);
+Dense.c:228:9: note: 	stmt 0 <retval>.inputs = IO_31(D);
+Dense.c:228:9: note: 	stmt 1 <retval>.outputs = _22;
+Dense.c:228:9: note: 	children 0x6f92fc8
+Dense.c:228:9: note: node (external) 0x6f92fc8 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: 	{ IO_31(D), _22 }
+Dense.c:228:9: note: ------>vectorizing SLP node starting from: <retval>.inputs = IO_31(D);
+Dense.c:228:9: note: vect_is_simple_use: operand IO_31(D) + _21, type of def: internal
+Dense.c:228:9: note: transform store. ncopies = 1
+Dense.c:228:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.inputs
+Dense.c:228:9: note: created &<retval>
+Dense.c:228:9: note: add new stmt: MEM <vector(2) long unsigned int> [(float * *)&<retval>] = _78;
+Dense.c:228:9: note: vectorizing stmts using SLP.
+Dense.c:228:9: optimized: basic block part vectorized using 32 byte vectors
+Dense.c:228:9: note: Vectorizing SLP tree:
+Dense.c:228:9: note: node 0x6f930c8 (max_nunits=4, refcnt=1) vector(4) long unsigned int
+Dense.c:228:9: note: op template: <retval>.feed = layer$feed_30;
+Dense.c:228:9: note: 	stmt 0 <retval>.feed = layer$feed_30;
+Dense.c:228:9: note: 	stmt 1 <retval>.back = layer$back_39;
+Dense.c:228:9: note: 	stmt 2 <retval>.fix = layer$fix_40;
+Dense.c:228:9: note: 	stmt 3 <retval>.activate = _25;
+Dense.c:228:9: note: 	children 0x6f931c8
+Dense.c:228:9: note: node (external) 0x6f931c8 (max_nunits=1, refcnt=1) vector(4) long unsigned int
+Dense.c:228:9: note: 	{ layer$feed_30, layer$back_39, layer$fix_40, _25 }
+Dense.c:228:9: note: ------>vectorizing SLP node starting from: <retval>.feed = layer$feed_30;
+Dense.c:228:9: note: vect_is_simple_use: operand layer$back_39 = PHI <layer$back_45(D)(11), _BackDense(9), _SIMD_BackDense(15)>, type of def: internal
+Dense.c:228:9: note: vect_is_simple_use: operand layer$fix_40 = PHI <layer$fix_46(D)(11), _FixDense(9), _SIMD_FixDense(15)>, type of def: internal
+Dense.c:228:9: note: vect_is_simple_use: operand (void (*<T91a>) (float *, unsigned int, char)) _24, type of def: internal
+Dense.c:228:9: note: conflicting alias set types.
+Dense.c:228:9: note: transform store. ncopies = 1
+Dense.c:228:9: note: create vector_type-pointer variable to type: vector(4) long unsigned int  vectorizing a pointer ref: <retval>.feed
+Dense.c:228:9: note: created &<retval>.feed
+Dense.c:228:9: note: add new stmt: MEM <vector(4) long unsigned int> [(void *)&<retval> + 32B] = _84;
+Dense.c:228:9: note: vectorizing stmts using SLP.
+Dense.c:228:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:228:9: note: Vectorizing SLP tree:
+Dense.c:228:9: note: node 0x6f932c8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: op template: <retval>.parent = 0B;
+Dense.c:228:9: note: 	stmt 0 <retval>.parent = 0B;
+Dense.c:228:9: note: 	stmt 1 <retval>.child = 0B;
+Dense.c:228:9: note: 	children 0x6f93348
+Dense.c:228:9: note: node (constant) 0x6f93348 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: 	{ 0B, 0B }
+Dense.c:228:9: note: ------>vectorizing SLP node starting from: <retval>.parent = 0B;
+Dense.c:228:9: note: vect_is_simple_use: operand 0B, type of def: constant
+Dense.c:228:9: note: transform store. ncopies = 1
+Dense.c:228:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: <retval>.parent
+Dense.c:228:9: note: created &<retval>.parent
+Dense.c:228:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer * *)&<retval> + 72B] = { 0, 0 };
+Dense.c:228:9: note: vectorizing stmts using SLP.
+Dense.c:228:9: optimized: basic block part vectorized using 16 byte vectors
+Dense.c:228:9: note: Vectorizing SLP tree:
+Dense.c:228:9: note: node 0x6f933c8 (max_nunits=2, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: op template: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:228:9: note: 	stmt 0 MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:228:9: note: 	stmt 1 MEM <float *> [(struct PULSE_Layer *)&<retval> + 96B] = _4;
+Dense.c:228:9: note: 	children 0x6f93448
+Dense.c:228:9: note: node (external) 0x6f93448 (max_nunits=1, refcnt=1) vector(2) long unsigned int
+Dense.c:228:9: note: 	{ MODEL_29(D), _4 }
+Dense.c:228:9: note: ------>vectorizing SLP node starting from: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B] = MODEL_29(D);
+Dense.c:228:9: note: vect_is_simple_use: operand MODEL_29(D) + _3, type of def: internal
+Dense.c:228:9: note: transform store. ncopies = 1
+Dense.c:228:9: note: create vector_type-pointer variable to type: vector(2) long unsigned int  vectorizing a pointer ref: MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B]
+Dense.c:228:9: note: created &MEM <float *> [(struct PULSE_Layer *)&<retval> + 88B]
+Dense.c:228:9: note: add new stmt: MEM <vector(2) long unsigned int> [(struct PULSE_Layer *)&<retval> + 88B] = _89;
+Dense.c:228:9: note: vectorizing stmts using SLP.
+Dense.c:228:9: note: ***** The result for vector mode V32QI would be the same
