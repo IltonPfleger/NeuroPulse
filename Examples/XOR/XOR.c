@@ -13,7 +13,7 @@ int main()
 			PULSE_DENSE,(PULSE_DenseLayerArgs){128, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_NONE});
 
 	double t1 = omp_get_wtime();
-	PULSE_Train(model.layers, 15000, 4, (PULSE_HyperArgs){2, 0.1}, PULSE_LOSS_MSE, (PULSE_DataType*)x, (PULSE_DataType*)y);
+	PULSE_Train(model, 15000, 4, (PULSE_HyperArgs){2, 0.1}, PULSE_LOSS_MSE, (PULSE_DataType*)x, (PULSE_DataType*)y);
 	double t2 = omp_get_wtime();
 	printf("%f\n", t2 - t1);
 

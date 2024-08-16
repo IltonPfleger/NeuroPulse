@@ -1,7 +1,7 @@
 #include "Include/Loss.h"
 
 
-static PULSE_DataType _MSE(PULSE_DataType * x, PULSE_DataType * y, PULSE_DataType * errors, PULSE_N size)
+static PULSE_DataType _MSE(PULSE_DataType * x, PULSE_DataType * y, PULSE_DataType * errors, PULSE_Size_t size)
 {
 	PULSE_DataType loss = 0;
 	for(int i = 0; i < size; i++)
@@ -9,7 +9,7 @@ static PULSE_DataType _MSE(PULSE_DataType * x, PULSE_DataType * y, PULSE_DataTyp
 	return loss/size;
 }
 
-static PULSE_DataType _MSA(PULSE_DataType * x, PULSE_DataType * y, PULSE_DataType * errors, PULSE_N size)
+static PULSE_DataType _MSA(PULSE_DataType * x, PULSE_DataType * y, PULSE_DataType * errors, PULSE_Size_t size)
 {
 	PULSE_DataType loss = 0;
 	for(int i = 0; i < size; i++)

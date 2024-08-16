@@ -74,7 +74,7 @@ int main()
 
 
 	double t1 = omp_get_wtime();
-	PULSE_Train(model.layers, 5, 60000, (PULSE_HyperArgs){100, 0.1}, PULSE_LOSS_MSE, (PULSE_DataType*)images, (PULSE_DataType*)labels);
+	PULSE_Train(model, 5, 60000, (PULSE_HyperArgs){100, 0.1}, PULSE_LOSS_MSE, (PULSE_DataType*)images, (PULSE_DataType*)labels);
 	double t2 = omp_get_wtime();
 	printf("%f\n", t2 - t1);
 	print_one_hot_label(PULSE_Foward(model.layers, images));

@@ -9,7 +9,7 @@
 #include <time.h>
 
 #define PULSE_DataType float
-#define PULSE_N unsigned int
+#define PULSE_Size_t unsigned int
 #define PULSE_Void void
 
 typedef struct {

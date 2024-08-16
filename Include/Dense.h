@@ -14,5 +14,6 @@ typedef struct
 PULSE_Layer PULSE_CreateDenseLayer(PULSE_DenseLayerArgs, PULSE_DataType *, PULSE_DataType *);
 unsigned int PULSE_GetDenseWeightsSize(PULSE_DenseLayerArgs);
 unsigned int PULSE_GetDenseIOSize(PULSE_DenseLayerArgs);
+unsigned int PULSE_GetDenseFixesSize(PULSE_DenseLayerArgs);
 
 #endif
