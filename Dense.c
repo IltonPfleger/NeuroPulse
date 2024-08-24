@@ -70,35 +70,53 @@ static void _SIMD_BackDense(PULSE_Layer * this)
     __PULSE_SIMD_DATATYPE delta, errors, gradients, inputs, weights;
     int i = 0, j = 0, wi = 0, J = this->n_inputs - __PULSE_SIMD_N_PER_CHUNK;
 
-    for(i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
-    {
-        PULSE_DataType cdelta = this->outputs[i] * this->errors[i];
-        dense.deltas[i] += cdelta;
-        delta = __PULSE_SIMD_SET_ALL(cdelta);
-        j = 0;
-        while(j < J)
+    if(this->parent != NULL)
+        for(i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
         {
-            gradients = __PULSE_SIMD_LOAD(dense.gradients + wi + j);
-            inputs = __PULSE_SIMD_LOAD(this->inputs + j);
-            gradients = __PULSE_SIMD_MADD(delta, inputs, gradients);
-            __PULSE_SIMD_STORE(&dense.gradients[wi + j], gradients);
-            if(this->parent != NULL)
+            PULSE_DataType cdelta = this->outputs[i] * this->errors[i];
+            dense.deltas[i] += cdelta;
+            delta = __PULSE_SIMD_SET_ALL(cdelta);
+            j = 0;
+            while(j < J)
             {
+                gradients = __PULSE_SIMD_LOAD(dense.gradients + wi + j);
+                inputs = __PULSE_SIMD_LOAD(this->inputs + j);
+                gradients = __PULSE_SIMD_MADD(delta, inputs, gradients);
+                __PULSE_SIMD_STORE(&dense.gradients[wi + j], gradients);
                 weights = __PULSE_SIMD_LOAD(dense.weights + wi + j);
                 errors = __PULSE_SIMD_LOAD(this->parent->errors + j);
                 __PULSE_SIMD_STORE(this->parent->errors + j,__PULSE_SIMD_MADD(weights, delta, errors));
+                j += __PULSE_SIMD_N_PER_CHUNK;
             }
-            j += __PULSE_SIMD_N_PER_CHUNK;
-        }
 
-        for(; j < this->n_inputs; j++)
-        {
-            dense.gradients[wi + j] += cdelta * this->inputs[j];
-            if(this->parent != NULL)
+            for(; j < this->n_inputs; j++)
+            {
+                dense.gradients[wi + j] += cdelta * this->inputs[j];
                 this->parent->errors[j] += dense.weights[wi + j] * cdelta;
+            }
+
+        }
+    else
+        for(i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
+        {
+            PULSE_DataType cdelta = this->outputs[i] * this->errors[i];
+            dense.deltas[i] += cdelta;
+            delta = __PULSE_SIMD_SET_ALL(cdelta);
+            j = 0;
+            while(j < J)
+            {
+                gradients = __PULSE_SIMD_LOAD(dense.gradients + wi + j);
+                inputs = __PULSE_SIMD_LOAD(this->inputs + j);
+                gradients = __PULSE_SIMD_MADD(delta, inputs, gradients);
+                __PULSE_SIMD_STORE(&dense.gradients[wi + j], gradients);
+                j += __PULSE_SIMD_N_PER_CHUNK;
+            }
+
+            for(; j < this->n_inputs; j++)
+                dense.gradients[wi + j] += cdelta * this->inputs[j];
+
         }
 
-    }
 }
 
 #endif

@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O4 -march=native -lm -D__PULSE_CFLAGS_CacheLineSize=`getconf LEVEL1_DCACHE_LINESIZE` -Wall -g
+CFLAGS = -O4 -march=native -lm -D__PULSE_CFLAGS_CacheLineSize=`getconf LEVEL1_DCACHE_LINESIZE` -Wall -g -fopenmp
 OBJECTS = Dense.o Activations.o PULSE.o Loss.o
 LIBRARY = libPULSE.so
 
