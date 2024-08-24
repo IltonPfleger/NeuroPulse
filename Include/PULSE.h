@@ -6,17 +6,17 @@
 #include "Loss.h"
 #include "Activations.h"
 
-typedef struct 
+typedef struct
 {
-	PULSE_Layer * layers;
-	PULSE_DataType * weights;
-	PULSE_DataType * io;
-	PULSE_DataType * fixes;
-	size_t n_layers;
-	size_t weights_size;
-	size_t io_size;
-	size_t fixes_size;
-}PULSE_Model;
+    PULSE_Layer * layers;
+    PULSE_DataType * weights;
+    PULSE_DataType * io;
+    size_t n_layers;
+    size_t weights_size;
+    size_t io_size;
+    size_t fixes_size;
+    size_t errors_size;
+} PULSE_Model;
 
 PULSE_DataType * PULSE_Foward(PULSE_Layer *, PULSE_DataType *);
 PULSE_Model PULSE_CreateModel(int, ...);

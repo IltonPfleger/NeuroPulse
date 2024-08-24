@@ -1,9 +1,9 @@
 
 
-CFLAGS = -O4 -march=native -lm -fopenmp -g
+CFLAGS = -O4 -fopenmp
 
 default:
 	gcc ${CFLAGS} XOR.c -o XOR -L/home/pj/C/NeuroPulse/ -lPULSE -Wl,-rpath=../../
 
-clear:
+clean:
 	rm XOR

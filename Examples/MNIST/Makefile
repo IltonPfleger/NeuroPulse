@@ -1,11 +1,15 @@
 
+CC = gcc
 
-CFLAGS = -O4 -march=native -lm -fopenmp -g -Wall
+CFLAGS = -O4 -march=native -lm -fopenmp -g -Wall -L$(shell pwd)/../../ -lPULSE -Wl,-rpath=../../
 
 default:
-	gcc ${CFLAGS} MNIST.c -o MNIST -L/home/pj/C/NeuroPulse/ -lPULSE -Wl,-rpath=../../
+	@if [ ! -f ./train* ]; then \
+		make download; \
+		fi;
+	$(CC) ${CFLAGS} MNIST.c -o MNIST
 
-clone:
+download:
 	curl -LO https://storage.googleapis.com/cvdf-datasets/mnist/train-images-idx3-ubyte.gz
 	curl -LO https://storage.googleapis.com/cvdf-datasets/mnist/train-labels-idx1-ubyte.gz;
 	curl -LO https://storage.googleapis.com/cvdf-datasets/mnist/t10k-images-idx3-ubyte.gz;
@@ -13,7 +17,7 @@ clone:
 	gzip -dk *.gz
 	rm *.gz
 
-clear:
+clean:
 	rm train*
 	rm t10k*
 	rm MNIST
