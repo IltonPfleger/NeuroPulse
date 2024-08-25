@@ -1,137 +1,238 @@
 #pragma once
+
+#if defined(__PULSE_GPU_SUPPORTED)
+#define __PULSE_GPU_CHECK(x) x
+#else
+#define __PULSE_GPU_CHECK(x) (printf("ERROR: PULSE GPUs Are Not Supported On This Device"), exit(1))
+#endif
+
+#ifdef __PULSE_GPU_SUPPORTED
 #define CL_TARGET_OPENCL_VERSION 300
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <CL/cl.h>
 
 typedef struct
 {
-	cl_program PROGRAM;
-	cl_kernel KERNEL;
-}__PULSE_OPENCL_KERNEL;
+    cl_program PROGRAM;
+    cl_kernel KERNEL;
+} __PULSE_OPENCL_KERNEL;
 
-
+static char RUNNING = 0;
 static cl_device_id DEVICE_ID;
 static cl_context CONTEXT;
 static cl_command_queue QUEUE;
-static cl_mem MEM_A;
-static cl_mem MEM_B;
-static cl_mem MEM_C;
-static size_t MAX_WORK_GROUP_SIZE;
-static size_t BASE_BUFFER_SIZE = 512;
-static cl_ulong GLOBAL_MEM_SIZE;
-static __PULSE_OPENCL_KERNEL MM_1NxTMN;
+static size_t MAX_LOCAL_WORK_SIZE;
 
+static cl_mem READ;
+static cl_mem WRITE;
 
+static __PULSE_OPENCL_KERNEL FeedDense;
+static __PULSE_OPENCL_KERNEL BackDense;
 
-static void __PULSE_OPENCL_CHECK_ERROR(cl_int err) {
-	if (err == CL_SUCCESS) return;
-	printf("ERROR: OpenCL Code: %d.\n", err);
-	exit(1);
+static void __PULSE_OPENCL_CHECK_ERROR(cl_int err)
+{
+    if (err == CL_SUCCESS)
+        return;
+    printf("ERROR: OpenCL Code: %d.\n", err);
+    exit(1);
 }
 
 static void __PULSE_OPENCL_GET_GPU()
 {
-	if(clGetDeviceIDs(NULL, CL_DEVICE_TYPE_GPU, 1, &DEVICE_ID, NULL) == CL_SUCCESS);
-	{
-		char device_name[128];
-		clGetDeviceInfo(DEVICE_ID, CL_DEVICE_NAME, 128, &device_name, NULL);
-		CONTEXT = clCreateContext(NULL, 1, &DEVICE_ID, NULL, NULL, NULL);
-		QUEUE = clCreateCommandQueueWithProperties(CONTEXT, DEVICE_ID, NULL, NULL);
-		printf("Using: %s.\n", device_name);
-	}
+    if (clGetDeviceIDs(NULL, CL_DEVICE_TYPE_GPU, 1, &DEVICE_ID, NULL) == CL_SUCCESS) ;
+    {
+        char device_name[128];
+        clGetDeviceInfo(DEVICE_ID, CL_DEVICE_NAME, 128, &device_name, NULL);
+        CONTEXT = clCreateContext(NULL, 1, &DEVICE_ID, NULL, NULL, NULL);
+        QUEUE = clCreateCommandQueue(CONTEXT, DEVICE_ID, 0, NULL);
+        printf("Using: %s.\n", device_name);
+    }
 };
 
 static void __PULSE_OPENCL_GET_GPU_INFO()
 {
-	clGetDeviceInfo(DEVICE_ID, CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(size_t), &MAX_WORK_GROUP_SIZE, NULL);
-	clGetDeviceInfo(DEVICE_ID, CL_DEVICE_GLOBAL_MEM_SIZE, sizeof(cl_ulong), &GLOBAL_MEM_SIZE, NULL);
+    clGetDeviceInfo(DEVICE_ID, CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(size_t), &MAX_LOCAL_WORK_SIZE, NULL);
 };
 
-static void __PULSE_OPENCL_FREE_GPU_BUFFERS()
+static void __PULSE_OPENCL_COMPILE_KERNEL(__PULSE_OPENCL_KERNEL *kernel, const char *name, const char *src)
 {
-	clReleaseMemObject(MEM_A);
-	clReleaseMemObject(MEM_B);
-	clReleaseMemObject(MEM_C);
+    kernel->PROGRAM = clCreateProgramWithSource(CONTEXT, 1, (const char **)&src, NULL, NULL);
+    cl_int err = clBuildProgram(kernel->PROGRAM, 0, NULL, NULL, NULL, NULL);
+    kernel->KERNEL = clCreateKernel(kernel->PROGRAM, name, NULL);
+
+    if (err == CL_BUILD_PROGRAM_FAILURE)
+    {
+        size_t log_size;
+        clGetProgramBuildInfo(kernel->PROGRAM, DEVICE_ID, CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
+        char *log = (char *) malloc(log_size);
+        clGetProgramBuildInfo(kernel->PROGRAM, DEVICE_ID, CL_PROGRAM_BUILD_LOG, log_size, log, NULL);
+        printf("%s\n", log);
+        free(log);
+    }
 }
 
-static void __PULSE_OPENCL_ALLOC_GPU_BUFFERS()
+static void __PULSE_OPENCL_RELEASE_KERNEL(__PULSE_OPENCL_KERNEL kernel)
 {
-	const int N = BASE_BUFFER_SIZE;
-	__PULSE_OPENCL_FREE_GPU_BUFFERS();
-	MEM_A = clCreateBuffer(CONTEXT, CL_MEM_READ_ONLY, N*N*sizeof(float), NULL, NULL);
-	MEM_B = clCreateBuffer(CONTEXT, CL_MEM_READ_ONLY, N*N*sizeof(float), NULL, NULL);
-	MEM_C = clCreateBuffer(CONTEXT, CL_MEM_WRITE_ONLY, N*N*sizeof(float),NULL, NULL);
+    __PULSE_OPENCL_CHECK_ERROR(clReleaseProgram(kernel.PROGRAM));
+    __PULSE_OPENCL_CHECK_ERROR(clReleaseKernel(kernel.KERNEL));
 }
 
-static void __PULSE_OPENCL_COMPILE_KERNEL(__PULSE_OPENCL_KERNEL * kernel, const char * name, const char * src)
+cl_mem PULSE_OPENCL_ALLOC_READ_ONLY_MEM_ON_GPU(size_t size)
 {
-	kernel->PROGRAM = clCreateProgramWithSource(CONTEXT, 1, (const char **)&src, NULL, NULL);
-	__PULSE_OPENCL_CHECK_ERROR(clBuildProgram(kernel->PROGRAM, 0, NULL, NULL, NULL, NULL));
-	kernel->KERNEL = clCreateKernel(kernel->PROGRAM, name, NULL);
+    return clCreateBuffer(CONTEXT, CL_MEM_READ_ONLY, size, NULL, NULL);
 }
 
-static void __PULSE_OPENCL_FREE_KERNEL(__PULSE_OPENCL_KERNEL * kernel)
+cl_mem PULSE_OPENCL_ALLOC_WRITE_ONLY_MEM_ON_GPU(size_t size)
 {
-	__PULSE_OPENCL_CHECK_ERROR(clReleaseProgram(kernel->PROGRAM));
-	__PULSE_OPENCL_CHECK_ERROR(clReleaseKernel(kernel->KERNEL));
+    return clCreateBuffer(CONTEXT, CL_MEM_WRITE_ONLY, size, NULL, NULL);
 }
 
-
-static const char MM_1NxTMN_SRC[]  = "__kernel void MM_1NxTMN(const __global float * A, const __global float * B, __global float * C, const int N, const int M) {\n" \
-																			"const int local_x = get_local_id(0);\n" \
-																			"const int x = get_group_id(0);\n" \
-																			"const int wi = (local_x + x) * N;\n" \
-																			"const int LOCAL_SIZE = 512;\n"\
-																			"__local float a[LOCAL_SIZE];\n"\
-																			"float acc = 0.0f;\n" \
-																			"if(x*LOCAL_SIZE + local_x < N) {\n" \
-																			"for(int i = 0; i < N/LOCAL_SIZE; i++) {\n" \
-																			"a[local_x] = A[i*LOCAL_SIZE + local_x];\n"\
-																			"barrier(CLK_LOCAL_MEM_FENCE);\n"\
-																			"for(int j = 0; j < LOCAL_SIZE; j++) {\n" \
-																			"acc += a[j] * B[wi + i*LOCAL_SIZE + j];\n"\
-																			"};"\
-																			"barrier(CLK_LOCAL_MEM_FENCE);\n"\
-																			"};"\
-																			"C[x*LOCAL_SIZE + local_x] += acc;\n"\
-																			"};"\
-																			"};";
-
-
-
-
-
-void __PULSE_OPENCL_START()
+void PULSE_OPENCL_COPY_READ_MEM_TO_GPU(void *buffer, size_t offset, size_t size)
 {
-	static char STARTED = 0;
-	if(!STARTED)
-	{
-		__PULSE_OPENCL_GET_GPU();
-		__PULSE_OPENCL_GET_GPU_INFO();
-		__PULSE_OPENCL_ALLOC_GPU_BUFFERS();
-		__PULSE_OPENCL_COMPILE_KERNEL(&MM_1NxTMN, "MM_1NxTMN", MM_1NxTMN_SRC);
-		STARTED = 1;
-	}
+    clEnqueueWriteBuffer(QUEUE, READ, CL_TRUE, offset, size, buffer, 0, NULL, NULL);
 }
 
-
-void __PULSE_OPENCL_MM_1NxTMN(float * A, float * B, float * BETA, float * dst, int N, int M)
+void PULSE_OPENCL_COPY_WRITE_MEM_TO_GPU(void *buffer, size_t offset, size_t size)
 {
-	size_t global[] = {M};
-	size_t local[] = {512};
-	__PULSE_OPENCL_CHECK_ERROR(clEnqueueWriteBuffer(QUEUE, MEM_A, CL_TRUE, 0, N * sizeof(float), A, 0, NULL, NULL));
-	__PULSE_OPENCL_CHECK_ERROR(clEnqueueWriteBuffer(QUEUE, MEM_B, CL_TRUE, 0, N * M * sizeof(float), B, 0, NULL, NULL));
-	if(BETA != NULL)
-		__PULSE_OPENCL_CHECK_ERROR(clEnqueueWriteBuffer(QUEUE, MEM_C, CL_TRUE, 0, M * sizeof(float), BETA, 0, NULL, NULL));
-
-	clSetKernelArg(MM_1NxTMN.KERNEL, 0, sizeof(cl_mem), (void*)&MEM_A);
-	clSetKernelArg(MM_1NxTMN.KERNEL, 1, sizeof(cl_mem), (void*)&MEM_B);
-	clSetKernelArg(MM_1NxTMN.KERNEL, 2, sizeof(cl_mem), (void*)&MEM_C);
-	clSetKernelArg(MM_1NxTMN.KERNEL, 3, sizeof(int), (void*)&N);
-	clSetKernelArg(MM_1NxTMN.KERNEL, 4, sizeof(int), (void*)&M);
-	cl_event event;
-	__PULSE_OPENCL_CHECK_ERROR(clEnqueueNDRangeKernel(QUEUE, MM_1NxTMN.KERNEL, 1, NULL, global, local, 0, NULL, &event));
-	__PULSE_OPENCL_CHECK_ERROR(clWaitForEvents(1, &event));
-	__PULSE_OPENCL_CHECK_ERROR(clEnqueueReadBuffer(QUEUE, MEM_C, CL_TRUE, 0, M * sizeof(float), dst, 0, NULL, NULL));
+    clEnqueueWriteBuffer(QUEUE, WRITE, CL_TRUE, offset, size, buffer, 0, NULL, NULL);
 }
+
+void PULSE_OPENCL_GET_WRITE_MEM_TO_HOST(void *buffer, size_t offset, size_t size)
+{
+    clEnqueueReadBuffer(QUEUE, WRITE, CL_TRUE, offset, size, buffer, 0, NULL, NULL);
+}
+
+void PULSE_OPENCL_ENQUEUE_FEEDDENSE(size_t i_size, size_t o_size)
+{
+    clSetKernelArg(FeedDense.KERNEL, 0, sizeof(cl_mem), &READ);
+    clSetKernelArg(FeedDense.KERNEL, 1, sizeof(cl_mem), &WRITE);
+    clSetKernelArg(FeedDense.KERNEL, 2, sizeof(int), (void *)&i_size);
+    clSetKernelArg(FeedDense.KERNEL, 3, sizeof(int), (void *)&o_size);
+    __PULSE_OPENCL_CHECK_ERROR(clEnqueueNDRangeKernel(QUEUE, FeedDense.KERNEL, 1, NULL, &o_size, NULL, 0, NULL, NULL));	//Local = NULL = OpenCL Will Find The Better Value
+    clFinish(QUEUE);
+}
+
+void PULSE_OPENCL_ENQUEUE_BACKDENSE(size_t i_size, size_t o_size)
+{
+    clSetKernelArg(BackDense.KERNEL, 0, sizeof(cl_mem), &READ);
+    clSetKernelArg(BackDense.KERNEL, 1, sizeof(cl_mem), &WRITE);
+    clSetKernelArg(BackDense.KERNEL, 2, sizeof(int), (void *)&i_size);
+    clSetKernelArg(BackDense.KERNEL, 3, sizeof(int), (void *)&o_size);
+    __PULSE_OPENCL_CHECK_ERROR(clEnqueueNDRangeKernel(QUEUE, BackDense.KERNEL, 1, NULL, &o_size, NULL, 0, NULL, NULL));	//Local = NULL = OpenCL Will Find The Better Value
+    clFinish(QUEUE);
+}
+
+static char * GetFeedDense_SRC()
+{
+    static const char FeedDense_SRC[] =
+        "__kernel void FeedDense(__global float * A, __global float * B, const int i_size, const int o_size) {\n"
+        "const int local_size = get_local_size(0);\n"
+        "const int local_id = get_local_id(0);\n"
+        "const int group_id = get_group_id(0);\n"
+        "const int id = group_id*local_size + local_id; \n"
+        "__global float * INPUTS = A;\n"
+        "__global float * WEIGHTS = A + i_size;\n"
+        "__global float * BAIASES = WEIGHTS + i_size*o_size;\n"
+        "WEIGHTS += id*i_size; \n"
+        "float acc = 0.0f; \n"
+        "for(int i = 0; i < i_size; i++) { \n"
+        "acc += INPUTS[i] * WEIGHTS[i]; \n"
+        "};"
+        "B[id] = acc + BAIASES[id]; \n"
+        "};";
+
+    /*"const int _local_size = get_local_size(0);\n"
+      "const int _local_id = get_local_id(0);\n"
+      "const int _group_id = get_group_id(0);\n"
+      "const int id = _group_id*_local_size + _local_id;\n"
+      "const int W_OFFSET = id*i_size; \n"
+      "float acc = 0.0f; \n"
+      "__local float local_a[_max_local_size]; \n"
+      "for(int i = 0; i < i_size/_local_size; i++) { \n"
+      "local_a[_local_id] = INPUTS[i*_local_size + _local_id]; \n"
+      "barrier(CLK_LOCAL_MEM_FENCE); \n"
+      "for(int j = 0; j < _local_size; j++) { \n"
+      "acc += local_a[j] * WEIGHTS[W_OFFSET + i*_local_size + j]; \n" "}; \n"
+      "barrier(CLK_LOCAL_MEM_FENCE); \n"
+      "}; \n"
+      "B[id] = acc + WEIGHTS[i_size*o_size + id]; \n"*/
+    //"};";
+
+    //static char KERNEL[sizeof(FeedDense_SRC) + 32];
+    //sprintf(KERNEL, FeedDense_SRC, MAX_LOCAL_WORK_SIZE);
+    return FeedDense_SRC;
+}
+
+static char *GetBackDense_SRC()
+{
+    static const char BackDense_SRC[] =
+        "__kernel void BackDense(__global float * A, __global float * B, const int i_size, const int o_size) {\n" \
+        "const int local_size = get_local_size(0);\n"
+        "const int local_id = get_local_id(0);\n"
+        "const int group_id = get_group_id(0);\n"
+        "const int id = local_size*group_id + local_id;\n"
+        "__global float * INPUTS = A;\n"
+        "__global float * OUTPUTS = INPUTS + i_size;\n"
+        "__global float * ERRORS = OUTPUTS + o_size;\n"
+        "__global float * WEIGHTS = ERRORS + o_size;\n"
+        "__global float * GRADIENTS = B;\n"
+        "__global float * DELTAS = GRADIENTS + i_size*o_size;\n"
+        "const float delta = ERRORS[id] * OUTPUTS[id]; \n"
+        "DELTAS[id] += delta; \n"
+        "for(int i = 0; i < i_size; i++) {\n"
+        "GRADIENTS[id*i_size + i] += delta * INPUTS[i];"
+        "}; \n"
+        "};";
+
+    return BackDense_SRC;
+
+}
+
+//static void _BackDense(PULSE_Layer *this)
+//{
+//    PULSE_DenseLayer dense = this->layer.DENSE;
+//    this->activate(this->outputs, this->n_outputs, 1);
+//    for (int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs) {
+//      PULSE_DataType delta = this->errors[i] * this->outputs[i];
+//      dense.deltas[i] += delta;
+//      for (int j = 0; j < this->n_inputs; j++) {
+//          dense.gradients[wi + j] += delta * this->inputs[j];
+//          if (this->parent != NULL)
+//              this->parent->errors[j] += dense.weights[wi + j] * delta;
+//      }
+//    }
+//}
+
+void PULSE_OPENCL_START()
+{
+    if (!RUNNING)
+    {
+        __PULSE_OPENCL_GET_GPU();
+        __PULSE_OPENCL_GET_GPU_INFO();
+        __PULSE_OPENCL_COMPILE_KERNEL(&FeedDense, "FeedDense", GetFeedDense_SRC());
+        __PULSE_OPENCL_COMPILE_KERNEL(&BackDense, "BackDense", GetBackDense_SRC());
+
+        READ = PULSE_OPENCL_ALLOC_READ_ONLY_MEM_ON_GPU(5 * 1024 * 1024 * sizeof(float));
+        WRITE = PULSE_OPENCL_ALLOC_WRITE_ONLY_MEM_ON_GPU(5 * 1024 * 1024 * sizeof(float));
+
+        printf("WARNING: Pulse OpenCL Started!\n");
+        RUNNING = 1;
+    }
+}
+
+void PULSE_OPENCL_RELEASE()
+{
+    clFinish(QUEUE);
+    __PULSE_OPENCL_RELEASE_KERNEL(FeedDense);
+    clReleaseContext(CONTEXT);
+    clReleaseCommandQueue(QUEUE);
+    clReleaseDevice(DEVICE_ID);
+    clReleaseMemObject(READ);
+    clReleaseMemObject(WRITE);
+    RUNNING = 0;
+    printf("WARNING: Pulse OpenCL Finished!\n");
+}
+
+#endif

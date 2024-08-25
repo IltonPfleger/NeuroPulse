@@ -9,15 +9,18 @@ int main()
     PULSE_data_t y[4][1] = {{1}, {0}, {1}, {0}};
 
     PULSE_Model model = PULSE_CreateModel(2,
-    PULSE_DENSE, (PULSE_DenseLayerArgs) {
-        2, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD
+                                          PULSE_DENSE, (PULSE_DenseLayerArgs)
+    {
+        2, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_GPU_OPENCL
     },
-    PULSE_DENSE,(PULSE_DenseLayerArgs) {
-        128, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD
+    PULSE_DENSE,(PULSE_DenseLayerArgs)
+    {
+        128, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_GPU_OPENCL
     });
 
     double t1 = omp_get_wtime();
-    PULSE_Train(model, 15000, 4, (PULSE_HyperArgs) {
+    PULSE_Train(model, 15000, 4, (PULSE_HyperArgs)
+    {
         2, 0.1
     }, PULSE_LOSS_MSE, (PULSE_data_t*)x, (PULSE_data_t*)y);
     double t2 = omp_get_wtime();

@@ -1,16 +1,17 @@
 #include "Include/Dense.h"
 #include "Include/PULSE_SIMD.h"
+#include "Include/PulseOpenCL.h"
 
 
 static void _FeedDense(PULSE_layer_t * this)
 {
-    const int B = this->n_inputs*this->n_outputs;
+    const int BAIASES_OFFSET = this->n_inputs*this->n_outputs;
     for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
     {
         this->outputs[i] = 0;
         for(int j = 0; j < this->n_inputs; j++)
             this->outputs[i] += this->inputs[j] * this->w[wi + j];
-        this->outputs[i] += this->w[B + i];
+        this->outputs[i] += this->w[BAIASES_OFFSET + i];
     }
     this->activate(this->outputs, this->n_outputs, 0);
 }
@@ -18,12 +19,12 @@ static void _FeedDense(PULSE_layer_t * this)
 
 static void _BackDense(PULSE_layer_t * this)
 {
-    const int B = this->n_inputs*this->n_outputs;
+    const int BAIASES_OFFSET = this->n_inputs*this->n_outputs;
     this->activate(this->outputs, this->n_outputs, 1);
     for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
     {
         PULSE_data_t delta = this->errors[i] * this->outputs[i];
-        this->g[B + i] += delta;
+        this->g[BAIASES_OFFSET + i] += delta;
         for(int j = 0; j < this->n_inputs; j++)
         {
             this->g[wi + j] += delta * this->inputs[j];
@@ -36,8 +37,8 @@ static void _BackDense(PULSE_layer_t * this)
 #ifdef __PULSE_SIMD_SUPPORTED
 static void _SIMD_FeedDense(PULSE_layer_t * this)
 {
-    const int B = this->n_inputs*this->n_outputs;
-    memcpy(this->outputs, this->w + B, sizeof(PULSE_data_t)*this->n_outputs);
+    const int BAIASES_OFFSET = this->n_inputs*this->n_outputs;
+    memcpy(this->outputs, this->w + BAIASES_OFFSET, sizeof(PULSE_data_t)*this->n_outputs);
     __PULSE_SIMD_DATATYPE inputs, weights, outputs;
     PULSE_data_t output;
     PULSE_data_t * w_ptr = &(this->w[0]);
@@ -65,16 +66,16 @@ static void _SIMD_FeedDense(PULSE_layer_t * this)
 
 static void _SIMD_BackDense(PULSE_layer_t * this)
 {
-    const int B = this->n_inputs*this->n_outputs;
+    const int BAIASES_OFFSET = this->n_inputs*this->n_outputs;
     this->activate(this->outputs, this->n_outputs, 1);
     __PULSE_SIMD_DATATYPE delta, errors, gradients, inputs, weights;
-    int i = 0, j = 0, wi = 0, J = this->n_inputs - __PULSE_SIMD_N_PER_CHUNK;
+    int i, j, wi, J = this->n_inputs - __PULSE_SIMD_N_PER_CHUNK;
 
     if(this->parent != NULL)
         for(i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
         {
             PULSE_data_t cdelta = this->outputs[i] * this->errors[i];
-            this->g[B + i] += cdelta;
+            this->g[BAIASES_OFFSET + i] += cdelta;
             delta = __PULSE_SIMD_SET_ALL(cdelta);
             j = 0;
             while(j < J)
@@ -100,7 +101,7 @@ static void _SIMD_BackDense(PULSE_layer_t * this)
         for(i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
         {
             PULSE_data_t cdelta = this->outputs[i] * this->errors[i];
-            this->g[B + i] += cdelta;
+            this->g[BAIASES_OFFSET + i] += cdelta;
             delta = __PULSE_SIMD_SET_ALL(cdelta);
             j = 0;
             while(j < J)
@@ -118,6 +119,48 @@ static void _SIMD_BackDense(PULSE_layer_t * this)
         }
 
 }
+#endif
+
+#ifdef __PULSE_GPU_SUPPORTED
+static void _GPU_OPENCL_FeedDense(PULSE_layer_t *this)
+{
+    static int SIZE = sizeof(float);
+    PULSE_OPENCL_COPY_READ_MEM_TO_GPU(this->inputs, 0, SIZE * this->n_inputs);
+    PULSE_OPENCL_COPY_READ_MEM_TO_GPU(this->w, this->n_inputs * SIZE, SIZE * ((this->n_inputs * this->n_outputs) + this->n_outputs));
+    PULSE_OPENCL_ENQUEUE_FEEDDENSE(this->n_inputs, this->n_outputs);
+    PULSE_OPENCL_GET_WRITE_MEM_TO_HOST(this->outputs, 0, SIZE * this->n_outputs);
+    this->activate(this->outputs, this->n_outputs, 0);
+}
+
+static void _GPU_OPENCL_BackDense(PULSE_layer_t *this)
+{
+    static int SIZE = sizeof(float);
+    this->activate(this->outputs, this->n_outputs, 1);
+    int READ = 0;
+    PULSE_OPENCL_COPY_READ_MEM_TO_GPU(this->inputs, READ, SIZE*this->n_inputs); //Move Inputs To GPU Global Memory
+    READ += SIZE*this->n_inputs;
+    PULSE_OPENCL_COPY_READ_MEM_TO_GPU(this->outputs, READ, SIZE*this->n_outputs); //Move Outputs To GPU Global Memory
+    READ += SIZE*this->n_outputs;
+    PULSE_OPENCL_COPY_READ_MEM_TO_GPU(this->errors, READ, SIZE*this->n_outputs); //Move Errors To GPU Global Memory
+    READ += SIZE*this->n_outputs;
+    PULSE_OPENCL_COPY_READ_MEM_TO_GPU(this->w, READ, SIZE*(this->n_outputs*this->n_inputs + this->n_outputs)); //Move Weights + Baises To GPU Global Memory
+    PULSE_OPENCL_COPY_WRITE_MEM_TO_GPU(this->g, 0, SIZE*(this->n_outputs*this->n_inputs + this->n_outputs)); //Move Gradients To GPU Global Memory
+    PULSE_OPENCL_ENQUEUE_BACKDENSE(this->n_inputs, this->n_outputs); //Run BackDense Kernel
+    PULSE_OPENCL_GET_WRITE_MEM_TO_HOST(this->g, 0, SIZE*(this->n_outputs*this->n_inputs + this->n_outputs)); //Get New Gradients To HOST.
+
+    for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs)
+    {
+        PULSE_data_t delta = this->errors[i] * this->outputs[i];
+        //this->g[DELTAS_OFFSET + i] += delta;
+        for(int j = 0; j < this->n_inputs; j++)
+        {
+            // this->g[wi + j] += delta * this->inputs[j];
+            if(this->parent != NULL)
+                this->parent->errors[j] += this->w[wi + j] * delta;
+        }
+    }
+}
+
 
 #endif
 
@@ -177,8 +220,11 @@ PULSE_layer_t PULSE_CreateDenseLayer(PULSE_DenseLayerArgs args)
         __PULSE_SIMD_CHECK(layer.back = &_SIMD_BackDense);
         break;
     case PULSE_OPTIMIZATION_GPU_OPENCL:
-        printf("ERROR: PULSE Layer GPU are not supported on this device");
-        exit(1);
+        layer.feed = &_GPU_OPENCL_FeedDense;
+        layer.back = &_GPU_OPENCL_BackDense;
+        PULSE_OPENCL_START();
+        //printf("ERROR: PULSE Layer GPU are not supported on this device");
+        //exit(1);
         break;
     }
 
