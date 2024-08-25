@@ -53,7 +53,7 @@ static void __PULSE_OPENCL_GET_GPU()
 
 static void __PULSE_OPENCL_GET_GPU_INFO()
 {
-    clGetDeviceInfo(DEVICE_ID, CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(size_t), &MAX_LOCAL_WORK_SIZE, NULL);
+    clGetDeviceInfo(DEVICE_ID, CL_DEVICE_PREFERRED_WORK_GROUP_SIZE_MULTIPLE, sizeof(size_t), &MAX_LOCAL_WORK_SIZE, NULL);
 };
 
 static void __PULSE_OPENCL_COMPILE_KERNEL(__PULSE_OPENCL_KERNEL *kernel, const char *name, const char *src)
@@ -89,6 +89,26 @@ cl_mem PULSE_OPENCL_ALLOC_WRITE_ONLY_MEM_ON_GPU(size_t size)
     return clCreateBuffer(CONTEXT, CL_MEM_WRITE_ONLY, size, NULL, NULL);
 }
 
+static size_t __PULSE_OPENCL_GET_LOCAL_SIZE(size_t a, size_t b)
+{
+    size_t rest;
+    size_t b2 = MAX_LOCAL_WORK_SIZE;
+    while (b != 0)
+    {
+        rest = a % b;
+        a = b;
+        b = rest;
+    }
+
+    while (b2 != 0)
+    {
+        rest = a % b2;
+        a = b2;
+        b2 = rest;
+    }
+    return a;
+}
+
 void PULSE_OPENCL_COPY_READ_MEM_TO_GPU(void *buffer, size_t offset, size_t size)
 {
     clEnqueueWriteBuffer(QUEUE, READ, CL_TRUE, offset, size, buffer, 0, NULL, NULL);
@@ -110,7 +130,8 @@ void PULSE_OPENCL_ENQUEUE_FEEDDENSE(size_t i_size, size_t o_size)
     clSetKernelArg(FeedDense.KERNEL, 1, sizeof(cl_mem), &WRITE);
     clSetKernelArg(FeedDense.KERNEL, 2, sizeof(int), (void *)&i_size);
     clSetKernelArg(FeedDense.KERNEL, 3, sizeof(int), (void *)&o_size);
-    __PULSE_OPENCL_CHECK_ERROR(clEnqueueNDRangeKernel(QUEUE, FeedDense.KERNEL, 1, NULL, &o_size, NULL, 0, NULL, NULL));	//Local = NULL = OpenCL Will Find The Better Value
+    size_t local = __PULSE_OPENCL_GET_LOCAL_SIZE(i_size, o_size);
+    __PULSE_OPENCL_CHECK_ERROR(clEnqueueNDRangeKernel(QUEUE, FeedDense.KERNEL, 1, NULL, &o_size, &local, 0, NULL, NULL));	//Local = NULL = OpenCL Will Find The Better Value
     clFinish(QUEUE);
 }
 
@@ -120,13 +141,14 @@ void PULSE_OPENCL_ENQUEUE_BACKDENSE(size_t i_size, size_t o_size)
     clSetKernelArg(BackDense.KERNEL, 1, sizeof(cl_mem), &WRITE);
     clSetKernelArg(BackDense.KERNEL, 2, sizeof(int), (void *)&i_size);
     clSetKernelArg(BackDense.KERNEL, 3, sizeof(int), (void *)&o_size);
-    __PULSE_OPENCL_CHECK_ERROR(clEnqueueNDRangeKernel(QUEUE, BackDense.KERNEL, 1, NULL, &o_size, NULL, 0, NULL, NULL));	//Local = NULL = OpenCL Will Find The Better Value
+    size_t local = __PULSE_OPENCL_GET_LOCAL_SIZE(i_size, o_size);
+    __PULSE_OPENCL_CHECK_ERROR(clEnqueueNDRangeKernel(QUEUE, BackDense.KERNEL, 1, NULL, &o_size, &local, 0, NULL, NULL));	//Local = NULL = OpenCL Will Find The Better Value
     clFinish(QUEUE);
 }
 
 static char * GetFeedDense_SRC()
 {
-    static const char FeedDense_SRC[] =
+    const char FeedDense_SRC[] =
         "__kernel void FeedDense(__global float * A, __global float * B, const int i_size, const int o_size) {\n"
         "const int local_size = get_local_size(0);\n"
         "const int local_id = get_local_id(0);\n"
@@ -135,39 +157,28 @@ static char * GetFeedDense_SRC()
         "__global float * INPUTS = A;\n"
         "__global float * WEIGHTS = A + i_size;\n"
         "__global float * BAIASES = WEIGHTS + i_size*o_size;\n"
+        "__local float __shared[%zu]; \n"
         "WEIGHTS += id*i_size; \n"
         "float acc = 0.0f; \n"
-        "for(int i = 0; i < i_size; i++) { \n"
-        "acc += INPUTS[i] * WEIGHTS[i]; \n"
+        "for(int i = 0; i < i_size; i += local_size) { \n"
+        "__shared[local_id] = INPUTS[i + local_id]; \n"
+        "barrier(CLK_LOCAL_MEM_FENCE); \n"
+        "for(int j = 0; j < local_size; j++) { \n"
+        "acc += __shared[j] * WEIGHTS[i + j]; \n"
+        "};"
+        "barrier(CLK_LOCAL_MEM_FENCE); \n"
         "};"
         "B[id] = acc + BAIASES[id]; \n"
         "};";
 
-    /*"const int _local_size = get_local_size(0);\n"
-      "const int _local_id = get_local_id(0);\n"
-      "const int _group_id = get_group_id(0);\n"
-      "const int id = _group_id*_local_size + _local_id;\n"
-      "const int W_OFFSET = id*i_size; \n"
-      "float acc = 0.0f; \n"
-      "__local float local_a[_max_local_size]; \n"
-      "for(int i = 0; i < i_size/_local_size; i++) { \n"
-      "local_a[_local_id] = INPUTS[i*_local_size + _local_id]; \n"
-      "barrier(CLK_LOCAL_MEM_FENCE); \n"
-      "for(int j = 0; j < _local_size; j++) { \n"
-      "acc += local_a[j] * WEIGHTS[W_OFFSET + i*_local_size + j]; \n" "}; \n"
-      "barrier(CLK_LOCAL_MEM_FENCE); \n"
-      "}; \n"
-      "B[id] = acc + WEIGHTS[i_size*o_size + id]; \n"*/
-    //"};";
-
-    //static char KERNEL[sizeof(FeedDense_SRC) + 32];
-    //sprintf(KERNEL, FeedDense_SRC, MAX_LOCAL_WORK_SIZE);
-    return FeedDense_SRC;
+    static char KERNEL[sizeof(FeedDense_SRC) + 4];
+    sprintf(KERNEL, FeedDense_SRC, MAX_LOCAL_WORK_SIZE);
+    return KERNEL;
 }
 
 static char *GetBackDense_SRC()
 {
-    static const char BackDense_SRC[] =
+    const char BackDense_SRC[] =
         "__kernel void BackDense(__global float * A, __global float * B, const int i_size, const int o_size) {\n" \
         "const int local_size = get_local_size(0);\n"
         "const int local_id = get_local_id(0);\n"
@@ -179,14 +190,22 @@ static char *GetBackDense_SRC()
         "__global float * WEIGHTS = ERRORS + o_size;\n"
         "__global float * GRADIENTS = B;\n"
         "__global float * DELTAS = GRADIENTS + i_size*o_size;\n"
+        "__local float __shared[%zu]; \n"
         "const float delta = ERRORS[id] * OUTPUTS[id]; \n"
         "DELTAS[id] += delta; \n"
-        "for(int i = 0; i < i_size; i++) {\n"
-        "GRADIENTS[id*i_size + i] += delta * INPUTS[i];"
+        "for(int i = 0; i < i_size; i += local_size) {\n"
+        "__shared[local_id] = INPUTS[i + local_id]; \n"
+        "barrier(CLK_LOCAL_MEM_FENCE); \n"
+        "for(int j = 0; j < local_size; j++) {\n"
+        "GRADIENTS[id*i_size + i + j] += delta * __shared[j]; \n"
+        "}; \n"
+        "barrier(CLK_LOCAL_MEM_FENCE); \n"
         "}; \n"
         "};";
 
-    return BackDense_SRC;
+    static char KERNEL[sizeof(BackDense_SRC) + 4];
+    sprintf(KERNEL, BackDense_SRC, MAX_LOCAL_WORK_SIZE);
+    return KERNEL;
 
 }
 
