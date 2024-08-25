@@ -2,7 +2,7 @@
 #define _PULSE_LOSS
 #include "PulseTypes.h"
 
-typedef PULSE_DataType (*PULSE_LossFunctionPtr)(PULSE_DataType *, PULSE_DataType *, PULSE_DataType *, size_t);
+typedef PULSE_data_t (*PULSE_LossFunctionPtr)(PULSE_data_t *, PULSE_data_t *, PULSE_data_t *, size_t);
 void* PULSE_GetLossFunctionPtr(PULSE_LossFunction);
 
 #endif

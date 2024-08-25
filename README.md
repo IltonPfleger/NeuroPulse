@@ -32,14 +32,14 @@ The aim of this project is to create a user-friendly Neural Networks library for
 
 int main()
 {
-	PULSE_DataType x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
-	PULSE_DataType y[4][1] = {{1}, {0}, {1}, {0}};
+	PULSE_data_t x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
+	PULSE_data_t y[4][1] = {{1}, {0}, {1}, {0}};
 
-	PULSE_Layer * model = PULSE_CreateModel(2,
+	PULSE_layer_t * model = PULSE_CreateModel(2,
 			PULSE_DENSE, (PULSE_ARGS_DENSE){2, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_NONE},
 			PULSE_DENSE,(PULSE_ARGS_DENSE){128, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_NONE});
 
-	PULSE_Train(model, 15000, 4, (PULSE_HyperArgs){2, 0.1}, PULSE_LOSS_MSE, (PULSE_DataType*)x, (PULSE_DataType*)y);
+	PULSE_Train(model, 15000, 4, (PULSE_HyperArgs){2, 0.1}, PULSE_LOSS_MSE, (PULSE_data_t*)x, (PULSE_data_t*)y);
 
 	printf("TRAIN RESULT\n");
 	for (int i = 0; i < 4; i++)

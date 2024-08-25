@@ -1,6 +1,6 @@
 #include "Include/Activations.h"
 
-static void PULSE_Sigmoid(PULSE_DataType * x, size_t size, char prime)
+static void PULSE_Sigmoid(PULSE_data_t * x, size_t size, char prime)
 {
 	for(int i = 0; i < size; i++)
 	{
@@ -11,7 +11,7 @@ static void PULSE_Sigmoid(PULSE_DataType * x, size_t size, char prime)
 }
 
 
-static void PULSE_ReLU(PULSE_DataType * x, size_t size, char prime)
+static void PULSE_ReLU(PULSE_data_t * x, size_t size, char prime)
 {
 
 	for(int i = 0; i < size; i++)
@@ -22,7 +22,7 @@ static void PULSE_ReLU(PULSE_DataType * x, size_t size, char prime)
 	}
 }
 
-static void PULSE_LeakyReLU(PULSE_DataType * x, size_t size, char prime)
+static void PULSE_LeakyReLU(PULSE_data_t * x, size_t size, char prime)
 {
 
 	for(int i = 0; i < size; i++)
@@ -33,7 +33,7 @@ static void PULSE_LeakyReLU(PULSE_DataType * x, size_t size, char prime)
 	}
 }
 
-static void PULSE_Softmax(PULSE_DataType * x, size_t size, char prime)
+static void PULSE_Softmax(PULSE_data_t * x, size_t size, char prime)
 {
 }
 
@@ -63,7 +63,7 @@ void* PULSE_GetActivationFunctionPtr(PULSE_ActivationFunction type)
 
 
 
-//void PULSE_Softmax(PULSE_DataType * x, size_t size, char prime)
+//void PULSE_Softmax(PULSE_data_t * x, size_t size, char prime)
 //{
 //	if(prime)
 //	{

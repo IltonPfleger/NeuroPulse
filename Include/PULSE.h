@@ -8,22 +8,23 @@
 
 typedef struct
 {
-    PULSE_Layer * layers;
-    PULSE_DataType * weights;
-    PULSE_DataType * io;
+    PULSE_layer_t * layers;
+    PULSE_data_t * weights;
+    PULSE_data_t * io;
     size_t n_layers;
     size_t weights_size;
     size_t io_size;
     size_t fixes_size;
     size_t errors_size;
+    char trained;
 } PULSE_Model;
 
-PULSE_DataType * PULSE_Foward(PULSE_Layer *, PULSE_DataType *);
+PULSE_data_t * PULSE_Foward(PULSE_layer_t *, PULSE_data_t *);
 PULSE_Model PULSE_CreateModel(int, ...);
 void PULSE_Destroy(PULSE_Model *);
-void PULSE_Back(PULSE_Layer *);
+void PULSE_Back(PULSE_layer_t *);
 void PULSE_Shuffle(size_t *, size_t);
-void PULSE_Train(PULSE_Model, size_t, size_t, PULSE_HyperArgs, PULSE_LossFunction, PULSE_DataType *, PULSE_DataType *);
-void PULSE_Connect(PULSE_Layer *, PULSE_Layer * );
+void PULSE_Train(PULSE_Model, size_t, size_t, PULSE_HyperArgs, PULSE_LossFunction, PULSE_data_t *, PULSE_data_t *);
+void PULSE_Connect(PULSE_layer_t *, PULSE_layer_t * );
 
 #endif

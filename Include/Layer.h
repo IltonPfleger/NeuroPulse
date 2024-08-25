@@ -3,47 +3,32 @@
 #include "PulseTypes.h"
 #include "Activations.h"
 
-struct PULSE_Layer;
-typedef void (*PULSE_FeedLayerFunctionPtr)(struct PULSE_Layer *);
-typedef void (*PULSE_BackLayerFunctionPtr)(struct PULSE_Layer *);
-typedef void (*PULSE_DistributeTrainLayerAllocations)(struct PULSE_Layer *, PULSE_DataType **, PULSE_DataType **);
-
 typedef enum
 {
     PULSE_DENSE,
-} PULSE_LayerType;
+} PULSE_layer_enum_t;
 
-typedef struct {
-    PULSE_DataType * weights;
-    PULSE_DataType * baiases;
-    PULSE_DataType * deltas;
-    PULSE_DataType * ddeltas;
-    PULSE_DataType * gradients;
-} PULSE_DenseLayer;
 
-typedef union
+typedef struct PULSE_layer_t
 {
-    PULSE_DenseLayer DENSE;
-} PULSE_LayerWrapper;
-
-
-typedef struct PULSE_Layer
-{
-    PULSE_DataType *inputs;
-    PULSE_DataType *outputs;
-    PULSE_DataType *errors;
-    PULSE_LayerType type;
+    PULSE_data_t * inputs;
+    PULSE_data_t * outputs;
+    PULSE_data_t * errors;
+    PULSE_data_t * w;
+    PULSE_data_t * g;
+    PULSE_layer_enum_t type;
     PULSE_OptimizationType optimization;
-    PULSE_FeedLayerFunctionPtr feed;
-    PULSE_BackLayerFunctionPtr back;
     PULSE_ActivationFunctionPtr activate;
-    PULSE_DistributeTrainLayerAllocations mode;
-    struct PULSE_Layer * parent;
-    struct PULSE_Layer * child;
-    PULSE_LayerWrapper layer;
-    unsigned int n_inputs;
-    unsigned int n_outputs;
-} PULSE_Layer;
+    void (*feed)(struct PULSE_layer_t *);
+    void (*back)(struct PULSE_layer_t *);
+    void (*randomize)(struct PULSE_layer_t *);
+    void (*start)(struct PULSE_layer_t *, PULSE_data_t **, PULSE_data_t **);
+    void (*mode)(struct PULSE_layer_t *, PULSE_data_t **, PULSE_data_t **);
+    struct PULSE_layer_t * parent;
+    struct PULSE_layer_t * child;
+    size_t n_inputs;
+    size_t n_outputs;
+} PULSE_layer_t;
 
 
 #endif

@@ -1,14 +1,14 @@
 #include "Include/PULSE.h"
 
-PULSE_DataType * PULSE_Foward(PULSE_Layer * layer, PULSE_DataType * inputs)
+PULSE_data_t * PULSE_Foward(PULSE_layer_t * layer, PULSE_data_t * inputs)
 {
     if(inputs != NULL)
-        memcpy(layer->inputs, inputs, sizeof(PULSE_DataType)*layer->n_inputs);
+        memcpy(layer->inputs, inputs, sizeof(PULSE_data_t)*layer->n_inputs);
     layer->feed(layer);
 
     if(layer->child != NULL)
     {
-        memcpy(layer->child->inputs, layer->outputs, sizeof(PULSE_DataType)*layer->n_outputs);
+        memcpy(layer->child->inputs, layer->outputs, sizeof(PULSE_data_t)*layer->n_outputs);
         return PULSE_Foward(layer->child, NULL);
     }
     else
@@ -16,17 +16,17 @@ PULSE_DataType * PULSE_Foward(PULSE_Layer * layer, PULSE_DataType * inputs)
 }
 
 
-void PULSE_Back(PULSE_Layer * layer)
+void PULSE_Back(PULSE_layer_t * layer)
 {
     layer->back(layer);
     if(layer->parent != NULL)
     {
         PULSE_Back(layer->parent);
-        memset(layer->parent->errors, 0, layer->n_inputs*sizeof(PULSE_DataType));
+        memset(layer->parent->errors, 0, layer->n_inputs*sizeof(PULSE_data_t));
     }
 }
 
-void PULSE_Fix(PULSE_DataType * weights, PULSE_DataType * fixes, PULSE_HyperArgs args, size_t size)
+void PULSE_Fix(PULSE_data_t * restrict weights, PULSE_data_t * restrict fixes, PULSE_HyperArgs args, size_t size)
 {
     const float HYPER = -args.lr/args.batch_size;
     for(int i = 0; i < size; i ++)
@@ -50,17 +50,17 @@ void PULSE_Shuffle(size_t *indexes, size_t max)
     };
 }
 
-void PULSE_Train(PULSE_Model model, size_t epoch, size_t data_size, PULSE_HyperArgs args, PULSE_LossFunction loss_function, PULSE_DataType * x, PULSE_DataType * y)
+void PULSE_Train(PULSE_Model model, size_t epoch, size_t data_size, PULSE_HyperArgs args, PULSE_LossFunction loss_function, PULSE_data_t * x, PULSE_data_t * y)
 {
     srand(time(NULL));
     PULSE_LossFunctionPtr PULSE_GetLoss = PULSE_GetLossFunctionPtr(loss_function);
-    PULSE_DataType * FIXES = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*model.fixes_size);
-    PULSE_DataType * FIXES_PTR = FIXES;
-    PULSE_DataType * ERRORS = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*model.errors_size);
-    PULSE_DataType * ERRORS_PTR = ERRORS;
+    PULSE_data_t * FIXES = (PULSE_data_t*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_data_t)*model.fixes_size);
+    PULSE_data_t * FIXES_PTR = FIXES;
+    PULSE_data_t * ERRORS = (PULSE_data_t*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_data_t)*model.errors_size);
+    PULSE_data_t * ERRORS_PTR = ERRORS;
 
-    PULSE_Layer * output = model.layers + model.n_layers - 1;
-    PULSE_DataType loss = 0, batch_loss = 0;
+    PULSE_layer_t * output = model.layers + model.n_layers - 1;
+    PULSE_data_t loss = 0, batch_loss = 0;
 
     for(int i = 0; i < model.n_layers; i++)
         model.layers[i].mode(model.layers + i, &FIXES_PTR, &ERRORS_PTR);
@@ -90,18 +90,19 @@ void PULSE_Train(PULSE_Model model, size_t epoch, size_t data_size, PULSE_HyperA
     free(ERRORS);
 }
 
-void PULSE_Connect(PULSE_Layer * parent, PULSE_Layer * child)
+void PULSE_Connect(PULSE_layer_t * parent, PULSE_layer_t * child)
 {
     parent->child = child;
     child->parent = parent;
 }
 
+
 PULSE_Model PULSE_CreateModel(int size, ...)
 {
-    size *= 2;
+    srand(time(NULL));
     PULSE_Model model;
-    model.n_layers = size/2;
-    model.layers = (PULSE_Layer*)malloc(sizeof(PULSE_Layer)*model.n_layers);
+    model.n_layers = size;
+    model.layers = (PULSE_layer_t*)malloc(sizeof(PULSE_layer_t)*model.n_layers);
 
     va_list layers_info;
     va_start(layers_info, size);
@@ -109,44 +110,37 @@ PULSE_Model PULSE_CreateModel(int size, ...)
     model.io_size = 0;
     model.fixes_size = 0;
     model.errors_size = 0;
+    model.trained = 0;
 
-    for (int i = 0; i < model.n_layers; i++)
+    for(int i = 0; i < model.n_layers; i++)
     {
-        PULSE_LayerType type = va_arg(layers_info, PULSE_LayerType);
+        PULSE_layer_enum_t type = va_arg(layers_info, PULSE_layer_enum_t);
         switch(type)
         {
         case PULSE_DENSE:
             PULSE_DenseLayerArgs args = va_arg(layers_info, PULSE_DenseLayerArgs);
-            model.weights_size += PULSE_GetDenseWeightsSize(args);
-            model.io_size += PULSE_GetDenseIOSize(args);
-            model.fixes_size += PULSE_GetDenseFixesSize(args);
-            model.errors_size += PULSE_GetDenseErrorsSize(args);
-            break;
-        }
-    }
-    model.weights = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*model.weights_size);
-    model.io = (PULSE_DataType*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DataType)*model.io_size);
-
-    va_end(layers_info);
-    va_start(layers_info, size);
-    PULSE_DataType * WEIGHTS_PTR = model.weights;
-    PULSE_DataType * IO_PTR = model.io;
-
-    for (int i = 0; i < model.n_layers; i++)
-    {
-        PULSE_LayerType type = va_arg(layers_info, PULSE_LayerType);
-        switch(type)
-        {
-        case PULSE_DENSE:
-            PULSE_DenseLayerArgs args = va_arg(layers_info, PULSE_DenseLayerArgs);
-            model.layers[i] = PULSE_CreateDenseLayer(args, WEIGHTS_PTR, IO_PTR);
-            WEIGHTS_PTR += PULSE_GetDenseWeightsSize(args);
-            IO_PTR += PULSE_GetDenseIOSize(args);
-            break;
+            model.layers[i] = PULSE_CreateDenseLayer(args);
+            model.io_size += model.layers[i].n_outputs + model.layers[i].n_inputs;
+            model.errors_size += model.layers[i].n_outputs;
+            model.weights_size += model.layers[i].n_inputs * model.layers[i].n_outputs + model.layers[i].n_outputs;
+            model.fixes_size += model.layers[i].n_inputs * model.layers[i].n_outputs + model.layers[i].n_outputs;
         }
         if(i > 0)
             PULSE_Connect(&model.layers[i - 1], &model.layers[i]);
+
     }
+
+    model.weights = (PULSE_data_t*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_data_t)*model.weights_size);
+    model.io = (PULSE_data_t*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_data_t)*model.io_size);
+    PULSE_data_t * WEIGHTS_PTR = model.weights, * IO = model.io;
+    PULSE_layer_t * current = model.layers;
+    while(current != NULL)
+    {
+        current->start(current, &WEIGHTS_PTR, &IO);
+        current->randomize(current);
+        current = current->child;
+    }
+
     va_end(layers_info);
     return model;
 }

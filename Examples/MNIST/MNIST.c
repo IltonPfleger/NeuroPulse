@@ -6,7 +6,7 @@
 
 void * get_train_images()
 {
-    PULSE_DataType * images = (PULSE_DataType*)malloc(sizeof(PULSE_DataType)*IMAGE_SIZE*60000); //PULSE_DataType -> Default -> Single Precision Float
+    PULSE_data_t * images = (PULSE_data_t*)malloc(sizeof(PULSE_data_t)*IMAGE_SIZE*60000); //PULSE_data_t -> Default -> Single Precision Float
     FILE *fptr;
     fptr = fopen("train-images-idx3-ubyte", "rb");
     fread(images, sizeof(int), 4,  fptr); //TRASH HEADER
@@ -21,7 +21,7 @@ void * get_train_images()
     return images;
 }
 
-void print_image(PULSE_DataType * image)
+void print_image(PULSE_data_t * image)
 {
     for(int i = 0; i < IMAGE_SIZE; i++)
         if(i%28 != 0)
@@ -34,7 +34,7 @@ void print_image(PULSE_DataType * image)
 void * get_train_labels()
 {
     const int SIZE = 60000*10;
-    PULSE_DataType * labels = (PULSE_DataType*)malloc(sizeof(PULSE_DataType)*SIZE);
+    PULSE_data_t * labels = (PULSE_data_t*)malloc(sizeof(PULSE_data_t)*SIZE);
     FILE *fptr;
     fptr = fopen("train-labels-idx1-ubyte", "rb");
     fread(labels, sizeof(int), 2,  fptr); //TRASH HEADER
@@ -49,7 +49,7 @@ void * get_train_labels()
     return labels;
 }
 
-void print_one_hot_label(PULSE_DataType * label)
+void print_one_hot_label(PULSE_data_t * label)
 {
     printf("[ ");
     for(int i = 0; i < 10; i++)
@@ -62,8 +62,8 @@ void print_one_hot_label(PULSE_DataType * label)
 
 int main()
 {
-    PULSE_DataType * images = get_train_images();
-    PULSE_DataType * labels = get_train_labels();
+    PULSE_data_t * images = get_train_images();
+    PULSE_data_t * labels = get_train_labels();
 
     print_image(images);
     print_one_hot_label(labels);
@@ -80,7 +80,7 @@ int main()
     double t1 = omp_get_wtime();
     PULSE_Train(model, 5, 60000, (PULSE_HyperArgs) {
         100, 0.1
-    }, PULSE_LOSS_MSE, (PULSE_DataType*)images, (PULSE_DataType*)labels);
+    }, PULSE_LOSS_MSE, (PULSE_data_t*)images, (PULSE_data_t*)labels);
     double t2 = omp_get_wtime();
     printf("%f\n", t2 - t1);
     print_one_hot_label(PULSE_Foward(model.layers, images));
