@@ -1,13 +1,13 @@
-
 CC = gcc
-
-CFLAGS = -O4 -march=native -lm -fopenmp -g -Wall -L$(shell pwd)/../../ -lPULSE -Wl,-rpath=../../
+CFLAGS = -O4 -fopenmp -Wall
+PULSE_DIR := $(shell dirname $(shell dirname $(shell pwd)))
 
 default:
 	@if [ ! -f ./train* ]; then \
 		make download; \
 		fi;
-	$(CC) ${CFLAGS} MNIST.c -o MNIST
+	$(CC) ${CFLAGS} MNIST.c -o MNIST -L$(PULSE_DIR) -lPULSE -Wl,-rpath=$(PULSE_DIR)
+
 
 download:
 	curl -LO https://storage.googleapis.com/cvdf-datasets/mnist/train-images-idx3-ubyte.gz

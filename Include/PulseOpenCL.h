@@ -1,9 +1,9 @@
 #pragma once
 
 #if defined(__PULSE_GPU_SUPPORTED)
-#define __PULSE_GPU_CHECK(x) x
+#define __PULSE_OPENCL_GPU_CHECK(x) x
 #else
-#define __PULSE_GPU_CHECK(x) (printf("ERROR: PULSE GPUs Are Not Supported On This Device"), exit(1))
+#define __PULSE_OPENCL_GPU_CHECK(x) (printf("ERROR: PULSE GPUs Are Not Supported On This Device.\n"), exit(1))
 #endif
 
 #ifdef __PULSE_GPU_SUPPORTED

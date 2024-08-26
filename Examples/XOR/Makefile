@@ -1,9 +1,9 @@
-
-
-CFLAGS = -O4 -fopenmp
+CC := gcc
+CFLAGS := -O4 -fopenmp -Wall
+PULSE_DIR := $(shell dirname $(shell dirname $(shell pwd)))
 
 default:
-	gcc ${CFLAGS} XOR.c -o XOR -L/home/pj/C/NeuroPulse/ -lPULSE -Wl,-rpath=../../
+	$(CC) ${CFLAGS} XOR.c -o XOR -Wl,-rpath=$(PULSE_DIR) -L$(PULSE_DIR) -lPULSE
 
 clean:
 	rm XOR

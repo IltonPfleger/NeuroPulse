@@ -220,11 +220,9 @@ PULSE_layer_t PULSE_CreateDenseLayer(PULSE_DenseLayerArgs args)
         __PULSE_SIMD_CHECK(layer.back = &_SIMD_BackDense);
         break;
     case PULSE_OPTIMIZATION_GPU_OPENCL:
-        layer.feed = &_GPU_OPENCL_FeedDense;
-        layer.back = &_GPU_OPENCL_BackDense;
-        PULSE_OPENCL_START();
-        //printf("ERROR: PULSE Layer GPU are not supported on this device");
-        //exit(1);
+        __PULSE_OPENCL_GPU_CHECK(layer.feed = &_GPU_OPENCL_FeedDense);
+        __PULSE_OPENCL_GPU_CHECK(layer.back = &_GPU_OPENCL_BackDense);
+        __PULSE_OPENCL_GPU_CHECK(PULSE_OPENCL_START());
         break;
     }
 

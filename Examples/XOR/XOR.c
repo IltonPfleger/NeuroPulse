@@ -11,11 +11,11 @@ int main()
     PULSE_Model model = PULSE_CreateModel(2,
                                           PULSE_DENSE, (PULSE_DenseLayerArgs)
     {
-        2, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_GPU_OPENCL
+        2, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD
     },
     PULSE_DENSE,(PULSE_DenseLayerArgs)
     {
-        128, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_GPU_OPENCL
+        128, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD
     });
 
     double t1 = omp_get_wtime();
