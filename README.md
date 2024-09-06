@@ -32,19 +32,19 @@ The aim of this project is to create a user-friendly Neural Networks library for
 
 int main()
 {
-	PULSE_data_t x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
-	PULSE_data_t y[4][1] = {{1}, {0}, {1}, {0}};
+	PULSE_DATA x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
+	PULSE_DATA y[4][1] = {{1}, {0}, {1}, {0}};
 
-	PULSE_layer_t * model = PULSE_CreateModel(2,
+	pulse_layer_t * model = PULSE_CreateModel(2,
 			PULSE_DENSE, (PULSE_ARGS_DENSE){2, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_NONE},
 			PULSE_DENSE,(PULSE_ARGS_DENSE){128, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_NONE});
 
-	PULSE_Train(model, 15000, 4, (PULSE_HyperArgs){2, 0.1}, PULSE_LOSS_MSE, (PULSE_data_t*)x, (PULSE_data_t*)y);
+	pulse_train(model, 15000, 4, (PULSE_HyperArgs){2, 0.1}, PULSE_LOSS_MSE, (PULSE_DATA*)x, (PULSE_DATA*)y);
 
 	printf("TRAIN RESULT\n");
 	for (int i = 0; i < 4; i++)
 	{
-		printf("Entrada: %d %d, Output: %f\n", (int)x[i][0], (int)x[i][1], PULSE_Foward(model, x[i])[0]);
+		printf("Entrada: %d %d, Output: %f\n", (int)x[i][0], (int)x[i][1], pulse_foward(model, x[i])[0]);
 	}
 	PULSE_Destroy(model);
 }

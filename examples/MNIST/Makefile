@@ -6,7 +6,7 @@ default:
 	@if [ ! -f ./train* ]; then \
 		make download; \
 		fi;
-	$(CC) ${CFLAGS} MNIST.c -o MNIST -L$(PULSE_DIR) -lPULSE -Wl,-rpath=$(PULSE_DIR)
+	$(CC) ${CFLAGS} MNIST.c -o MNIST -L$(PULSE_DIR) -lpulse -Wl,-rpath=$(PULSE_DIR)
 
 
 download:

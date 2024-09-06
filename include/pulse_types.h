@@ -8,35 +8,34 @@
 #include <math.h>
 #include <time.h>
 
-#define PULSE_data_t float
+#define PULSE_DATA float
 
-typedef struct
-{
+typedef struct {
     int batch_size;
     double lr;
-} PULSE_HyperArgs;
+} pulse_train_hyper_args_t;
 
-typedef enum
-{
+typedef enum {
+    PULSE_DENSE,
+} pulse_layer_e;
+
+typedef enum {
     PULSE_ACTIVATION_NONE,
     PULSE_ACTIVATION_RELU,
     PULSE_ACTIVATION_LEAKYRELU,
     PULSE_ACTIVATION_SIGMOID,
-    PULSE_ACTIVATION_SOFTMAX,
-} PULSE_ActivationFunction;
+} pulse_activation_fnc_e;
 
-typedef enum
-{
+typedef enum {
     PULSE_LOSS_MSE,
     PULSE_LOSS_MAE,
-} PULSE_LossFunction;
+} pulse_loss_fnc_e;
 
-typedef enum
-{
+typedef enum {
     PULSE_OPTIMIZATION_NONE,
     PULSE_OPTIMIZATION_SIMD,
     PULSE_OPTIMIZATION_GPU_OPENCL,
-} PULSE_OptimizationType;
+} pulse_optimization_e;
 
 
 #endif
