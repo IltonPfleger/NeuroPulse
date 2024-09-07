@@ -1,6 +1,7 @@
 #pragma once
 #include "pulse_types.h"
 #include "layer.h"
+#include "dense.h"
 #include "loss.h"
 #include "activations.h"
 
@@ -13,7 +14,6 @@ typedef struct {
     size_t io_size;
     size_t fixes_size;
     size_t errors_size;
-    char trained;
 } pulse_model;
 
 PULSE_DATA * pulse_foward(pulse_layer_t *, PULSE_DATA *);

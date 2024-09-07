@@ -1,10 +1,8 @@
 #include "pulse.h"
 
 PULSE_DATA * pulse_foward(pulse_layer_t * layer, PULSE_DATA * inputs) {
-    if(inputs != NULL)
-        memcpy(layer->inputs, inputs, sizeof(PULSE_DATA)*layer->n_inputs);
+    if(inputs != NULL) memcpy(layer->inputs, inputs, sizeof(PULSE_DATA)*layer->n_inputs);
     layer->feed(layer);
-
     if(layer->next != NULL) return pulse_foward(layer->next, NULL);
     else return layer->outputs;
 }
@@ -87,25 +85,19 @@ pulse_model pulse_create_model(int size, ...) {
     model.io_size = 0;
     model.fixes_size = 0;
     model.errors_size = 0;
-    model.trained = 0;
 
     for(int i = 0; i < model.n_layers; i++) {
-        pulse_layer_e type = va_arg(layers_info, pulse_layer_e);
-        switch(type) {
-            case PULSE_DENSE:
-                pulse_dense_layer_args_t args = va_arg(layers_info, pulse_dense_layer_args_t);
-                model.layers[i] = pulse_create_dense_layer(args);
-                model.io_size += model.layers[i].n_inputs;
-                model.errors_size += model.layers[i].n_outputs;
-                model.weights_size += model.layers[i].n_inputs * model.layers[i].n_outputs + model.layers[i].n_outputs;
-                model.fixes_size += model.layers[i].n_inputs * model.layers[i].n_outputs + model.layers[i].n_outputs;
-				if(i == model.n_layers - 1) model.io_size += model.layers[i].n_outputs;
-        }
+        pulse_layer_t layer = va_arg(layers_info, pulse_layer_t);
+        model.io_size += layer.n_inputs;
+        model.errors_size += layer.n_outputs;
+        model.weights_size += layer.get_weights_size(&layer);
+        model.fixes_size += layer.get_weights_size(&layer);
+        model.layers[i] = layer;
+        if(i == model.n_layers - 1) model.io_size += layer.n_outputs;
         if(i > 0) {
             model.layers[i - 1].next = &model.layers[i];
             model.layers[i].prev = &model.layers[i - 1];
         }
-
     }
 
     model.weights = (PULSE_DATA*)aligned_alloc(__PULSE_CFLAGS_CacheLineSize, sizeof(PULSE_DATA)*model.weights_size);

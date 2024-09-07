@@ -62,12 +62,8 @@ int main() {
     print_one_hot_label(labels);
 
     pulse_model model = pulse_create_model(2,
-    PULSE_DENSE, (pulse_dense_layer_args_t) {
-        IMAGE_SIZE, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD
-    },
-    PULSE_DENSE,(pulse_dense_layer_args_t) {
-        128, 10, PULSE_ACTIVATION_SIGMOID, PULSE_OPTIMIZATION_SIMD
-    });
+                                           pulse_create_dense_layer(IMAGE_SIZE, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD),
+                                           pulse_create_dense_layer(128, 10, PULSE_ACTIVATION_SIGMOID, PULSE_OPTIMIZATION_SIMD));
 
 
     double t1 = omp_get_wtime();

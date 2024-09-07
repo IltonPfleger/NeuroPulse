@@ -8,12 +8,8 @@ int main() {
     PULSE_DATA y[4][1] = {{1}, {0}, {1}, {0}};
 
     pulse_model model = pulse_create_model(2,
-    PULSE_DENSE, (pulse_dense_layer_args_t) {
-        2, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD
-    },
-    PULSE_DENSE,(pulse_dense_layer_args_t) {
-        128, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD
-    });
+                                           pulse_create_dense_layer(2, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD),
+                                           pulse_create_dense_layer(128, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD));
 
     double t1 = omp_get_wtime();
     pulse_train(model, 15000, 4, (pulse_train_hyper_args_t) {

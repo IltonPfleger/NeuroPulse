@@ -1,4 +1,4 @@
-#include "layer.h"
+#include "dense.h"
 #include "pulse_simd.h"
 #include "opencl/PulseOpenCL.h"
 
@@ -164,9 +164,11 @@ static void PULSE_DenseRandomize(pulse_layer_t * this) {
         this->w[i] = (PULSE_DATA)rand()/(PULSE_DATA)(RAND_MAX)*sqrt(2.0/(PULSE_DATA)(this->n_inputs+this->n_outputs));
 }
 
+static size_t PULSE_DenseGetWeightsSize(pulse_layer_t * this) {
+    return this->n_inputs * this->n_outputs + this->n_outputs;
+}
 
-
-pulse_layer_t pulse_create_dense_layer(pulse_dense_layer_args_t args) {
+pulse_layer_t pulse_create_dense_layer(size_t n_inputs, size_t n_outputs, pulse_activation_fnc_e activation, pulse_optimization_e optimization) {
     pulse_layer_t layer;
     layer.inputs = NULL;
     layer.outputs = NULL;
@@ -176,15 +178,16 @@ pulse_layer_t pulse_create_dense_layer(pulse_dense_layer_args_t args) {
     layer.prev = NULL;
     layer.next = NULL;
     layer.type = PULSE_DENSE;
-    layer.optimization = args.optimization;
-    layer.n_inputs = args.n_inputs;
-    layer.n_outputs = args.n_outputs;
-    layer.activate = pulse_get_activation_fnc_ptr(args.activation_function);
+    layer.optimization = optimization;
+    layer.n_inputs = n_inputs;
+    layer.n_outputs = n_outputs;
+    layer.activate = pulse_get_activation_fnc_ptr(activation);
     layer.mode = &PULSE_DenseDistributeTrainAllocations;
     layer.start = &PULSE_DenseDistributeAllocations;
     layer.randomize = &PULSE_DenseRandomize;
+    layer.get_weights_size = &PULSE_DenseGetWeightsSize;
 
-    switch(args.optimization) {
+    switch(optimization) {
         case PULSE_OPTIMIZATION_NONE:
             layer.feed = &_FeedDense;
             layer.back = &_BackDense;
@@ -202,6 +205,3 @@ pulse_layer_t pulse_create_dense_layer(pulse_dense_layer_args_t args) {
 
     return layer;
 }
-
-
-

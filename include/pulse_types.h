@@ -16,17 +16,6 @@ typedef struct {
 } pulse_train_hyper_args_t;
 
 typedef enum {
-    PULSE_DENSE,
-} pulse_layer_e;
-
-typedef enum {
-    PULSE_ACTIVATION_NONE,
-    PULSE_ACTIVATION_RELU,
-    PULSE_ACTIVATION_LEAKYRELU,
-    PULSE_ACTIVATION_SIGMOID,
-} pulse_activation_fnc_e;
-
-typedef enum {
     PULSE_LOSS_MSE,
     PULSE_LOSS_MAE,
 } pulse_loss_fnc_e;
