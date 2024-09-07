@@ -63,7 +63,7 @@ int main() {
 
     pulse_model model = pulse_create_model(2,
     PULSE_DENSE, (pulse_dense_layer_args_t) {
-        IMAGE_SIZE, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_GPU_OPENCL
+        IMAGE_SIZE, 128, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_SIMD
     },
     PULSE_DENSE,(pulse_dense_layer_args_t) {
         128, 10, PULSE_ACTIVATION_SIGMOID, PULSE_OPTIMIZATION_SIMD

@@ -5,11 +5,8 @@ PULSE_DATA * pulse_foward(pulse_layer_t * layer, PULSE_DATA * inputs) {
         memcpy(layer->inputs, inputs, sizeof(PULSE_DATA)*layer->n_inputs);
     layer->feed(layer);
 
-    if(layer->next != NULL) {
-        memcpy(layer->next->inputs, layer->outputs, sizeof(PULSE_DATA)*layer->n_outputs);
-        return pulse_foward(layer->next, NULL);
-    } else
-        return layer->outputs;
+    if(layer->next != NULL) return pulse_foward(layer->next, NULL);
+    else return layer->outputs;
 }
 
 
@@ -98,10 +95,11 @@ pulse_model pulse_create_model(int size, ...) {
             case PULSE_DENSE:
                 pulse_dense_layer_args_t args = va_arg(layers_info, pulse_dense_layer_args_t);
                 model.layers[i] = pulse_create_dense_layer(args);
-                model.io_size += model.layers[i].n_outputs + model.layers[i].n_inputs;
+                model.io_size += model.layers[i].n_inputs;
                 model.errors_size += model.layers[i].n_outputs;
                 model.weights_size += model.layers[i].n_inputs * model.layers[i].n_outputs + model.layers[i].n_outputs;
                 model.fixes_size += model.layers[i].n_inputs * model.layers[i].n_outputs + model.layers[i].n_outputs;
+				if(i == model.n_layers - 1) model.io_size += model.layers[i].n_outputs;
         }
         if(i > 0) {
             model.layers[i - 1].next = &model.layers[i];

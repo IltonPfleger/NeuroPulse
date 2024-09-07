@@ -133,9 +133,7 @@ static void _GPU_OPENCL_BackDense(pulse_layer_t *this) {
 
     for(int i = 0, wi = 0; i < this->n_outputs; i++, wi += this->n_inputs) {
         PULSE_DATA delta = this->errors[i] * this->outputs[i];
-        //this->g[DELTAS_OFFSET + i] += delta;
         for(int j = 0; j < this->n_inputs; j++) {
-            // this->g[wi + j] += delta * this->inputs[j];
             if(this->prev != NULL)
                 this->prev->errors[j] += this->w[wi + j] * delta;
         }
@@ -158,7 +156,7 @@ static void PULSE_DenseDistributeAllocations(pulse_layer_t * this, PULSE_DATA **
     this->inputs = *IO;
     this->outputs = *IO  + this->n_inputs;
     *WEIGHTS += this->n_inputs * this->n_outputs + this->n_outputs;
-    *IO += this->n_outputs + this->n_inputs;
+    *IO += this->n_inputs;
 }
 
 static void PULSE_DenseRandomize(pulse_layer_t * this) {
