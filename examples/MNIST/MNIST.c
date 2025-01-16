@@ -4,7 +4,8 @@
 #include "../../include/pulse.h"
 #define IMAGE_SIZE 784
 
-void * get_train_images() {
+void * get_train_images()
+{
     PULSE_DATA * images = (PULSE_DATA*)malloc(sizeof(PULSE_DATA)*IMAGE_SIZE*60000); //PULSE_DATA -> Default -> Single Precision Float
     FILE *fptr;
     fptr = fopen("train-images-idx3-ubyte", "rb");
@@ -19,7 +20,8 @@ void * get_train_images() {
     return images;
 }
 
-void print_image(PULSE_DATA * image) {
+void print_image(PULSE_DATA * image)
+{
     for(int i = 0; i < IMAGE_SIZE; i++)
         if(i%28 != 0)
             printf("%.f", image[i]);
@@ -28,7 +30,8 @@ void print_image(PULSE_DATA * image) {
     printf("\n");
 }
 
-void * get_train_labels() {
+void * get_train_labels()
+{
     const int SIZE = 60000*10;
     PULSE_DATA * labels = (PULSE_DATA*)malloc(sizeof(PULSE_DATA)*SIZE);
     FILE *fptr;
@@ -44,7 +47,8 @@ void * get_train_labels() {
     return labels;
 }
 
-void print_one_hot_label(PULSE_DATA * label) {
+void print_one_hot_label(PULSE_DATA * label)
+{
     printf("[ ");
     for(int i = 0; i < 10; i++)
         printf("%.f ", label[i]);
@@ -54,7 +58,8 @@ void print_one_hot_label(PULSE_DATA * label) {
 
 
 
-int main() {
+int main()
+{
     PULSE_DATA * images = get_train_images();
     PULSE_DATA * labels = get_train_labels();
 
@@ -73,4 +78,6 @@ int main() {
     double t2 = omp_get_wtime();
     printf("%f\n", t2 - t1);
     print_one_hot_label(pulse_foward(model.layers, images));
+
+    pulse_free(&model);
 };

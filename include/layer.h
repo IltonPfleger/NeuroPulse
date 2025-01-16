@@ -17,12 +17,10 @@ typedef struct pulse_layer_s {
     pulse_activation_fnc_ptr activate;
     void (*feed)(struct pulse_layer_s *);
     void (*back)(struct pulse_layer_s *);
-    void (*randomize)(struct pulse_layer_s *);
-    void (*start)(struct pulse_layer_s *, PULSE_DATA **, PULSE_DATA **);
-    void (*mode)(struct pulse_layer_s *, PULSE_DATA **, PULSE_DATA **);
-    size_t (*get_weights_size)(struct pulse_layer_s *);
+    void (*free)(struct pulse_layer_s *);
     struct pulse_layer_s * next;
     struct pulse_layer_s * prev;
     size_t n_inputs;
     size_t n_outputs;
+    size_t n_weights;
 } pulse_layer_t;

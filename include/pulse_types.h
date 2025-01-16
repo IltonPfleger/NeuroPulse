@@ -9,6 +9,10 @@
 #include <time.h>
 
 #define PULSE_DATA float
+#define PULSE_ALLOC(x) aligned_alloc(__PULSE_CFLAGS_CacheLineSize, x)
+#define PULSE_FREE(x) free(x)
+
+
 
 typedef struct {
     int batch_size;
@@ -23,7 +27,6 @@ typedef enum {
 typedef enum {
     PULSE_OPTIMIZATION_NONE,
     PULSE_OPTIMIZATION_SIMD,
-    PULSE_OPTIMIZATION_GPU_OPENCL,
 } pulse_optimization_e;
 
 
