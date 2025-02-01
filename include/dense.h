@@ -1,5 +1,7 @@
-#pragma once
-#include "layer.h"
+#ifndef __DENSE__
+#define __DENSE__
+
+#include <layer.h>
 
 typedef struct {
     unsigned int n_inputs;
@@ -9,3 +11,5 @@ typedef struct {
 } pulse_dense_layer_args_t;
 
 pulse_layer_t pulse_create_dense_layer(size_t, size_t, pulse_activation_fnc_e, pulse_optimization_e);
+
+#endif

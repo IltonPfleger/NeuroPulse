@@ -1,9 +1,13 @@
-CC := gcc
-CFLAGS := -O4 -fopenmp -Wall
-PULSE_DIR := $(shell dirname $(shell dirname $(shell pwd)))
+CC = gcc
+CFLAGS = -O4 -fopenmp -Wall
+PULSE_DIR = $(shell dirname $(shell dirname $(shell pwd)))
+SOURCES = $(shell find . -type f -name "*.c")
+TARGET = $(SOURCES:.c=)
 
-default:
-	$(CC) ${CFLAGS} XOR.c -o XOR -Wl,-rpath=$(PULSE_DIR) -L$(PULSE_DIR) -lpulse
+all: $(TARGET)
+
+%: %.c
+	$(CC) $(CFLAGS) $< -o $@ -Wl,-rpath=$(PULSE_DIR) -L$(PULSE_DIR) -I$(PULSE_DIR)/include -lpulse
 
 clean:
-	rm XOR
+	rm -f $(TARGET)

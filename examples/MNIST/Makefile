@@ -1,12 +1,16 @@
 CC = gcc
 CFLAGS = -O4 -fopenmp -Wall
-PULSE_DIR := $(shell dirname $(shell dirname $(shell pwd)))
+PULSE_DIR = $(shell dirname $(shell dirname $(shell pwd)))
+SOURCES = $(shell find . -type f -name "*.c")
+TARGET = $(SOURCES:.c=)
 
-default:
+all: $(TARGET)
+
+%: %.c
 	@if [ ! -f ./train* ]; then \
 		make download; \
 		fi;
-	$(CC) ${CFLAGS} MNIST.c -o MNIST -L$(PULSE_DIR) -lpulse -Wl,-rpath=$(PULSE_DIR)
+	$(CC) $(CFLAGS) $< -o $@ -Wl,-rpath=$(PULSE_DIR) -L$(PULSE_DIR) -I$(PULSE_DIR)/include -lpulse
 
 
 download:
@@ -21,3 +25,4 @@ clean:
 	rm train*
 	rm t10k*
 	rm MNIST
+	rm $(TARGET)
