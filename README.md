@@ -32,13 +32,13 @@ The aim of this project is to create a user-friendly Neural Networks library for
 
 int main()
 {
-    PULSE_DATA x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
-    PULSE_DATA y[4][1] = {{1}, {0}, {1}, {0}};
+    pulse_datatype x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
+    pulse_datatype y[4][1] = {{1}, {0}, {1}, {0}};
 
     pulse_model model = pulse_create_model(2,
                                            pulse_create_dense_layer(2, 4, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_NONE),
                                            pulse_create_dense_layer(4, 1, PULSE_ACTIVATION_RELU, PULSE_OPTIMIZATION_NONE));
-    pulse_train(model, 15000, 4, (pulse_train_hyper_args_t) {2, 0.1}, PULSE_LOSS_MSE, (PULSE_DATA*)x, (PULSE_DATA*)y);
+    pulse_train(model, 15000, 4, (pulse_train_hyper_args_t) {2, 0.1}, PULSE_LOSS_MSE, (pulse_datatype*)x, (pulse_datatype*)y);
 
     printf("TRAIN RESULT\n");
     for (int i = 0; i < 4; i++) {

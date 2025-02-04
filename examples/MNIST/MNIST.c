@@ -6,7 +6,7 @@
 
 void * get_train_images()
 {
-    PULSE_DATA * images = (PULSE_DATA*)malloc(sizeof(PULSE_DATA)*IMAGE_SIZE*60000); //PULSE_DATA -> Default -> Single Precision Float
+    pulse_datatype * images = (pulse_datatype*)malloc(sizeof(pulse_datatype)*IMAGE_SIZE*60000); //pulse_datatype -> Default -> Single Precision Float
     FILE *fptr;
     fptr = fopen("train-images-idx3-ubyte", "rb");
     fread(images, sizeof(int), 4,  fptr); //TRASH HEADER
@@ -20,7 +20,7 @@ void * get_train_images()
     return images;
 }
 
-void print_image(PULSE_DATA * image)
+void print_image(pulse_datatype * image)
 {
     for(int i = 0; i < IMAGE_SIZE; i++)
         if(i%28 != 0)
@@ -33,7 +33,7 @@ void print_image(PULSE_DATA * image)
 void * get_train_labels()
 {
     const int SIZE = 60000*10;
-    PULSE_DATA * labels = (PULSE_DATA*)malloc(sizeof(PULSE_DATA)*SIZE);
+    pulse_datatype * labels = (pulse_datatype*)malloc(sizeof(pulse_datatype)*SIZE);
     FILE *fptr;
     fptr = fopen("train-labels-idx1-ubyte", "rb");
     fread(labels, sizeof(int), 2,  fptr); //TRASH HEADER
@@ -47,7 +47,7 @@ void * get_train_labels()
     return labels;
 }
 
-void print_one_hot_label(PULSE_DATA * label)
+void print_one_hot_label(pulse_datatype * label)
 {
     printf("[ ");
     for(int i = 0; i < 10; i++)
@@ -60,8 +60,8 @@ void print_one_hot_label(PULSE_DATA * label)
 
 int main()
 {
-    PULSE_DATA * images = get_train_images();
-    PULSE_DATA * labels = get_train_labels();
+    pulse_datatype * images = get_train_images();
+    pulse_datatype * labels = get_train_labels();
 
     print_image(images);
     print_one_hot_label(labels);
@@ -74,7 +74,7 @@ int main()
     double t1 = omp_get_wtime();
     pulse_train(model, 5, 60000, (pulse_train_hyper_args_t) {
         100, 0.1
-    }, PULSE_LOSS_MSE, (PULSE_DATA*)images, (PULSE_DATA*)labels);
+    }, PULSE_LOSS_MSE, (pulse_datatype*)images, (pulse_datatype*)labels);
     double t2 = omp_get_wtime();
     printf("%f\n", t2 - t1);
     print_one_hot_label(pulse_foward(model.layers, images));
