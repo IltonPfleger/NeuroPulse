@@ -55,8 +55,8 @@ int main()
     pulse_train(model, (pulse_train_args_t){.samples = SAMPLES, .epoch = 10000, .batch_size = 1, .lr = 0.1}, MSE, X, Y);
     clock_t t2 = clock();
 
-    printf("TRAIN RESULT\n");
-    for (int i = 0; i < 4; i++) printf("Entrada: %d %d, Output: %f\n", (int)x[i][0], (int)x[i][1], *(double*)pulse_forward(model, x[i]));
+    printf("Train Result:\n");
+    for (int i = 0; i < 4; i++) printf("Input: %d %d, Output: %f\n", (int)x[i][0], (int)x[i][1], *(double*)pulse_forward(model, x[i]));
     printf("Time: %f\n", (double)(t2 - t1) / CLOCKS_PER_SEC);
 
     pulse_free(model);
