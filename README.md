@@ -18,11 +18,11 @@ The aim of this project is to create a user-friendly Neural Networks library for
 * [x] Stochastic Gradient Descent.
 * [x] Batch Gradient Descent.
 * [x] Mini-Batch Gradient Descent.
-* [x] Custom Activation Functions Per Layer.
-* [x] Convolutional Layers.
+* [x] Custom Activation Functions Layer.
+* [ ] Convolutional Layers.
 * [ ] RNN Features.
 * [ ] Optimizers like RMSProp, Adam, etc.
-* [x] Custom Error Functions.
+* [x] Custom Loss Functions.
 
 ## Example
 ```c Xor Problem.
@@ -35,37 +35,33 @@ The aim of this project is to create a user-friendly Neural Networks library for
 
 int main()
 {
-    auto DTYPE   = PULSE_DOUBLE;
-    auto ReLU    = PULSE_RELU[DTYPE];
-    auto Sigmoid = PULSE_SIGMOID[DTYPE];
-    auto MSE     = PULSE_MSE[DTYPE];
+    constexpr int SAMPLES          = 4;
+    constexpr int INPUT_DIMENSION  = 2;
+    constexpr int OUTPUT_DIMENSION = 1;
 
-    double x[4][2] = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
-    double y[4][1] = {{1}, {0}, {1}, {0}};
-    void* X[4];
-    void* Y[4];
+    auto constexpr DTYPE = PULSE_DOUBLE;
+    auto const ReLU      = PULSE_RELU[DTYPE];
+    auto const Sigmoid   = PULSE_SIGMOID[DTYPE];
+    auto const MSE       = PULSE_MSE[DTYPE];
 
-    X[0] = x[0];
-    X[1] = x[1];
-    X[2] = x[2];
-    X[3] = x[3];
+    const double x[SAMPLES][INPUT_DIMENSION]  = {{0, 1}, {1, 1}, {1, 0}, {0, 0}};
+    const double y[SAMPLES][OUTPUT_DIMENSION] = {{1}, {0}, {1}, {0}};
+    const void* const X[SAMPLES]              = {x[0], x[1], x[2], x[3]};
+    const void* const Y[SAMPLES]              = {y[0], y[1], y[2], y[3]};
 
-    Y[0] = y[0];
-    Y[1] = y[1];
-    Y[2] = y[2];
-    Y[3] = y[3];
+    pulse_model model = pulse_create_model(2, pulse_dense_layer(INPUT_DIMENSION, 4, DTYPE, ReLU), pulse_dense_layer(4, OUTPUT_DIMENSION, DTYPE, Sigmoid));
 
-    pulse_model model = pulse_create_model(2, pulse_dense_layer(2, 4, DTYPE, ReLU), pulse_dense_layer(4, 1, DTYPE, Sigmoid));
-    pulse_train(model, (pulse_train_args_t){.samples = 4, .epoch = 15000, .batch_size = 1, .lr = 0.1}, MSE, X, Y);
+    clock_t t1 = clock();
+    pulse_train(model, (pulse_train_args_t){.samples = SAMPLES, .epoch = 10000, .batch_size = 1, .lr = 0.1}, MSE, X, Y);
+    clock_t t2 = clock();
 
     printf("TRAIN RESULT\n");
-    for (int i = 0; i < 4; i++) {
-        double* output = pulse_forward(model, x[i]);
-        printf("Entrada: %d %d, Output: %f\n", (int)x[i][0], (int)x[i][1], *output);
-    }
+    for (int i = 0; i < 4; i++) printf("Entrada: %d %d, Output: %f\n", (int)x[i][0], (int)x[i][1], *(double*)pulse_forward(model, x[i]));
+    printf("Time: %f\n", (double)(t2 - t1) / CLOCKS_PER_SEC);
 
     pulse_free(model);
 }
+
 ```
 ## Notes:
 * The project requires C standard libraries. If using non-compiled files, include them in your compilation.
