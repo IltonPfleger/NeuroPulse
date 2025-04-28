@@ -13,7 +13,7 @@ typedef struct pulse_layer_s {
     struct pulse_layer_s *next;
     struct pulse_layer_s *prev;
     void *internal;
-    void (*feed)(struct pulse_layer_s *, void *);
+    void (*feed)(struct pulse_layer_s *, const void *const);
     void (*back)(struct pulse_layer_s *);
     void (*free)(struct pulse_layer_s *);
     void (*fix)(struct pulse_layer_s *, pulse_train_args_t);

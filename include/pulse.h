@@ -12,10 +12,10 @@ typedef struct {
 } pulse_model;
 
 pulse_model pulse_create_model(int, ...);
-void *pulse_forward(pulse_model, void *);
+void *pulse_forward(pulse_model, const void *const);
 void pulse_free(pulse_model);
 void pulse_back(pulse_model);
 void pulse_shuffle(size_t *, size_t);
-void pulse_train(pulse_model, pulse_train_args_t, pulse_loss_function, void **, void **);
+void pulse_train(pulse_model, pulse_train_args_t, pulse_loss_function, const void *const *, const void *const *);
 
 #endif

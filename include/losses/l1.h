@@ -5,19 +5,19 @@
 #include <math.h>
 #include <types/dtype.h>
 
-#define L1(dtype)                                                    \
-    static double l1_##dtype(void *x, void *y, void *z, size_t size) \
-    {                                                                \
-        dtype *x_data = (dtype *)x;                                  \
-        dtype *y_data = (dtype *)y;                                  \
-        dtype *z_data = (dtype *)z;                                  \
-        double loss   = 0;                                           \
-        for (size_t i = 0; i < size; i++) {                          \
-            dtype diff = x_data[i] - y_data[i];                      \
-            z_data[i]  = diff;                                       \
-            loss += diff;                                            \
-        };                                                           \
-        return loss;                                                 \
+#define L1(dtype)                                                                                  \
+    static double l1_##dtype(const void *const x, const void *const y, void *const z, size_t size) \
+    {                                                                                              \
+        dtype *x_data = (dtype *)x;                                                                \
+        dtype *y_data = (dtype *)y;                                                                \
+        dtype *z_data = (dtype *)z;                                                                \
+        double loss   = 0;                                                                         \
+        for (size_t i = 0; i < size; i++) {                                                        \
+            dtype diff = x_data[i] - y_data[i];                                                    \
+            z_data[i]  = diff;                                                                     \
+            loss += diff;                                                                          \
+        };                                                                                         \
+        return loss;                                                                               \
     };
 
 L1(int)

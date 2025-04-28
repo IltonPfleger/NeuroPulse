@@ -6,7 +6,7 @@
 #include <string.h>
 #include <time.h>
 
-void *pulse_forward(pulse_model model, void *inputs)
+void *pulse_forward(pulse_model model, const void *const inputs)
 {
     model.layers->feed(model.layers, inputs);
     return (model.layers + model.n_layers - 1)->outputs;
@@ -27,7 +27,7 @@ void pulse_shuffle(size_t *indexes, size_t max)
     };
 }
 
-void pulse_train(pulse_model model, pulse_train_args_t args, pulse_loss_function loss_function, void **x, void **y)
+void pulse_train(pulse_model model, pulse_train_args_t args, pulse_loss_function loss_function, const void *const *x, const void *const *y)
 {
     srand(time(NULL));
     pulse_layer_t *output = model.layers + model.n_layers - 1;

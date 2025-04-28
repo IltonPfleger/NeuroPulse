@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O4 -fopenmp -Wall -std=c23 -lm
+CFLAGS = -O4 -Wall -Wextra -std=c23 -lm
 PULSE_DIR = $(shell dirname $(shell dirname $(shell pwd)))
 SOURCES = $(shell find . -type f -name "*.c")
 TARGET = $(SOURCES:.c=)

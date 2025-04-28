@@ -20,10 +20,10 @@ typedef struct {
 } pulse_dense_layer_t;
 
 #define FEED(dtype)                                                         \
-    static void feed_##dtype(pulse_layer_t *this, void *ptr)                \
+    static void feed_##dtype(pulse_layer_t *this, const void *const ptr)    \
     {                                                                       \
         pulse_dense_layer_t dense = *(pulse_dense_layer_t *)this->internal; \
-        this->inputs              = ptr;                                    \
+        this->inputs              = (void *const)ptr;                       \
         dtype *weights            = (dtype *)dense.w;                       \
         dtype *bias               = (dtype *)dense.b;                       \
         dtype *inputs             = (dtype *)this->inputs;                  \
@@ -112,7 +112,7 @@ FIX(int)
 FIX(float)
 FIX(double)
 
-static void (*PULSE_DENSE_FEED[])(pulse_layer_t *, void *)            = {[PULSE_INT] = feed_int, [PULSE_FLOAT] = feed_float, [PULSE_DOUBLE] = feed_double};
+static void (*PULSE_DENSE_FEED[])(pulse_layer_t *, const void *const) = {[PULSE_INT] = feed_int, [PULSE_FLOAT] = feed_float, [PULSE_DOUBLE] = feed_double};
 static void (*PULSE_DENSE_BACK[])(pulse_layer_t *)                    = {[PULSE_INT] = back_int, [PULSE_FLOAT] = back_float, [PULSE_DOUBLE] = back_double};
 static void (*PULSE_DENSE_FIX[])(pulse_layer_t *, pulse_train_args_t) = {[PULSE_INT] = fix_int, [PULSE_FLOAT] = fix_float, [PULSE_DOUBLE] = fix_double};
 
