@@ -1,7 +1,8 @@
-#include <memory/memory.h>
+#include <debug/debug.h>
 #include <pulse.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
@@ -44,7 +45,7 @@ void pulse_train(pulse_model model, pulse_train_args_t args, pulse_loss_function
 
             if ((j + 1) % args.batch_size == 0) pulse_fix(model, args);
 
-            printf("Epoch: %ld | Item: %ld | Avg Loss: %.10f\r", i, j, loss);
+            PULSE_DEBUG_LOGGER("Epoch: %ld | Item: %ld | Avg Loss: %.10f\r", i, j, loss);
         }
     }
 }
@@ -52,16 +53,17 @@ void pulse_train(pulse_model model, pulse_train_args_t args, pulse_loss_function
 pulse_model pulse_create_model(int size, ...)
 {
     srand(time(NULL));
-    pulse_model model;
-    model.n_layers = size;
-    model.layers   = pulse_memory_alloc(sizeof(pulse_layer_t) * model.n_layers);
-
     va_list layers_info;
     va_start(layers_info, size);
 
+    pulse_layer_t *layers = malloc(sizeof(pulse_layer_t) * size);
+    PULSE_DEBUG_ERROR(layers == NULL, "PulseModel::Create >> Heap memory allocation failed.");
+
+    pulse_model model = {.n_layers = size, .layers = layers};
+
     for (size_t i = 0; i < model.n_layers; i++) {
         pulse_layer_t layer = va_arg(layers_info, pulse_layer_t);
-        model.layers[i]     = layer;
+        memcpy(model.layers + i, &layer, sizeof(pulse_layer_t));
         if (i > 0) {
             model.layers[i - 1].next = &model.layers[i];
             model.layers[i].prev     = &model.layers[i - 1];
@@ -74,5 +76,5 @@ pulse_model pulse_create_model(int size, ...)
 void pulse_free(pulse_model model)
 {
     for (size_t i = 0; i < model.n_layers; i++) model.layers[i].free(model.layers + i);
-    pulse_memory_free(model.layers);
+    free(model.layers);
 }

@@ -3,10 +3,12 @@
 
 #include <activations/activation.h>
 #include <assert.h>
+#include <debug/debug.h>
 #include <layers/layer.h>
 #include <math.h>
-#include <memory/memory.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 typedef struct {
@@ -117,49 +119,64 @@ static void (*PULSE_DENSE_FIX[])(pulse_layer_t *, pulse_train_args_t) = {[PULSE_
 static void PULSE_DENSE_FREE(pulse_layer_t *this)
 {
     pulse_dense_layer_t dense = *(pulse_dense_layer_t *)this->internal;
-    pulse_memory_free(this->outputs);
-    pulse_memory_free(this->errors);
-    pulse_memory_free(dense.w);
-    pulse_memory_free(dense.b);
-    pulse_memory_free(dense.g);
-    pulse_memory_free(dense.d);
-    pulse_memory_free(this->internal);
+    free(this->outputs);
+    free(this->errors);
+    free(dense.w);
+    free(dense.b);
+    free(dense.g);
+    free(dense.d);
+    free(this->internal);
 };
 
-pulse_layer_t pulse_dense_layer(size_t isize, size_t osize, pulse_dtype_t dtype, pulse_activation_function activation)
+pulse_layer_t pulse_dense_layer(size_t isize, size_t osize, pulse_dtype_t dtype, pulse_activation_function activate)
 {
     srand(time(NULL));
-    const size_t DTYPE_SIZE    = pulse_dtype_sizes[dtype];
-    pulse_dense_layer_t *dense = (pulse_dense_layer_t *)pulse_memory_alloc(sizeof(pulse_dense_layer_t));
-    pulse_layer_t layer;
+    const size_t DTYPE_SIZE = pulse_dtype_sizes[dtype];
 
-    layer.outputs = pulse_memory_alloc(DTYPE_SIZE * osize);
-    layer.errors  = pulse_memory_alloc(DTYPE_SIZE * osize);
-    layer.isize   = isize;
-    layer.osize   = osize;
+    pulse_dense_layer_t *dense_ptr = (pulse_dense_layer_t *)malloc(sizeof(pulse_dense_layer_t));
+    void *outputs                  = malloc(DTYPE_SIZE * osize);
+    void *errors                   = malloc(DTYPE_SIZE * osize);
+    void *weights                  = malloc(DTYPE_SIZE * osize * isize);
+    void *gradients                = malloc(DTYPE_SIZE * osize * isize);
+    void *biases                   = malloc(DTYPE_SIZE * osize);
+    void *deltas                   = malloc(DTYPE_SIZE * osize);
 
-    dense->w = pulse_memory_alloc(DTYPE_SIZE * osize * isize);
-    dense->g = pulse_memory_alloc(DTYPE_SIZE * osize * isize);
-    dense->b = pulse_memory_alloc(DTYPE_SIZE * osize);
-    dense->d = pulse_memory_alloc(DTYPE_SIZE * osize);
-    assert(activation != NULL);
-    dense->activate = activation;
+    PULSE_DEBUG_ERROR(isize <= 0, "PulseDenseLayer::Create >> Input length can't be negative or zero.");
+    PULSE_DEBUG_ERROR(osize <= 0, "PulseDenseLayer::Create >> Output length can't be negative or zero.");
+    PULSE_DEBUG_ERROR(activate == NULL, "PulseDenseLayer::Create >> Activation function can't be NULL.");
+    PULSE_DEBUG_ERROR(dense_ptr == NULL, "PulseDenseLayer::Create >> Heap memory allocation failed.");
+    PULSE_DEBUG_ERROR(outputs == NULL, "PulseDenseLayer::Create >> Heap memory allocation failed.");
+    PULSE_DEBUG_ERROR(errors == NULL, "PulseDenseLayer::Create >> Heap memory allocation failed.");
+    PULSE_DEBUG_ERROR(weights == NULL, "PulseDenseLayer::Create >> Heap memory allocation failed.");
+    PULSE_DEBUG_ERROR(biases == NULL, "PulseDenseLayer::Create >> Heap memory allocation failed.");
+    PULSE_DEBUG_ERROR(deltas == NULL, "PulseDenseLayer::Create >> Heap memory allocation failed.");
 
-    layer.prev = NULL;
-    layer.next = NULL;
+    const pulse_dense_layer_t dense = {
+        .w        = weights,
+        .g        = gradients,
+        .d        = deltas,
+        .b        = biases,
+        .activate = activate,
+    };
 
-    assert(PULSE_DENSE_FEED[dtype] != NULL);
-    assert(PULSE_DENSE_BACK[dtype] != NULL);
-    assert(PULSE_DENSE_FIX[dtype] != NULL);
-    assert(dense != NULL);
-    layer.feed     = PULSE_DENSE_FEED[dtype];
-    layer.back     = PULSE_DENSE_BACK[dtype];
-    layer.fix      = PULSE_DENSE_FIX[dtype];
-    layer.free     = PULSE_DENSE_FREE;
-    layer.internal = dense;
+    const pulse_layer_t layer = {
+        .outputs  = outputs,
+        .errors   = errors,
+        .prev     = NULL,
+        .next     = NULL,
+        .feed     = PULSE_DENSE_FEED[dtype],
+        .back     = PULSE_DENSE_BACK[dtype],
+        .fix      = PULSE_DENSE_FIX[dtype],
+        .free     = PULSE_DENSE_FREE,
+        .osize    = osize,
+        .isize    = isize,
+        .internal = dense_ptr,
+    };
 
-    double *weights = (double *)dense->w;
-    for (size_t i = 0; i < isize * osize; i++) weights[i] = (double)rand() / (double)(RAND_MAX)*sqrt(2.0 / (double)(isize + osize));
+    memcpy(dense_ptr, &dense, sizeof(pulse_dense_layer_t));
+
+    double *$weights = (double *)dense.w;
+    for (size_t i = 0; i < isize * osize; i++) $weights[i] = (double)rand() / (double)(RAND_MAX)*sqrt(2.0 / (double)(isize + osize));
     return layer;
 }
 

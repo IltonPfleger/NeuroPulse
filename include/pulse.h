@@ -3,6 +3,7 @@
 
 #include <layers/layer.h>
 #include <losses/loss.h>
+#include <stddef.h>
 #include <types/train.h>
 
 typedef struct {

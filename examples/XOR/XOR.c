@@ -31,7 +31,7 @@ int main()
     pulse_model model = pulse_create_model(2, pulse_dense_layer(2, 4, DTYPE, ReLU), pulse_dense_layer(4, 1, DTYPE, Sigmoid));
 
     double t1 = omp_get_wtime();
-    pulse_train(model, (pulse_train_args_t){.samples = 4, .epoch = 15000, .batch_size = 1, .lr = 0.1}, MSE, X, Y);
+    pulse_train(model, (pulse_train_args_t){.samples = 4, .epoch = 500000, .batch_size = 1, .lr = 0.1}, MSE, X, Y);
     double t2 = omp_get_wtime();
     printf("%f\n", t2 - t1);
 
