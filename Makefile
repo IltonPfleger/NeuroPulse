@@ -1,26 +1,21 @@
 CC = gcc
 CFLAGS = -O4 -march=native -I ./include -lm -Wall -Wextra -fPIC
-#CFLAGS += -D__PULSE_CFLAGS_CacheLineSize=`getconf LEVEL1_DCACHE_LINESIZE`
 
-SOURCES = $(shell find . -path "./examples/*" -prune -o -type f -name "*.c" -print)
-
-OBJECTS = $(SOURCES:.c=.o)
-OBJECTS := $(subst ./,build/,$(OBJECTS))
-
-LIBRARY = libpulse.so
+SOURCES = $(shell find . -type f -name '*.c' | grep -v examples)
+OBJECTS = $(shell find . -type f -name '*.c' | grep -v examples | sed 's/.c$$/.o/g' | sed 's/^/build\//g')
+LIBRARY = build/libpulse.so
 
 all: $(LIBRARY)
 
 $(LIBRARY): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -shared -o $@
+	$(CC) $(CFLAGS) $(OBJECTS) -shared -o $(LIBRARY)
 
 build/%.o: %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf build
-	find . -type f -name "*.so" -type f -name "*.o" -exec rm {} +
+	rm -rf build/*
 
 run:
 	(cd examples/$(EXAMPLE) && make)

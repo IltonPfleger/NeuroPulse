@@ -1,8 +1,8 @@
 CC = gcc
-CFLAGS = -O4 -fopenmp -Wall -std=c23 -lm
-PULSE_DIR = $(shell dirname $(shell dirname $(shell pwd)))
-SOURCES = $(shell find . -type f -name "*.c")
-TARGET = $(SOURCES:.c=)
+CFLAGS = -O4 -Wall -Wextra -std=c23 -lm
+PULSE_DIR = ../../
+TARGET = MNIST
+SOURCES = $(TARGET).c
 
 all: $(TARGET)
 
@@ -10,8 +10,7 @@ all: $(TARGET)
 	@if [ ! -f ./train* ]; then \
 		make download; \
 		fi;
-	$(CC) $(CFLAGS) $< -o $@ -Wl,-rpath=$(PULSE_DIR) -L$(PULSE_DIR) -I$(PULSE_DIR)/include -lpulse
-
+	$(CC) $(CFLAGS) $< -o $@ -L$(PULSE_DIR)build/ -I$(PULSE_DIR)/include -lpulse
 
 download:
 	curl -LO https://storage.googleapis.com/cvdf-datasets/mnist/train-images-idx3-ubyte.gz
@@ -26,3 +25,8 @@ clean:
 	rm t10k*
 	rm MNIST
 	rm $(TARGET)
+
+run:
+	LD_LIBRARY_PATH=../../build ./$(TARGET)
+
+
