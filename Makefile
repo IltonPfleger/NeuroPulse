@@ -1,5 +1,6 @@
 CC = gcc
-CFLAGS = -O4 -march=native -I ./include -lm -Wall -Wextra -fPIC
+CFLAGS = -Wall -Wextra -Werror -Wpedantic
+CFLAGS = -O4 -march=native -Iinclude -lm -fPIC
 
 SOURCES = $(shell find . -type f -name '*.c' | grep -v examples)
 OBJECTS = $(shell find . -type f -name '*.c' | grep -v examples | sed 's/.c$$/.o/g' | sed 's/^/build\//g')

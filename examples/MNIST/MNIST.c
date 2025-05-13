@@ -2,23 +2,21 @@
 #include <activations/sigmoid.h>
 #include <layers/dense.h>
 #include <losses/l1.h>
-#include <omp.h>
 #include <pulse.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-size_t IMAGE_SIZE  = 784;
-size_t OUTPUT_SIZE = 10;
-size_t SAMPLES     = 60000;
+constexpr int IMAGE_SIZE      = 784;
+constexpr int N_TRAIN_SAMPLES = 60000;
 
 void **get_train_images()
 {
-    void **images = (void **)malloc(sizeof(void *) * SAMPLES);
+    void **images = (void **)malloc(sizeof(void *) * N_TRAIN_SAMPLES);
     FILE *file    = fopen("train-images-idx3-ubyte", "rb");
     assert(file != NULL);
     fseek(file, sizeof(int) * 4, SEEK_SET);
     unsigned char buffer[IMAGE_SIZE];
-    for (int i = 0; i < SAMPLES; i++) {
+    for (int i = 0; i < N_TRAIN_SAMPLES; i++) {
         images[i]    = malloc(sizeof(double) * IMAGE_SIZE);
         double *data = (double *)images[i];
         fread(buffer, IMAGE_SIZE, 1, file);
@@ -43,17 +41,17 @@ void print_image(double *image)
 //
 void **get_train_labels()
 {
-    void **labels = (void **)malloc(sizeof(void *) * SAMPLES);
+    void **labels = (void **)malloc(sizeof(void *) * N_TRAIN_SAMPLES);
     FILE *file    = fopen("train-labels-idx1-ubyte", "rb");
     assert(labels != NULL);
     assert(file != NULL);
     fseek(file, sizeof(int) * 2, SEEK_SET);
     unsigned char value;
-    for (int i = 0; i < SAMPLES; i++) {
-        labels[i]    = malloc(sizeof(double) * OUTPUT_SIZE);
+    for (int i = 0; i < N_TRAIN_SAMPLES; i++) {
+        labels[i]    = malloc(sizeof(double) * 10);
         double *data = (double *)labels[i];
         fread(&value, 1, 1, file);
-        for (int j = 0; j < OUTPUT_SIZE; j++) {
+        for (int j = 0; j < 10; j++) {
             data[j] = j == value ? 1 : 0;
         }
     }
@@ -69,25 +67,27 @@ void print_one_hot_label(double *label)
 
 int main()
 {
-    auto DTYPE   = PULSE_DOUBLE;
-    auto ReLU    = PULSE_RELU[DTYPE];
-    auto SIGMOID = PULSE_SIGMOID[DTYPE];
-    auto L1      = PULSE_L1[DTYPE];
+    constexpr int SAMPLES          = N_TRAIN_SAMPLES;
+    constexpr int INPUT_DIMENSION  = IMAGE_SIZE;
+    constexpr int OUTPUT_DIMENSION = 10;
+    constexpr int BATCH_SIZE       = 100;
+    constexpr int EPOCH            = 10;
+    constexpr double LR            = 0.1;
 
-    void **images = get_train_images();
-    void **labels = get_train_labels();
+    auto constexpr DTYPE   = PULSE_DOUBLE;
+    auto constexpr ReLU    = PULSE_RELU[DTYPE];
+    auto constexpr SIGMOID = PULSE_SIGMOID[DTYPE];
+    auto constexpr L1      = PULSE_L1[DTYPE];
 
-    print_image((double *)images[0]);
-    print_one_hot_label((double *)labels[0]);
+    auto images = (const void *const *)get_train_images();
+    auto labels = (const void *const *)get_train_labels();
 
-    pulse_model model = pulse_create_model(2, pulse_dense_layer(IMAGE_SIZE, 128, DTYPE, ReLU), pulse_dense_layer(128, 10, DTYPE, SIGMOID));
+    pulse_model model = pulse_create_model(2, pulse_dense_layer(INPUT_DIMENSION, 128, DTYPE, ReLU), pulse_dense_layer(128, OUTPUT_DIMENSION, DTYPE, SIGMOID));
 
-    double t1 = omp_get_wtime();
-    pulse_train(model, (pulse_train_args_t){.samples = 60000, .epoch = 10, .batch_size = 100, .lr = 0.5}, L1, images, labels);
-    double t2 = omp_get_wtime();
-    printf("%f\n", t2 - t1);
-
-    print_one_hot_label((double *)pulse_forward(model, images[0]));
+    clock_t t1 = clock();
+    pulse_train(model, (pulse_train_args_t){.samples = SAMPLES, .epoch = EPOCH, .batch_size = BATCH_SIZE, .lr = LR}, L1, images, labels);
+    clock_t t2 = clock();
+    printf("%f\n", (double)((t2 - t1) / (double)(CLOCKS_PER_SEC)));
 
     pulse_free(model);
 };
