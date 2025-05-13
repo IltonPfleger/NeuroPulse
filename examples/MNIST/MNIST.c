@@ -74,20 +74,20 @@ int main()
     constexpr int EPOCH            = 10;
     constexpr double LR            = 0.1;
 
-    auto constexpr DTYPE   = PULSE_DOUBLE;
-    auto constexpr ReLU    = PULSE_RELU[DTYPE];
-    auto constexpr SIGMOID = PULSE_SIGMOID[DTYPE];
-    auto constexpr L1      = PULSE_L1[DTYPE];
+    auto constexpr DTYPE = PULSE_DOUBLE;
+    auto const ReLU      = PULSE_RELU[DTYPE];
+    auto const SIGMOID   = PULSE_SIGMOID[DTYPE];
+    auto const L1        = PULSE_L1[DTYPE];
 
     auto images = (const void *const *)get_train_images();
     auto labels = (const void *const *)get_train_labels();
 
-    pulse_model model = pulse_create_model(2, pulse_dense_layer(INPUT_DIMENSION, 128, DTYPE, ReLU), pulse_dense_layer(128, OUTPUT_DIMENSION, DTYPE, SIGMOID));
+    pulse_layer_t *model = pulse_create_model(2, pulse_dense_layer(INPUT_DIMENSION, 128, DTYPE, ReLU), pulse_dense_layer(128, OUTPUT_DIMENSION, DTYPE, SIGMOID));
 
     clock_t t1 = clock();
     pulse_train(model, (pulse_train_args_t){.samples = SAMPLES, .epoch = EPOCH, .batch_size = BATCH_SIZE, .lr = LR}, L1, images, labels);
     clock_t t2 = clock();
-    printf("%f\n", (double)((t2 - t1) / (double)(CLOCKS_PER_SEC)));
+    printf("Finished: %f\n", (double)((t2 - t1) / (double)(CLOCKS_PER_SEC)));
 
     pulse_free(model);
 };

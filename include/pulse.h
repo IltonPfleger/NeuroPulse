@@ -6,16 +6,11 @@
 #include <stddef.h>
 #include <types/train.h>
 
-typedef struct {
-    pulse_layer_t *layers;
-    size_t n_layers;
-} pulse_model;
-
-pulse_model pulse_create_model(int, ...);
-void *pulse_forward(pulse_model, const void *const);
-void pulse_free(pulse_model);
-void pulse_back(pulse_model);
+struct pulse_layer_s *pulse_create_model(int, ...);
+void *pulse_forward(struct pulse_layer_s *, const void *const);
+void pulse_free(struct pulse_layer_s *);
+void pulse_back(struct pulse_layer_s *);
+void pulse_train(struct pulse_layer_s *, pulse_train_args_t, pulse_loss_function, const void *const *, const void *const *);
 void pulse_shuffle(size_t *, size_t);
-void pulse_train(pulse_model, pulse_train_args_t, pulse_loss_function, const void *const *, const void *const *);
 
 #endif

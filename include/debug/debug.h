@@ -18,7 +18,7 @@
 #endif
 
 #ifdef PULSE_DEBUG_LOGGER_ENABLED
-#define PULSE_DEBUG_LOGGER(LOG, ...) fprintf(stdout, "PULSE[LOGGER] >> " LOG, __VA_ARGS__);
+#define PULSE_DEBUG_LOGGER(LOG, ...) fprintf(stdout, "PULSE[LOGGER] >> " LOG, ##__VA_ARGS__);
 #else
 #define PULSE_DEBUG_LOGGER(LOG)
 #endif

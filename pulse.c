@@ -6,32 +6,40 @@
 #include <string.h>
 #include <time.h>
 
-void *pulse_forward(pulse_model model, const void *const inputs)
+void *pulse_forward(struct pulse_layer_s *layers, const void *const inputs)
 {
-    model.layers->feed(model.layers, inputs);
-    return (model.layers + model.n_layers - 1)->outputs;
+    layers->feed(layers, inputs);
+    while (layers->next != NULL) layers = layers->next;
+    return layers->outputs;
 }
 
-void pulse_back(pulse_model model) { (model.layers + model.n_layers - 1)->back(model.layers + model.n_layers - 1); }
+void pulse_back(struct pulse_layer_s *layers)
+{
+    while (layers->next != NULL) layers = layers->next;
+    layers->back(layers);
+}
 
-void pulse_fix(pulse_model model, pulse_train_args_t args) { model.layers->fix(model.layers, args); }
+void pulse_fix(struct pulse_layer_s *layers, pulse_train_args_t args) { layers->fix(layers, args); }
 
 void pulse_shuffle(size_t *indexes, size_t max)
 {
     for (size_t i = 0; i < max; i++) {
         size_t random    = (size_t)rand() % max;
         size_t random2   = (size_t)rand() % max;
-        size_t temp      = indexes[random];
+        size_t tmp       = indexes[random];
         indexes[random]  = indexes[random2];
-        indexes[random2] = temp;
+        indexes[random2] = tmp;
     };
 }
 
-void pulse_train(pulse_model model, pulse_train_args_t args, pulse_loss_function loss_function, const void *const *x, const void *const *y)
+void pulse_train(struct pulse_layer_s *layers, pulse_train_args_t args, pulse_loss_function loss_function, const void *const *x, const void *const *y)
 {
     srand(time(NULL));
-    pulse_layer_t *output = model.layers + model.n_layers - 1;
-    double loss           = 0;
+
+    struct pulse_layer_s *output = layers;
+    while (output->next != NULL) output = output->next;
+
+    double loss = 0;
 
     size_t RANDOM[args.samples];
     for (size_t i = 0; i < args.samples; i++) RANDOM[i] = i;
@@ -39,42 +47,44 @@ void pulse_train(pulse_model model, pulse_train_args_t args, pulse_loss_function
     for (size_t i = 0; i < args.epoch; i++) {
         pulse_shuffle(RANDOM, args.samples);
         for (size_t j = 0; j < args.samples; j++) {
-            pulse_forward(model, x[RANDOM[j]]);
+            pulse_forward(layers, x[RANDOM[j]]);
             loss = loss_function(output->outputs, y[RANDOM[j]], output->errors, output->osize);
-            pulse_back(model);
+            pulse_back(layers);
 
-            if ((j + 1) % args.batch_size == 0) pulse_fix(model, args);
+            if ((j + 1) % args.batch_size == 0) pulse_fix(layers, args);
 
             PULSE_DEBUG_LOGGER("Epoch: %ld | Item: %ld | Avg Loss: %.10f\r", i, j, loss);
         }
+        PULSE_DEBUG_LOGGER("\n");
     }
 }
 
-pulse_model pulse_create_model(int size, ...)
+struct pulse_layer_s *pulse_create_model(int size, ...)
 {
     srand(time(NULL));
-    va_list layers_info;
-    va_start(layers_info, size);
+    va_list args;
+    va_start(args, size);
 
-    pulse_layer_t *layers = malloc(sizeof(pulse_layer_t) * size);
+    struct pulse_layer_s *layers = malloc(sizeof(struct pulse_layer_s) * size);
     PULSE_DEBUG_ERROR(layers == NULL, "PulseModel::Create >> Heap memory allocation failed.");
 
-    pulse_model model = {.n_layers = size, .layers = layers};
-
-    for (size_t i = 0; i < model.n_layers; i++) {
-        pulse_layer_t layer = va_arg(layers_info, pulse_layer_t);
-        memcpy(model.layers + i, &layer, sizeof(pulse_layer_t));
+    for (size_t i = 0; i < size; i++) {
+        struct pulse_layer_s layer = va_arg(args, struct pulse_layer_s);
+        memcpy(layers + i, &layer, sizeof(struct pulse_layer_s));
         if (i > 0) {
-            model.layers[i - 1].next = &model.layers[i];
-            model.layers[i].prev     = &model.layers[i - 1];
+            layers[i - 1].next = &layers[i];
+            layers[i].prev     = &layers[i - 1];
         }
     }
-    va_end(layers_info);
-    return model;
+    va_end(args);
+    return layers;
 }
 
-void pulse_free(pulse_model model)
+void pulse_free(struct pulse_layer_s *layers)
 {
-    for (size_t i = 0; i < model.n_layers; i++) model.layers[i].free(model.layers + i);
-    free(model.layers);
+    while (layers != NULL) {
+        layers->free(layers);
+        layers = layers->next;
+    }
+    free(layers);
 }
