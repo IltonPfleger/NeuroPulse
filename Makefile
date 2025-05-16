@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Wpedantic
-CFLAGS = -O4 -march=native -Iinclude -lm -fPIC
+CFLAGS = -O4 -march=native -Iinclude -lm -fPIC -g 
 
 SOURCES = $(shell find . -type f -name '*.c' | grep -v examples)
 OBJECTS = $(shell find . -type f -name '*.c' | grep -v examples | sed 's/.c$$/.o/g' | sed 's/^/build\//g')
@@ -20,5 +20,5 @@ clean:
 
 run:
 	(cd examples/$(EXAMPLE) && make)
-	(cd examples/$(EXAMPLE) && ./$(EXAMPLE))
+	LD_LIBRARY_PATH=./build ./examples/$(EXAMPLE)/$(EXAMPLE)
 

@@ -19,7 +19,7 @@ RELU(int)
 RELU(float)
 RELU(double)
 
-static const pulse_activation_function PULSE_RELU[] = {
+static const pulse_activation_t PULSE_RELU[] = {
     [PULSE_INT]    = relu_int,
     [PULSE_FLOAT]  = relu_float,
     [PULSE_DOUBLE] = relu_double,

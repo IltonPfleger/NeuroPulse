@@ -24,7 +24,7 @@ MSE(int)
 MSE(float)
 MSE(double)
 
-static const pulse_loss_function PULSE_MSE[] = {
+static const pulse_loss_t PULSE_MSE[] = {
     [PULSE_INT]    = mse_int,
     [PULSE_FLOAT]  = mse_float,
     [PULSE_DOUBLE] = mse_double,

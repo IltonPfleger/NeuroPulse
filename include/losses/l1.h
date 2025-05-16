@@ -24,7 +24,7 @@ L1(int)
 L1(float)
 L1(double)
 
-static const pulse_loss_function PULSE_L1[] = {
+static const pulse_loss_t PULSE_L1[] = {
     [PULSE_INT]    = l1_int,
     [PULSE_FLOAT]  = l1_float,
     [PULSE_DOUBLE] = l1_double,

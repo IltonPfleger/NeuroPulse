@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -O4 -Wall -Wextra -std=c23 -lm
+CFLAGS = -O4 -Wall -Wextra -std=c23 -lm -g
 PULSE_DIR = ../../
 TARGET = XOR
 SOURCES = $(TARGET).c

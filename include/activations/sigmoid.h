@@ -19,7 +19,7 @@
 SIGMOID(float)
 SIGMOID(double)
 
-static const pulse_activation_function PULSE_SIGMOID[] = {
+static const pulse_activation_t PULSE_SIGMOID[] = {
     [PULSE_INT]    = NULL,
     [PULSE_FLOAT]  = sigmoid_float,
     [PULSE_DOUBLE] = sigmoid_double,

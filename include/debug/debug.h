@@ -2,8 +2,8 @@
 #define PULSE_DEBUG_H
 #include <stdio.h>
 
-#define PULSE_DEBUG_ERROR_ENABLED 1
-#define PULSE_DEBUG_LOGGER_ENABLED 1
+#define PULSE_DEBUG_ERROR_ENABLED
+// #define PULSE_DEBUG_LOGGER_ENABLED
 
 #ifdef PULSE_DEBUG_ERROR_ENABLED
 #define PULSE_DEBUG_ERROR(EXPRESSION, LOG)                                                \
@@ -20,7 +20,7 @@
 #ifdef PULSE_DEBUG_LOGGER_ENABLED
 #define PULSE_DEBUG_LOGGER(LOG, ...) fprintf(stdout, "PULSE[LOGGER] >> " LOG, ##__VA_ARGS__);
 #else
-#define PULSE_DEBUG_LOGGER(LOG)
+#define PULSE_DEBUG_LOGGER(LOG, ...)
 #endif
 
 #endif
