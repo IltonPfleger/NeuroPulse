@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #define PULSE_DEBUG_ERROR_ENABLED
-// #define PULSE_DEBUG_LOGGER_ENABLED
+#define PULSE_DEBUG_LOGGER_ENABLED
 
 #ifdef PULSE_DEBUG_ERROR_ENABLED
 #define PULSE_DEBUG_ERROR(EXPRESSION, LOG)                                                \

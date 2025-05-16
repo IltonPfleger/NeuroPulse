@@ -1,5 +1,6 @@
 #include <activations/relu.h>
 #include <activations/sigmoid.h>
+#include <assert.h>
 #include <layers/dense.h>
 #include <losses/l1.h>
 #include <pulse.h>
@@ -82,10 +83,10 @@ int main()
     auto images = (const void *const *)get_train_images();
     auto labels = (const void *const *)get_train_labels();
 
-    pulse_layer_t *model = pulse_create_model(2, pulse_dense_layer(INPUT_DIMENSION, 128, DTYPE, ReLU), pulse_dense_layer(128, OUTPUT_DIMENSION, DTYPE, SIGMOID));
+    pulse_layer_t *model = pulse_create_model(2, pulse_dense_layer(DTYPE, INPUT_DIMENSION, 128, ReLU, LR), pulse_dense_layer(DTYPE, 128, OUTPUT_DIMENSION, SIGMOID, LR));
 
     clock_t t1 = clock();
-    pulse_train(model, (pulse_train_args_t){.samples = SAMPLES, .epoch = EPOCH, .batch_size = BATCH_SIZE, .lr = LR}, L1, images, labels);
+    pulse_train(model, EPOCH, SAMPLES, BATCH_SIZE, L1, images, labels);
     clock_t t2 = clock();
     printf("Finished: %f\n", (double)((t2 - t1) / (double)(CLOCKS_PER_SEC)));
 
